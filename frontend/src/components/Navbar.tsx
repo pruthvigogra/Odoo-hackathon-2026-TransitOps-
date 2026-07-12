@@ -66,8 +66,14 @@ export default function Navbar() {
     router.push('/');
   };
 
-  // The 14 Dashboard points from your image:
-  const navItems = [
+  // The Dashboard points based on role:
+  const isDriver = user?.role === 'Driver';
+
+  const navItems = isDriver ? [
+    { name: 'My Driver Dashboard', href: `/drivers/${user.id}`, icon: LayoutDashboard },
+    { name: 'Notifications', href: '/alerts', icon: AlertCircle, badgeKey: 'alerts' },
+    { name: 'Settings', href: '/settings', icon: Settings },
+  ] : [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Vehicle Management', href: '/vehicles', icon: Truck },
     { name: 'Driver Management', href: '/drivers', icon: Users },

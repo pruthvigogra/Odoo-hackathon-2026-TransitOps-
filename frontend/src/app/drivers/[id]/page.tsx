@@ -9,7 +9,7 @@ import {
   Activity, Calendar, Phone, Mail, Award, Clock, HeartHandshake, AlertTriangle, Play
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import { api } from '@/utils/api';
+import { api, getUser } from '@/utils/api';
 
 // Dynamically import Leaflet Map to avoid SSR errors
 const Map = dynamic(() => import('@/components/Map'), { ssr: false });
@@ -33,7 +33,10 @@ export default function DriverDashboardPage() {
   // Success / Alert banner notification state
   const [notification, setNotification] = useState<{ message: string; type: string } | null>(null);
 
+  const [user, setUser] = useState<any>(null);
+
   useEffect(() => {
+    setUser(getUser());
     if (driverId) {
       fetchDriverDetails();
     }
@@ -162,13 +165,19 @@ export default function DriverDashboardPage() {
           
           {/* Header Action Back */}
           <div className="flex items-center justify-between border-b border-slate-200/60 pb-4">
-            <Link 
-              href="/drivers" 
-              className="flex items-center gap-1.5 text-xs font-bold text-slate-650 hover:text-slate-900 transition-colors bg-white/90 border border-slate-200 px-3 py-2 rounded-xl shadow-sm"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              Back to Driver List
-            </Link>
+            {user?.role !== 'Driver' ? (
+              <Link 
+                href="/dashboard" 
+                className="flex items-center gap-1.5 text-xs font-bold text-slate-650 hover:text-slate-900 transition-colors bg-white/90 border border-slate-200 px-3 py-2 rounded-xl shadow-sm"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                ← Back to Fleet Dashboard
+              </Link>
+            ) : (
+              <div className="text-xs font-bold text-slate-500">
+                Driver Portal Mode
+              </div>
+            )}
 
             <span className="text-[10px] font-bold text-slate-400">DRIVER DETAILS CONSOLE</span>
           </div>
