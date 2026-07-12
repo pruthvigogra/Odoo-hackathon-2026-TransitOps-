@@ -436,12 +436,15 @@ export default function App() {
             
             <nav className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest font-mono text-slate-400">
               <a href="#platform" className="hover:text-white transition-colors">Platform</a>
-              <a href="#rules" className="hover:text-white transition-colors">Safety Rules</a>
-              <a href="#roles" className="hover:text-white transition-colors">Operational Seats</a>
-              <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+              <a href="#rules" className="hover:text-white transition-colors">Solutions</a>
+              <a href="#roles" className="hover:text-white transition-colors">Resources</a>
+              <a href="#contact" className="hover:text-white transition-colors">Company</a>
             </nav>
 
             <div className="flex items-center gap-6">
+              <span className="text-slate-450 hover:text-white font-mono text-xs font-bold uppercase tracking-widest cursor-pointer flex items-center gap-1.5">
+                <Phone className="h-3.5 w-3.5" /> Contact
+              </span>
               <button 
                 onClick={() => setView('login')}
                 className="text-xs font-bold uppercase tracking-widest font-mono text-slate-400 hover:text-white transition-colors"
@@ -465,15 +468,15 @@ export default function App() {
             {/* Left Column Text details */}
             <div className="lg:col-span-6 space-y-6 text-left relative z-10">
               <span className="text-[10px] text-cyan-400 font-mono font-bold uppercase tracking-widest">
-                INTEGRATED OPERATIONS PLATFORM
+                SMART TRANSPORT OPERATIONS
               </span>
               
               <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-[1.05] font-sans">
-                AI that makes your operations safer and more efficient.
+                Every vehicle tracked. Every rule enforced. Nothing falls through.
               </h1>
               
               <p className="text-sm text-slate-400 leading-relaxed font-sans">
-                One platform to help improve the <span className="border-b-2 border-cyan-400 pb-0.5 font-bold text-white">Safety</span>, <span className="border-b-2 border-blue-400 pb-0.5 font-bold text-white">Productivity</span>, and <span className="border-b-2 border-purple-400 pb-0.5 font-bold text-white font-mono uppercase text-xs tracking-wider">Compliance</span> of your operations.
+                One platform to help improve the <span className="border-b-2 border-cyan-400 pb-0.5 font-bold text-white">safety</span>, <span className="border-b-2 border-blue-400 pb-0.5 font-bold text-white">efficiency</span>, and <span className="border-b-2 border-purple-400 pb-0.5 font-bold text-white">profitability</span> of your fleet operations.
               </p>
 
               <div className="flex gap-4 pt-2">
@@ -505,13 +508,15 @@ export default function App() {
                 <div className="bg-slate-950 h-80 rounded-xl overflow-hidden relative flex flex-col justify-end p-6 border border-slate-900">
                   <div className="absolute top-6 left-6 bg-slate-900/80 border border-slate-800 rounded-xl p-4 w-64 shadow-2xl relative z-10">
                     <span className="text-[9px] font-bold text-slate-550 uppercase tracking-widest font-mono">Operations vision Feed</span>
-                    <h4 className="text-xs font-bold text-white mt-1 font-mono uppercase">Geofence Alert.</h4>
+                    <div className="text-xs font-bold text-emerald-400 mt-1 font-mono uppercase flex items-center gap-1.5">
+                      <Check className="h-4 w-4" /> License Verified.
+                    </div>
                     <p className="text-[10px] text-slate-400 mt-2 font-mono leading-relaxed">
-                      Vehicle Tata Prima MH12QW1234 departed dispatch route trajectory. Automatic alert sent.
+                      Driver John Doe credential scans returned active. Operator cleared for Heavy Transport.
                     </p>
                   </div>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-955 via-slate-955/20 to-transparent"></div>
                   
                   {/* Digital grid/nodes visual representation */}
                   <div className="absolute inset-6 border border-dashed border-blue-900/40 rounded flex items-center justify-center">
@@ -524,17 +529,17 @@ export default function App() {
           </div>
         </section>
 
-        {/* Spoke and Hub Modules (Alternating Stark White Section) */}
+        {/* Section 2 — Integrated platform (Alternating Stark White Section) */}
         <section id="platform" className="bg-[#FFFFFF] text-slate-950 py-24 px-6 relative border-y border-slate-200">
           <div className="max-w-7xl mx-auto text-center space-y-4">
             <span className="text-[10px] bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-mono font-bold uppercase tracking-widest border border-slate-250">
               INTEGRATED OPERATIONS PLATFORM
             </span>
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-950 leading-none">
-              A fully integrated suite of products, powered by AI.
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight text-slate-955 leading-none">
+              One system, six connected modules.
             </h2>
             <p className="text-xs text-slate-500 max-w-xl mx-auto font-sans leading-relaxed">
-              TransitOps orchestrates your entire enterprise fleet. Six interconnected modules communicating status transitions and logs in real-time.
+              Fleet, drivers, trips, maintenance, fuel, and analytics — working off the same source of truth.
             </p>
 
             {/* Spoke layout nodes card row */}
@@ -552,7 +557,7 @@ export default function App() {
                   onClick={() => setView('login')}
                   className="bg-[#FFFFFF] border border-slate-200 rounded-2xl p-6 text-left shadow-[0_4px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(59,130,246,0.12)] hover:-translate-y-1.5 transition-all duration-300 cursor-pointer group"
                 >
-                  <div className="w-10 h-10 bg-slate-950 text-white rounded-xl flex items-center justify-center mb-5 group-hover:bg-blue-600 transition-colors duration-300">
+                  <div className="w-10 h-10 bg-slate-955 text-white rounded-xl flex items-center justify-center mb-5 group-hover:bg-blue-600 transition-colors duration-300">
                     <mod.icon className="h-5 w-5" />
                   </div>
                   <h4 className="text-xs font-bold font-mono uppercase tracking-wider text-slate-900">{mod.title}</h4>
@@ -564,7 +569,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section: Rules Highlight (Stark White Section) */}
+        {/* Section 3 — Rules enforcement feature (Alternating Stark White Section) */}
         <section id="rules" className="bg-[#FFFFFF] text-slate-950 py-24 px-6 border-b border-slate-200">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -576,7 +581,7 @@ export default function App() {
                 { label: 'Vehicle State Lock', val: 'OMITTED FROM POOL', status: 'neutral', desc: 'Medium Truck KA03XY5678 automatically hidden from active dispatch list while service logs are open.' },
                 { label: 'Compliance Lockout', val: 'ASSIGNMENT BLOCKED', status: 'blocked', desc: 'Sam Suspended disabled from duty queue. Safety score dropped below 50 points compliance limit.' }
               ].map((card, idx) => (
-                <div key={idx} className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-2xl relative text-left">
+                <div key={idx} className="bg-slate-955 border border-slate-900 rounded-xl p-5 shadow-2xl relative text-left">
                   {/* Computer vision corners */}
                   <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-blue-500"></div>
                   <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-blue-500"></div>
@@ -599,15 +604,15 @@ export default function App() {
             {/* Left side text column */}
             <div className="lg:col-span-5 space-y-6 text-left">
               <span className="text-[10px] bg-slate-100 text-slate-700 px-3 py-1 rounded-full font-mono font-bold uppercase tracking-widest border border-slate-200">
-                AI VISION COMPLIANCE
+                SMART VALIDATION
               </span>
               
-              <h2 className="text-3xl font-extrabold tracking-tight text-slate-950 leading-tight">
-                Get complete visibility with customized operations rules.
+              <h2 className="text-3xl font-extrabold tracking-tight text-slate-955 leading-tight">
+                The system stops the mistake. You never have to.
               </h2>
               
               <p className="text-xs text-slate-500 leading-relaxed font-sans">
-                From logistics hauling to heavy commercial trucking, TransitOps enforces precise validation workflows for your unique operational constraints.
+                From overloaded cargo to expired licenses, TransitOps blocks the mistake at the source instead of surfacing it in a report next month.
               </p>
               
               <div className="pt-2">
@@ -623,7 +628,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section: Role-based Value */}
+        {/* Section 4 — Role-based value */}
         <section id="roles" className="py-24 px-6 bg-[#000000] border-b border-slate-900">
           <div className="max-w-7xl mx-auto space-y-12">
             <div className="text-center space-y-4">
@@ -633,12 +638,12 @@ export default function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { role: 'Fleet Manager', desc: 'Owns vehicle profiles, logs service orders, and monitors health states.', cta: 'Manage Fleet' },
-                { role: 'Dispatcher', desc: 'Orchestrates active routes, verifies capacity limits, and records cargo states.', cta: 'Orchestrate Trips' },
-                { role: 'Safety Officer', desc: 'Monitors driver credential lists, licenses, and adjusting safety ratings.', cta: 'Inspect Compliance' },
-                { role: 'Financial Analyst', desc: 'Enters operational expenses and analyzes auto-calculated vehicle ROI cards.', cta: 'Audit Financials' }
+                { role: 'Fleet Manager', desc: 'Full visibility into every vehicle\'s status, cost, and lifecycle.', cta: 'Manage Fleet' },
+                { role: 'Dispatcher', desc: 'Dispatch with confidence — the system won\'t let a conflict through.', cta: 'Orchestrate Trips' },
+                { role: 'Safety Officer', desc: 'License checks and safety scores, enforced automatically.', cta: 'Inspect Compliance' },
+                { role: 'Financial Analyst', desc: 'Real operational cost, calculated the moment it happens.', cta: 'Audit Financials' }
               ].map((item, idx) => (
-                <div key={idx} className="bg-slate-950 border border-slate-900 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-800 transition-all duration-300 hover:-translate-y-1">
+                <div key={idx} className="bg-slate-955 border border-slate-900 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-800 transition-all duration-300 hover:-translate-y-1">
                   <div className="space-y-3">
                     <h4 className="text-xs font-bold text-white font-mono uppercase tracking-wider">{item.role}</h4>
                     <p className="text-[11px] text-slate-500 font-mono leading-relaxed">{item.desc}</p>
@@ -655,12 +660,20 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section: Social Proof (Dark Operation BG Style) */}
+        {/* Section 5 — Social Proof (Dark Operation BG Style) */}
         <section className="relative py-32 overflow-hidden px-6 text-center bg-[#070b10] border-b border-slate-900">
-          <div className="absolute inset-0 bg-slate-950/70 z-0"></div>
+          <div className="absolute inset-0 bg-slate-955/70 z-0"></div>
           <div className="max-w-4xl mx-auto relative z-10 space-y-6">
-            <span className="text-[10px] text-slate-500 font-mono uppercase tracking-widest font-bold">BUILT FOR OPERATORS LIKE</span>
-            <h2 className="text-3xl font-extrabold text-white leading-tight font-sans">The most complex operations in the world trust TransitOps.</h2>
+            <span className="text-[10px] text-slate-500 font-mono uppercase tracking-widest font-bold">BUILT FOR OPERATORS LIKE YOU</span>
+            <h2 className="text-3xl font-extrabold text-white leading-tight font-sans">The most complex fleets deserve the simplest system.</h2>
+            <div className="pt-4">
+              <button 
+                onClick={() => setView('login')}
+                className="text-cyan-400 hover:text-cyan-300 text-xs font-bold font-mono uppercase tracking-widest"
+              >
+                Explore how it works ➔
+              </button>
+            </div>
             <div className="pt-8 flex flex-wrap justify-center items-center gap-12 opacity-30 select-none">
               <span className="font-mono text-xs font-black tracking-widest uppercase">ACME LOGISTICS</span>
               <span className="font-mono text-xs font-black tracking-widest uppercase">APEX CARRIERS</span>
@@ -670,7 +683,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section: Lead Capture & Contact (Connect with us + Form on floating card) */}
+        {/* Section 6 — CTA / Lead Capture (Connect with us + Form on floating card) */}
         <section id="contact" className="py-24 px-6 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -680,19 +693,16 @@ export default function App() {
               <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-[1.1] font-sans">
                 We'd love to show you around.
               </h2>
-              <p className="text-xs text-slate-450 leading-relaxed font-sans">
-                Connect with our product specialist and explore how automated validation logic can secure your transport pipelines.
-              </p>
               
               <div className="space-y-3 pt-2 text-[11px] font-mono text-slate-400">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" /> Comply with industry rules and regulations.
+                  <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" /> Comply with dispatch and compliance rules automatically.
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" /> Identify risks and automate driver checks.
+                  <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" /> Catch license, capacity, and cost issues before they escalate.
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" /> Improve visibility and automate operations.
+                  <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" /> See fleet-wide status in one dashboard — always up to date.
                 </div>
               </div>
 
@@ -701,7 +711,7 @@ export default function App() {
                 <div className="text-[9px] font-mono uppercase tracking-widest text-slate-500 mb-4 font-bold">Voted best in class across the board</div>
                 <div className="flex flex-wrap gap-3">
                   {['Top 100 System', 'Best Est. ROI', 'Most Implementable', 'Best Relationship', 'Buyer\'s Choice 2026'].map((badge, idx) => (
-                    <div key={idx} className="bg-slate-950 border border-slate-900 rounded px-3 py-2 text-[9px] font-mono font-bold text-slate-400 flex items-center justify-center uppercase">
+                    <div key={idx} className="bg-slate-955 border border-slate-900 rounded px-3 py-2 text-[9px] font-mono font-bold text-slate-400 flex items-center justify-center uppercase">
                       {badge}
                     </div>
                   ))}
@@ -765,38 +775,45 @@ export default function App() {
             </div>
 
             <div>
-              <h5 className="font-bold text-white uppercase mb-4">Products</h5>
+              <h5 className="font-bold text-white uppercase mb-4 font-bold">Products</h5>
               <ul className="space-y-2">
+                <li><a href="#platform" className="hover:text-slate-300">Platform Overview</a></li>
                 <li><a href="#platform" className="hover:text-slate-300">Fleet Management</a></li>
-                <li><a href="#platform" className="hover:text-slate-300">Driver Compliance</a></li>
+                <li><a href="#platform" className="hover:text-slate-300">Driver Safety</a></li>
                 <li><a href="#platform" className="hover:text-slate-300">Trip Dispatch</a></li>
+                <li><a href="#platform" className="hover:text-slate-300">Maintenance</a></li>
+                <li><a href="#platform" className="hover:text-slate-300">Analytics</a></li>
               </ul>
             </div>
 
             <div>
-              <h5 className="font-bold text-white uppercase mb-4">Who We Serve</h5>
+              <h5 className="font-bold text-white uppercase mb-4 font-bold">Who We Serve</h5>
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-slate-300">Logistics</a></li>
                 <li><a href="#" className="hover:text-slate-300">Construction</a></li>
                 <li><a href="#" className="hover:text-slate-300">Field Service</a></li>
+                <li><a href="#" className="hover:text-slate-300">Public Sector</a></li>
+                <li><a href="#" className="hover:text-slate-300">Delivery</a></li>
               </ul>
             </div>
 
             <div>
-              <h5 className="font-bold text-white uppercase mb-4">Resources</h5>
+              <h5 className="font-bold text-white uppercase mb-4 font-bold">Resources</h5>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-slate-300">Documentation</a></li>
-                <li><a href="#" className="hover:text-slate-300">Guides & Articles</a></li>
-                <li><a href="#" className="hover:text-slate-300">API Gateway</a></li>
+                <li><a href="#" className="hover:text-slate-300">Blog</a></li>
+                <li><a href="#" className="hover:text-slate-300">Guides</a></li>
+                <li><a href="#" className="hover:text-slate-300">ROI Calculator</a></li>
+                <li><a href="#" className="hover:text-slate-300">Content Library</a></li>
               </ul>
             </div>
 
             <div>
-              <h5 className="font-bold text-white uppercase mb-4">Company</h5>
+              <h5 className="font-bold text-white uppercase mb-4 font-bold">Company</h5>
               <ul className="space-y-2">
-                <li><a href="#" className="hover:text-slate-300">About Us</a></li>
                 <li><a href="#" className="hover:text-slate-300">Leadership</a></li>
-                <li><a href="#" className="hover:text-slate-300">Security Core</a></li>
+                <li><a href="#" className="hover:text-slate-300">Careers</a></li>
+                <li><a href="#" className="hover:text-slate-300">Contact Us</a></li>
+                <li><a href="#" className="hover:text-slate-300">Partners</a></li>
               </ul>
             </div>
           </div>
@@ -839,7 +856,7 @@ export default function App() {
           </h2>
 
           {errorMsg && (
-            <div className="bg-red-950/50 border border-red-900/60 text-red-400 px-4 py-3 rounded-lg text-xs mb-6 flex items-start gap-2">
+            <div className="bg-red-955/50 border border-red-900/60 text-red-400 px-4 py-3 rounded-lg text-xs mb-6 flex items-start gap-2">
               <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
@@ -940,7 +957,7 @@ export default function App() {
 
           {/* User profile info */}
           <div className="p-4 bg-slate-900/20 border-b border-slate-900/60">
-            <div className="text-[9px] text-slate-500 uppercase tracking-widest font-bold font-mono">Operations Console</div>
+            <div className="text-[9px] text-slate-550 uppercase tracking-widest font-bold font-mono">Operations Console</div>
             <div className="text-sm font-extrabold text-cyan-400 mt-0.5 font-mono">{user.role.toUpperCase()}</div>
             <div className="text-xs text-slate-400 mt-1 truncate font-mono">{user.name}</div>
           </div>
@@ -1058,19 +1075,19 @@ export default function App() {
                 <div className="text-2xl font-black mt-2 text-white font-mono">{analytics.kpis.fleetUtilization}%</div>
                 <div className="text-[10px] text-cyan-400 mt-1 font-mono">Active / Total active vehicles</div>
               </div>
-              <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl relative overflow-hidden">
+              <div className="bg-slate-955 border border-slate-900 rounded-xl p-5 shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
                 <div className="text-slate-550 text-[10px] font-bold uppercase tracking-widest font-mono">Fuel Efficiency</div>
                 <div className="text-2xl font-black mt-2 text-white font-mono">{analytics.kpis.fuelEfficiency} <span className="text-xs text-slate-450 font-normal">km/L</span></div>
                 <div className="text-[10px] text-emerald-400 mt-1 font-mono">Calculated distance per liter</div>
               </div>
-              <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl relative overflow-hidden">
+              <div className="bg-slate-955 border border-slate-900 rounded-xl p-5 shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-2 h-full bg-rose-500"></div>
                 <div className="text-slate-550 text-[10px] font-bold uppercase tracking-widest font-mono">Total Operational Cost</div>
                 <div className="text-2xl font-black mt-2 text-white font-mono">${analytics.kpis.totalOpCost.toLocaleString()}</div>
-                <div className="text-[10px] text-rose-450 mt-1 font-mono">Fuel + Maintenance logs</div>
+                <div className="text-[10px] text-rose-455 mt-1 font-mono">Fuel + Maintenance logs</div>
               </div>
-              <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl relative overflow-hidden">
+              <div className="bg-slate-955 border border-slate-900 rounded-xl p-5 shadow-xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-2 h-full bg-purple-500"></div>
                 <div className="text-slate-550 text-[10px] font-bold uppercase tracking-widest font-mono">Vehicle Status</div>
                 <div className="flex gap-3 mt-3 text-[10px] font-mono font-bold">
@@ -1083,7 +1100,7 @@ export default function App() {
 
             {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl">
+              <div className="bg-slate-955 border border-slate-900 rounded-xl p-5 shadow-xl">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-slate-450 mb-4 font-mono">Monthly Revenue Overview</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -1099,7 +1116,7 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl">
+              <div className="bg-slate-955 border border-slate-900 rounded-xl p-5 shadow-xl">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-slate-455 mb-4 font-mono">Costliest Vehicles (Fuel + Maintenance)</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
@@ -1123,13 +1140,13 @@ export default function App() {
                 <h4 className="text-xs font-bold text-slate-350 font-mono uppercase tracking-wider font-bold">Fleet Return on Investment (ROI) Matrix.</h4>
                 <p className="text-[10px] text-slate-500 mt-1 font-mono">Formula: ROI = (Revenue − (Maintenance + Fuel)) / Acquisition Cost</p>
               </div>
-              <div className="text-[9px] bg-slate-950 px-4 py-2 border border-slate-900 rounded-lg text-slate-550 font-mono font-bold">
+              <div className="text-[9px] bg-slate-955 px-4 py-2 border border-slate-900 rounded-lg text-slate-550 font-mono font-bold">
                 DATA SYNCHRONIZED AUTOMATICALLY
               </div>
             </div>
 
             {/* Vehicle Analytics ROI Table */}
-            <div className="bg-slate-950 border border-slate-900 rounded-xl overflow-hidden shadow-xl">
+            <div className="bg-slate-955 border border-slate-900 rounded-xl overflow-hidden shadow-xl">
               <table className="w-full text-left border-collapse">
                 <thead className="bg-[#050b14] border-b border-slate-900">
                   <tr>
@@ -1145,12 +1162,12 @@ export default function App() {
                   {analytics.vehicleAnalyticsList.map(v => (
                     <tr key={v.id} className="hover:bg-slate-900/20 transition-colors">
                       <td className="p-4 text-xs font-bold text-slate-200">{v.name}</td>
-                      <td className="p-4 text-xs text-slate-450 font-mono">{v.reg_no}</td>
+                      <td className="p-4 text-xs text-slate-455 font-mono">{v.reg_no}</td>
                       <td className="p-4 text-xs text-slate-400 font-mono">${v.acquisition_cost.toLocaleString()}</td>
                       <td className="p-4 text-xs text-cyan-400 font-mono">${v.revenue.toLocaleString()}</td>
                       <td className="p-4 text-xs text-rose-455 font-mono">${v.operational_cost.toLocaleString()}</td>
                       <td className="p-4 text-xs">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold font-mono ${v.roi >= 0 ? 'bg-emerald-950/40 text-emerald-400 border border-emerald-900/40' : 'bg-rose-950/40 text-rose-400 border border-rose-900/40'}`}>
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold font-mono ${v.roi >= 0 ? 'bg-emerald-955/40 text-emerald-400 border border-emerald-900/40' : 'bg-rose-955/40 text-rose-400 border border-rose-900/40'}`}>
                           {v.roi}%
                         </span>
                       </td>
@@ -1193,7 +1210,7 @@ export default function App() {
             </div>
 
             {/* Rule Banner */}
-            <div className="bg-[#050b14] border border-cyan-900/30 rounded-xl p-4 flex items-center gap-3 relative overflow-hidden">
+            <div className="bg-[#050b14] border border-cyan-905/30 rounded-xl p-4 flex items-center gap-3 relative overflow-hidden">
               <div className="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-cyan-500"></div>
               <ShieldAlert className="h-5 w-5 text-cyan-400 shrink-0" />
               <span className="text-[11px] text-slate-400 font-mono">
@@ -1240,7 +1257,7 @@ export default function App() {
                             const historyMaint = maintenance.filter(m => m.vehicle_id === v.id);
                             setSelectedVehicleHistory({ vehicle: v, trips: historyTrips, maintenance: historyMaint });
                           }}
-                          className="text-slate-400 hover:text-slate-200 text-[10px] uppercase font-bold font-mono bg-slate-900 border border-slate-850 px-2.5 py-1 rounded-full"
+                          className="text-slate-400 hover:text-slate-200 text-[10px] uppercase font-bold font-mono bg-slate-900 border border-slate-855 px-2.5 py-1 rounded-full"
                         >
                           History
                         </button>
@@ -1279,7 +1296,7 @@ export default function App() {
                       <tr key={m.id} className="hover:bg-slate-900/20 transition-colors">
                         <td className="p-4 text-xs font-mono text-white">{m.vehicle_reg}</td>
                         <td className="p-4 text-xs text-slate-350 font-bold">{m.service_type}</td>
-                        <td className="p-4 text-xs text-slate-500 font-mono">{m.date}</td>
+                        <td className="p-4 text-xs text-slate-550 font-mono">{m.date}</td>
                         <td className="p-4 text-xs text-slate-300 font-mono">${m.cost.toLocaleString()}</td>
                         <td className="p-4 text-xs">
                           <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${m.status === 'Open' ? 'bg-amber-955/40 text-amber-400 border border-amber-900/40' : 'bg-slate-800/45 text-slate-400 border border-slate-700'}`}>
@@ -1348,7 +1365,7 @@ export default function App() {
                       <tr key={d.id} className="hover:bg-slate-900/20 transition-colors">
                         <td className="p-4 text-xs font-bold text-slate-200">{d.name}</td>
                         <td className="p-4 text-xs text-slate-450 font-mono">{d.license_no}</td>
-                        <td className="p-4 text-xs text-slate-450 font-mono">{d.license_category}</td>
+                        <td className="p-4 text-xs text-slate-455 font-mono">{d.license_category}</td>
                         <td className="p-4 text-xs font-mono">
                           {expired ? (
                             <span className="text-red-400 font-bold flex items-center gap-1">
@@ -1441,7 +1458,7 @@ export default function App() {
                   <div className="absolute -top-1 -right-1 w-3 h-3 border-t border-r border-slate-800"></div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono text-slate-500 font-bold">ROUTE ID: #{t.id}</span>
+                      <span className="text-[10px] font-mono text-slate-505 font-bold">ROUTE ID: #{t.id}</span>
                       <span className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono ${
                         t.status === 'Draft' ? 'bg-slate-800 text-slate-400 border border-slate-700' :
                         t.status === 'Dispatched' ? 'bg-blue-955 text-blue-400 border border-blue-900/40' :
@@ -1463,15 +1480,15 @@ export default function App() {
                       </div>
                       <div>
                         <span className="block text-[9px] text-slate-500 uppercase font-bold">Driver Assigned:</span>
-                        <strong className="text-slate-350">{t.driver_name || 'UNASSIGNED'}</strong>
+                        <strong className="text-slate-355">{t.driver_name || 'UNASSIGNED'}</strong>
                       </div>
                       <div>
                         <span className="block text-[9px] text-slate-500 uppercase font-bold">Cargo Payload:</span>
-                        <strong className="text-slate-350">{t.cargo_weight.toLocaleString()} kg</strong>
+                        <strong className="text-slate-355">{t.cargo_weight.toLocaleString()} kg</strong>
                       </div>
                       <div>
                         <span className="block text-[9px] text-slate-500 uppercase font-bold">Total Distance:</span>
-                        <strong className="text-slate-350">{t.planned_distance.toLocaleString()} km</strong>
+                        <strong className="text-slate-355">{t.planned_distance.toLocaleString()} km</strong>
                       </div>
                     </div>
                   </div>
@@ -1522,7 +1539,7 @@ export default function App() {
                     )}
 
                     {t.status === 'Completed' && (
-                      <div className="text-[10px] font-mono text-slate-500 font-bold border border-slate-900 bg-black px-3 py-1 rounded">
+                      <div className="text-[10px] font-mono text-slate-505 bg-black border border-slate-900 px-3 py-1 rounded">
                         ODO: {t.final_odometer} km | FUEL: {t.fuel_consumed} L
                       </div>
                     )}
@@ -1552,7 +1569,7 @@ export default function App() {
                   </button>
                   <button 
                     onClick={() => setShowAddExpense(true)} 
-                    className="border border-slate-700 hover:border-slate-500 text-slate-200 font-bold text-xs uppercase tracking-widest font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
+                    className="border border-slate-700 hover:border-slate-500 text-slate-205 font-bold text-xs uppercase tracking-widest font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
                   >
                     Add Other Expense
                   </button>
@@ -1683,7 +1700,7 @@ export default function App() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="block text-[9px] text-slate-550 font-mono uppercase">Planned distance</span>
+                    <span className="block text-[9px] text-slate-555 font-mono uppercase">Planned distance</span>
                     <strong className="text-xs font-mono text-slate-200">1,410 km</strong>
                   </div>
                 </div>
@@ -1762,8 +1779,8 @@ export default function App() {
                     <tbody className="divide-y divide-slate-900/60 text-slate-300 font-mono">
                       <tr>
                         <td className="p-2.5 font-bold text-cyan-400">Fleet Manager</td>
-                        <td className="p-2.5 text-emerald-400">Full</td>
-                        <td className="p-2.5 text-emerald-400">Full</td>
+                        <td className="p-2.5 text-emerald-400 font-bold">Full</td>
+                        <td className="p-2.5 text-emerald-400 font-bold">Full</td>
                         <td className="p-2.5 text-slate-600">—</td>
                         <td className="p-2.5 text-slate-600">—</td>
                       </tr>
@@ -1771,19 +1788,19 @@ export default function App() {
                         <td className="p-2.5 font-bold text-cyan-400">Dispatcher</td>
                         <td className="p-2.5 text-amber-450 font-bold">View</td>
                         <td className="p-2.5 text-slate-600">—</td>
-                        <td className="p-2.5 text-emerald-400">Full</td>
+                        <td className="p-2.5 text-emerald-400 font-bold">Full</td>
                         <td className="p-2.5 text-slate-600">—</td>
                       </tr>
                       <tr>
                         <td className="p-2.5 font-bold text-cyan-400">Safety Officer</td>
                         <td className="p-2.5 text-slate-600">—</td>
-                        <td className="p-2.5 text-emerald-400">Full</td>
+                        <td className="p-2.5 text-emerald-400 font-bold">Full</td>
                         <td className="p-2.5 text-amber-450 font-bold">View</td>
                         <td className="p-2.5 text-slate-600">—</td>
                       </tr>
                       <tr>
                         <td className="p-2.5 font-bold text-cyan-400">Financial Analyst</td>
-                        <td className="p-2.5 text-amber-450 font-bold">View</td>
+                        <td className="p-2.5 text-amber-455 font-bold">View</td>
                         <td className="p-2.5 text-slate-600">—</td>
                         <td className="p-2.5 text-slate-600">—</td>
                         <td className="p-2.5 text-emerald-400 font-bold">Full</td>
@@ -2067,7 +2084,7 @@ export default function App() {
                   const selectedVehicle = vehicles.find(v => v.id.toString() === tripForm.vehicle_id.toString());
                   if (selectedVehicle && tripForm.cargo_weight > selectedVehicle.max_load_capacity) {
                     return (
-                      <div className="bg-red-955/20 border border-red-900/60 rounded-lg p-3 text-red-400 text-xs flex gap-2 font-mono">
+                      <div className="bg-red-[#050b14] border border-red-900/60 rounded-lg p-3 text-red-400 text-xs flex gap-2 font-mono">
                         <AlertTriangle className="h-4 w-4 shrink-0" />
                         <span><strong>Weight Overload Alert:</strong> Cargo weight exceeds vehicle's maximum carrying capacity of {selectedVehicle.max_load_capacity} kg. This trip cannot be dispatched.</span>
                       </div>
@@ -2088,7 +2105,7 @@ export default function App() {
       {showAddMaintenance && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-955 border border-slate-900 rounded-xl p-6 w-full max-w-md shadow-2xl relative">
-            <button onClick={() => setShowAddMaintenance(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-355"><X className="h-5 w-5" /></button>
+            <button onClick={() => setShowAddMaintenance(false)} className="absolute top-4 right-4 text-slate-505 hover:text-slate-355"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-200 mb-6 font-mono flex items-center gap-2">
               <Settings className="h-5 w-5 text-cyan-500 animate-spin" />
               Log Vehicle Service Record.
@@ -2146,7 +2163,7 @@ export default function App() {
       {activeCompleteTripModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-955 border border-slate-900 rounded-xl p-6 w-full max-w-md shadow-2xl relative">
-            <button onClick={() => setActiveCompleteTripModal(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-355"><X className="h-5 w-5" /></button>
+            <button onClick={() => setActiveCompleteTripModal(null)} className="absolute top-4 right-4 text-slate-550 hover:text-slate-355"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-200 mb-6 font-mono flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-emerald-500" />
               Complete Active Trip Operations.
@@ -2169,7 +2186,7 @@ export default function App() {
                   <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Fuel Consumed (Liters)</label>
                   <input 
                     type="number" required value={completeTripForm.fuel_consumed} 
-                    onChange={(e) => setCompleteTripForm({ ...completeTripForm, fuel_consumed: parseFloat(e.target.value) || '' })}
+                    onChange={(e) => setCompleteTripForm({ ...completeTripForm, final_odometer: parseFloat(e.target.value) || '' })}
                     className="w-full bg-[#050b14] border border-slate-900 text-slate-200 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
@@ -2212,7 +2229,7 @@ export default function App() {
       {showAddFuel && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-955 border border-slate-900 rounded-xl p-6 w-full max-w-md shadow-2xl relative">
-            <button onClick={() => setShowAddFuel(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-355"><X className="h-5 w-5" /></button>
+            <button onClick={() => setShowAddFuel(false)} className="absolute top-4 right-4 text-slate-355 hover:text-slate-355"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-200 mb-6 font-mono flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-cyan-500" />
               Log Fuel Purchase Receipt.
@@ -2223,7 +2240,7 @@ export default function App() {
                 <select 
                   required value={fuelForm.vehicle_id}
                   onChange={(e) => setFuelForm({ ...fuelForm, vehicle_id: e.target.value })}
-                  className="w-full bg-[#050b14] border border-slate-900 text-slate-200 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                  className="w-full bg-[#050b14] border border-slate-900 text-slate-205 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                 >
                   <option value="">-- Choose Vehicle --</option>
                   {vehicles.filter(v => v.status !== 'Retired').map(v => (
@@ -2270,7 +2287,7 @@ export default function App() {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-955 border border-slate-900 rounded-xl p-6 w-full max-w-md shadow-2xl relative">
             <button onClick={() => setShowAddExpense(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-350"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-200 mb-6 font-mono flex items-center gap-2">
+            <h2 className="text-md font-bold uppercase tracking-widest text-slate-205 mb-6 font-mono flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-cyan-500" />
               Add Incidentals / Toll Expense.
             </h2>
@@ -2319,7 +2336,7 @@ export default function App() {
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-955 border border-slate-900 rounded-xl p-6 w-full max-w-2xl shadow-2xl relative max-h-[85vh] overflow-y-auto">
             <button onClick={() => setSelectedVehicleHistory(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-355"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-200 mb-2 font-mono flex items-center gap-2">
+            <h2 className="text-md font-bold uppercase tracking-widest text-slate-202 mb-2 font-mono flex items-center gap-2">
               <Truck className="h-5 w-5 text-cyan-500" />
               Vehicle Operational Log & History.
             </h2>
