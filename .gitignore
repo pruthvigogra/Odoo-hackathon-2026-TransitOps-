@@ -1,0 +1,19 @@
+# Dependency folders
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Local database and lockfiles
+backend/transitops.db
+backend/transitops.db-journal
+
+# Build outputs
+frontend/dist/
+frontend/.vite/
+
+# IDE and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
