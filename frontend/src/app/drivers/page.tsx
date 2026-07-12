@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { 
-  Plus, Search, Edit2, Trash2, Calendar, Star, ShieldAlert, Award, AlertTriangle, ShieldCheck, Users, X
+  Plus, Search, Edit2, Trash2, Calendar, Star, ShieldAlert, Award, AlertTriangle, ShieldCheck, Users, X, LayoutDashboard
 } from 'lucide-react';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import { api, getUser } from '@/utils/api';
 
@@ -251,6 +252,13 @@ export default function DriversPage() {
                 {/* Edit/Delete Actions */}
                 {user && ['Admin', 'Fleet Manager'].includes(user.role) && (
                   <div className="flex justify-end gap-1.5 pt-4 border-t border-slate-150 mt-4.5">
+                    <Link
+                      href={`/drivers/${d.id}`}
+                      className="p-1.5 bg-sky-50 hover:bg-sky-100 rounded-lg text-sky-700 hover:text-sky-900 border border-sky-200 hover:border-sky-350 transition-all text-[11px] font-bold flex items-center gap-1"
+                    >
+                      <LayoutDashboard className="w-3 h-3" />
+                      View Dashboard
+                    </Link>
                     <button
                       onClick={() => openEditModal(d)}
                       className="p-1.5 bg-slate-50 hover:bg-slate-100 rounded-lg text-slate-500 hover:text-slate-800 border border-slate-200 hover:border-slate-350 transition-all text-[11px] font-bold flex items-center gap-1"
