@@ -477,7 +477,7 @@ export default function App() {
                 >
                   Get started
                 </button>
-                <a href="#contact" className="border border-gray-600 text-white px-8 py-3.5 rounded-full font-medium text-base hover:bg-white/5 transition flex items-center space-x-2">
+                <a href="#contact" className="border border-gray-655 text-white px-8 py-3.5 rounded-full font-medium text-base hover:bg-white/5 transition flex items-center space-x-2">
                   <span>Watch demo</span>
                 </a>
               </div>
@@ -855,7 +855,7 @@ export default function App() {
           </h2>
 
           {errorMsg && (
-            <div className="bg-red-955/50 border border-red-900/60 text-red-450 px-4 py-3 rounded-lg text-xs mb-6 flex items-start gap-2">
+            <div className="bg-red-955/50 border border-red-900/60 text-red-455 px-4 py-3 rounded-lg text-xs mb-6 flex items-start gap-2">
               <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
               <span>{errorMsg}</span>
             </div>
@@ -939,24 +939,24 @@ export default function App() {
     );
   }
 
-  // ---------------- MAIN CONSOLE DASHBOARD VIEW (Light Theme Applied) ----------------
+  // ---------------- MAIN CONSOLE DASHBOARD VIEW (Apple-Style Minimalist Light Theme) ----------------
   return (
-    <div className="min-h-screen bg-slate-55 text-slate-700 flex flex-col md:flex-row relative text-left">
+    <div className="min-h-screen bg-[#F4F5F7] text-slate-700 flex flex-col md:flex-row relative text-left transition-all duration-300 ease-in-out">
       
-      {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-white border-r border-slate-200 flex flex-col justify-between shrink-0 relative z-10 shadow-sm">
+      {/* Sidebar Navigation - Kept Dark (#0D0E12) for Enterprise Contrast */}
+      <aside className="w-full md:w-64 bg-[#0D0E12] flex flex-col justify-between shrink-0 relative z-10 shadow-lg">
         <div>
           {/* Brand header */}
-          <div className="h-20 flex items-center gap-2.5 px-6 border-b border-slate-200 bg-slate-50/50">
-            <Truck className="h-5 w-5 text-blue-600" />
-            <span className="text-md font-extrabold tracking-widest uppercase font-mono text-slate-905 font-bold">TransitOps</span>
+          <div className="h-20 flex items-center gap-2.5 px-6 border-b border-white/5 bg-black/40">
+            <Truck className="h-5 w-5 text-blue-500" />
+            <span className="text-md font-black tracking-widest uppercase font-mono text-white">TransitOps</span>
           </div>
 
           {/* User profile info */}
-          <div className="p-4 bg-slate-50 border-b border-slate-200">
-            <div className="text-[10px] text-slate-400 uppercase tracking-widest font-bold font-mono">Operations Console</div>
-            <div className="text-[14px] font-extrabold text-blue-600 mt-0.5 font-mono">{user.role.toUpperCase()}</div>
-            <div className="text-xs text-slate-605 mt-1 truncate font-mono">{user.name}</div>
+          <div className="p-4 bg-black/20 border-b border-white/5">
+            <div className="text-[10px] text-gray-500 uppercase tracking-widest font-bold font-mono">Operations Console</div>
+            <div className="text-[14px] font-extrabold text-blue-500 mt-0.5 font-mono">{user.role.toUpperCase()}</div>
+            <div className="text-xs text-gray-400 mt-1 truncate font-mono">{user.name}</div>
           </div>
 
           {/* Navigation Links */}
@@ -964,9 +964,9 @@ export default function App() {
             {hasAccess('analytics') && (
               <button 
                 onClick={() => setActiveTab('dashboard')} 
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'dashboard' ? 'bg-blue-50 text-blue-605 border border-blue-200/50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'dashboard' ? 'bg-white/10 text-white border-blue-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
               >
-                <BarChart3 className="h-3.5 w-3.5 text-blue-600" />
+                <BarChart3 className="h-3.5 w-3.5 text-blue-500" />
                 Fleet Metrics
               </button>
             )}
@@ -974,9 +974,9 @@ export default function App() {
             {hasAccess('fleet') && (
               <button 
                 onClick={() => setActiveTab('vehicles')} 
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'vehicles' ? 'bg-blue-50 text-blue-605 border border-blue-200/50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'vehicles' ? 'bg-white/10 text-white border-blue-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
               >
-                <Truck className="h-3.5 w-3.5 text-blue-600" />
+                <Truck className="h-3.5 w-3.5 text-blue-500" />
                 Vehicle Registry
               </button>
             )}
@@ -984,9 +984,9 @@ export default function App() {
             {hasAccess('drivers') && (
               <button 
                 onClick={() => setActiveTab('drivers')} 
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'drivers' ? 'bg-blue-50 text-blue-605 border border-blue-200/50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'drivers' ? 'bg-white/10 text-white border-blue-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
               >
-                <Users className="h-3.5 w-3.5 text-blue-600" />
+                <Users className="h-3.5 w-3.5 text-blue-500" />
                 Drivers & Safety
               </button>
             )}
@@ -994,9 +994,9 @@ export default function App() {
             {hasAccess('trips') && (
               <button 
                 onClick={() => setActiveTab('trips')} 
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'trips' ? 'bg-blue-50 text-blue-605 border border-blue-200/50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'trips' ? 'bg-white/10 text-white border-blue-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
               >
-                <Navigation className="h-3.5 w-3.5 text-blue-600" />
+                <Navigation className="h-3.5 w-3.5 text-blue-500" />
                 Trips Console
               </button>
             )}
@@ -1004,36 +1004,36 @@ export default function App() {
             {hasAccess('expenses') && (
               <button 
                 onClick={() => setActiveTab('expenses')} 
-                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'expenses' ? 'bg-blue-50 text-blue-605 border border-blue-200/50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+                className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'expenses' ? 'bg-white/10 text-white border-blue-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
               >
-                <DollarSign className="h-3.5 w-3.5 text-blue-600" />
+                <DollarSign className="h-3.5 w-3.5 text-blue-500" />
                 Expenses & Fuel
               </button>
             )}
 
             <button 
               onClick={() => setActiveTab('driver-app')} 
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'driver-app' ? 'bg-purple-50 border border-purple-200 text-purple-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'driver-app' ? 'bg-white/10 text-purple-400 border-purple-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
             >
-              <Zap className="h-3.5 w-3.5 text-purple-650" />
+              <Zap className="h-3.5 w-3.5 text-purple-500" />
               Demo Driver App
             </button>
 
             <button 
               onClick={() => setActiveTab('settings')} 
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all ${activeTab === 'settings' ? 'bg-blue-50 text-blue-605 border border-blue-200/50' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}`}
+              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono transition-all duration-300 ease-in-out border-l-4 ${activeTab === 'settings' ? 'bg-white/10 text-white border-blue-500' : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-white'}`}
             >
-              <Settings className="h-3.5 w-3.5 text-blue-600" />
+              <Settings className="h-3.5 w-3.5 text-blue-500" />
               Settings & RBAC
             </button>
           </nav>
         </div>
 
         {/* Footer actions */}
-        <div className="p-4 border-t border-slate-200 bg-slate-50/50">
+        <div className="p-4 border-t border-white/5 bg-black/40">
           <button 
             onClick={handleLogout} 
-            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono text-rose-600 hover:bg-rose-50 transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono text-rose-500 hover:bg-rose-500/10 transition-colors duration-300"
           >
             <LogOut className="h-4 w-4" />
             Logout Session
@@ -1042,20 +1042,20 @@ export default function App() {
       </aside>
 
       {/* Main Board Component Area */}
-      <main className="flex-1 p-6 md:p-8 overflow-y-auto max-h-screen relative z-10 text-left">
+      <main className="flex-1 p-6 md:p-8 overflow-y-auto max-h-screen relative z-10">
         
         {/* ================= tab: DASHBOARD (Fleet Metrics) ================= */}
         {activeTab === 'dashboard' && analytics && (
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
-                <span className="text-[10px] text-blue-600 uppercase tracking-widest font-bold font-mono">Operations Platform</span>
-                <h1 className="text-2xl font-black tracking-tight text-slate-905 uppercase font-mono font-bold">Fleet Analytics & KPIs.</h1>
+                <span className="text-[10px] text-[#2563EB] uppercase tracking-widest font-bold font-mono">Operations Platform</span>
+                <h1 className="text-2xl font-bold tracking-tight text-[#111827] uppercase font-mono">Fleet Analytics & KPIs.</h1>
               </div>
               {user.role === 'Financial Analyst' && (
                 <button 
                   onClick={exportCSV} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all shadow-[0_4px_15px_rgba(37,99,235,0.15)]"
+                  className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)]"
                 >
                   <FileSpreadsheet className="h-4 w-4" />
                   Export Fleet ROI (CSV)
@@ -1063,32 +1063,28 @@ export default function App() {
               )}
             </div>
 
-            {/* KPI Metrics row */}
+            {/* KPI Metrics row with solid border accents */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-[#2563EB] relative overflow-hidden">
                 <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest font-mono">Fleet Utilization</div>
-                <div className="text-2xl font-black mt-2 text-slate-900 font-mono">{analytics.kpis.fleetUtilization}%</div>
-                <div className="text-[10px] text-blue-600 mt-1 font-mono">Active / Total active vehicles</div>
+                <div className="text-2xl font-black mt-2 text-[#111827] font-mono">{analytics.kpis.fleetUtilization}%</div>
+                <div className="text-[10px] text-[#2563EB] mt-1 font-mono">Active / Total active vehicles</div>
               </div>
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-2 h-full bg-blue-600"></div>
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-[#2563EB] relative overflow-hidden">
                 <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest font-mono">Fuel Efficiency</div>
-                <div className="text-2xl font-black mt-2 text-slate-900 font-mono">{analytics.kpis.fuelEfficiency} <span className="text-xs text-slate-500 font-normal">km/L</span></div>
-                <div className="text-[10px] text-emerald-600 mt-1 font-mono">Calculated distance per liter</div>
+                <div className="text-2xl font-black mt-2 text-[#111827] font-mono">{analytics.kpis.fuelEfficiency} <span className="text-xs text-slate-500 font-normal">km/L</span></div>
+                <div className="text-[10px] text-emerald-600 mt-1 font-mono font-bold">Calculated distance per liter</div>
               </div>
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-2 h-full bg-rose-500"></div>
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-rose-500 relative overflow-hidden">
                 <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest font-mono">Total Operational Cost</div>
-                <div className="text-2xl font-black mt-2 text-slate-900 font-mono">${analytics.kpis.totalOpCost.toLocaleString()}</div>
-                <div className="text-[10px] text-rose-600 mt-1 font-mono">Fuel + Maintenance logs</div>
+                <div className="text-2xl font-black mt-2 text-[#111827] font-mono">${analytics.kpis.totalOpCost.toLocaleString()}</div>
+                <div className="text-[10px] text-rose-600 mt-1 font-mono font-bold">Fuel + Maintenance logs</div>
               </div>
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-2 h-full bg-purple-500"></div>
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-purple-500 relative overflow-hidden">
                 <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest font-mono">Vehicle Status</div>
                 <div className="flex gap-3 mt-3 text-[10px] font-mono font-bold">
-                  <div className="text-emerald-605">🟢 {analytics.kpis.availableVehicles} AVAIL</div>
-                  <div className="text-blue-650">🔵 {analytics.kpis.activeVehicles} TRIP</div>
+                  <div className="text-emerald-600">🟢 {analytics.kpis.availableVehicles} AVAIL</div>
+                  <div className="text-blue-600">🔵 {analytics.kpis.activeVehicles} TRIP</div>
                   <div className="text-amber-600">🟡 {analytics.kpis.maintenanceVehicles} SHOP</div>
                 </div>
               </div>
@@ -1096,33 +1092,33 @@ export default function App() {
 
             {/* Charts Section */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 font-mono">Monthly Revenue Overview</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={analytics.monthlyRevenue}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
                       <XAxis dataKey="month" stroke="#475569" className="font-mono text-[10px]" />
                       <YAxis stroke="#475569" className="font-mono text-[10px]" />
-                      <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0' }} />
+                      <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB' }} />
                       <Legend wrapperStyle={{ fontSize: '10px', fontFamily: 'monospace' }} />
-                      <Bar dataKey="Revenue" fill="#1E6FEB" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="Revenue" fill="#2563EB" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
 
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-4 font-mono">Costliest Vehicles</h3>
                 <div className="h-64">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={analytics.topCostliestVehicles}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
                       <XAxis dataKey="reg_no" stroke="#475569" className="font-mono text-[10px]" />
                       <YAxis stroke="#475569" className="font-mono text-[10px]" />
-                      <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E2E8F0' }} />
+                      <Tooltip contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB' }} />
                       <Legend wrapperStyle={{ fontSize: '10px', fontFamily: 'monospace' }} />
-                      <Bar dataKey="operational_cost" name="Op Cost ($)" fill="#E8453C" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="operational_cost" name="Op Cost ($)" fill="#EF4444" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -1130,21 +1126,21 @@ export default function App() {
             </div>
 
             {/* ROI Formula Display Banner */}
-            <div className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
-              <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-blue-500"></div>
+            <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-2 h-full bg-[#2563EB]"></div>
               <div>
-                <h4 className="text-xs font-bold text-slate-900 font-mono uppercase tracking-wider font-bold">Fleet Return on Investment (ROI) Matrix.</h4>
+                <h4 className="text-xs font-bold text-[#111827] font-mono uppercase tracking-wider font-bold">Fleet Return on Investment (ROI) Matrix.</h4>
                 <p className="text-[10px] text-slate-500 mt-1 font-mono">Formula: ROI = (Revenue − (Maintenance + Fuel)) / Acquisition Cost</p>
               </div>
-              <div className="text-[9px] bg-slate-55 px-4 py-2 border border-slate-200 rounded-lg text-slate-600 font-mono font-bold">
+              <div className="text-[9px] bg-slate-50 px-4 py-2 border border-slate-200 rounded-lg text-slate-655 font-mono font-bold">
                 DATA SYNCHRONIZED AUTOMATICALLY
               </div>
             </div>
 
             {/* Vehicle Analytics ROI Table */}
-            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
               <table className="w-full text-left border-collapse">
-                <thead className="bg-slate-50 border-b border-slate-200">
+                <thead className="bg-slate-55 border-b border-slate-200">
                   <tr>
                     <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Vehicle</th>
                     <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Reg No.</th>
@@ -1156,14 +1152,14 @@ export default function App() {
                 </thead>
                 <tbody className="divide-y divide-slate-100 bg-white">
                   {analytics.vehicleAnalyticsList.map(v => (
-                    <tr key={v.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="p-4 text-xs font-bold text-slate-900">{v.name}</td>
+                    <tr key={v.id} className="hover:bg-slate-50 transition-colors duration-300">
+                      <td className="p-4 text-xs font-bold text-[#111827]">{v.name}</td>
                       <td className="p-4 text-xs text-slate-600 font-mono">{v.reg_no}</td>
                       <td className="p-4 text-xs text-slate-500 font-mono">${v.acquisition_cost.toLocaleString()}</td>
-                      <td className="p-4 text-xs text-blue-600 font-mono">${v.revenue.toLocaleString()}</td>
-                      <td className="p-4 text-xs text-rose-605 font-mono">${v.operational_cost.toLocaleString()}</td>
+                      <td className="p-4 text-xs text-[#2563EB] font-mono">${v.revenue.toLocaleString()}</td>
+                      <td className="p-4 text-xs text-[#EF4444] font-mono">${v.operational_cost.toLocaleString()}</td>
                       <td className="p-4 text-xs">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold font-mono ${v.roi >= 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-205' : 'bg-rose-50 text-rose-700 border border-rose-205'}`}>
+                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold font-mono ${v.roi >= 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-705 border border-rose-200'}`}>
                           {v.roi}%
                         </span>
                       </td>
@@ -1181,22 +1177,22 @@ export default function App() {
           <div className="space-y-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
               <div>
-                <span className="text-[10px] text-blue-600 uppercase tracking-widest font-bold font-mono">Logistics Assets</span>
-                <h1 className="text-2xl font-black tracking-tight text-slate-900 uppercase font-mono">Vehicle Registry.</h1>
+                <span className="text-[10px] text-[#2563EB] uppercase tracking-widest font-bold font-mono">Logistics Assets</span>
+                <h1 className="text-2xl font-bold tracking-tight text-[#111827] uppercase font-mono">Vehicle Registry.</h1>
               </div>
               <div className="flex gap-2 shrink-0">
                 {hasAccess('fleet', 'write') && (
                   <>
                     <button 
                       onClick={() => setShowAddVehicle(true)} 
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
+                      className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
                     >
                       <Plus className="h-4 w-4" />
                       Add Vehicle
                     </button>
                     <button 
                       onClick={() => setShowAddMaintenance(true)} 
-                      className="border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs uppercase tracking-widest font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
+                      className="border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
                     >
                       Log Service Record
                     </button>
@@ -1206,16 +1202,15 @@ export default function App() {
             </div>
 
             {/* Rule Banner */}
-            <div className="bg-white border border-slate-200 rounded-xl p-4 flex items-center gap-3 relative overflow-hidden shadow-sm">
-              <div className="absolute -top-1 -left-1 w-3 h-3 border-t border-l border-blue-500"></div>
-              <ShieldAlert className="h-5 w-5 text-blue-600 shrink-0" />
-              <span className="text-[11px] text-slate-650 font-mono">
+            <div className="bg-white rounded-2xl p-4 flex items-center gap-3 relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-l-4 border-[#2563EB]">
+              <ShieldAlert className="h-5 w-5 text-[#2563EB] shrink-0" />
+              <span className="text-[11px] text-slate-600 font-mono">
                 <strong className="font-semibold text-slate-900 uppercase">SYSTEM POLICY:</strong> Vehicles flagged as <code className="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-blue-600">Retired</code> or <code className="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-blue-600">In Shop</code> are excluded from Dispatch options.
               </span>
             </div>
 
             {/* Vehicles Table */}
-            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
               <table className="w-full text-left border-collapse">
                 <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
@@ -1230,18 +1225,18 @@ export default function App() {
                 </thead>
                 <tbody className="divide-y divide-slate-100 bg-white">
                   {vehicles.map(v => (
-                    <tr key={v.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="p-4 text-xs font-bold text-slate-905 font-mono">{v.reg_no}</td>
+                    <tr key={v.id} className="hover:bg-slate-50 transition-colors duration-300">
+                      <td className="p-4 text-xs font-bold text-[#111827] font-mono">{v.reg_no}</td>
                       <td className="p-4 text-xs text-slate-800 font-bold">{v.name}</td>
                       <td className="p-4 text-xs text-slate-500 font-mono">{v.type}</td>
                       <td className="p-4 text-xs text-slate-800 font-mono">{v.max_load_capacity.toLocaleString()} kg</td>
                       <td className="p-4 text-xs text-slate-500 font-mono">{v.odometer.toLocaleString()} km</td>
                       <td className="p-4 text-xs">
                         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                          v.status === 'Available' ? 'bg-emerald-50 text-emerald-705 border border-emerald-200' :
-                          v.status === 'On Trip' ? 'bg-blue-50 text-blue-750 border border-blue-200' :
+                          v.status === 'Available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                          v.status === 'On Trip' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
                           v.status === 'In Shop' ? 'bg-amber-50 text-amber-705 border border-amber-200' :
-                          'bg-slate-105 text-slate-600 border border-slate-200'
+                          'bg-slate-100 text-slate-600 border border-slate-200'
                         }`}>
                           {v.status.toUpperCase()}
                         </span>
@@ -1253,14 +1248,14 @@ export default function App() {
                             const historyMaint = maintenance.filter(m => m.vehicle_id === v.id);
                             setSelectedVehicleHistory({ vehicle: v, trips: historyTrips, maintenance: historyMaint });
                           }}
-                          className="text-slate-650 hover:text-slate-900 text-[10px] uppercase font-bold font-mono bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full"
+                          className="text-slate-650 hover:text-slate-900 text-[10px] uppercase font-bold font-mono bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full duration-300"
                         >
                           History
                         </button>
                         {hasAccess('fleet', 'write') && v.status !== 'Retired' && (
                           <button 
                             onClick={() => retireVehicle(v.id)}
-                            className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[10px] uppercase font-bold font-mono px-3 py-1 rounded-full"
+                            className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[10px] uppercase font-bold font-mono px-3 py-1 rounded-full duration-300"
                           >
                             Retire
                           </button>
@@ -1275,7 +1270,7 @@ export default function App() {
             {/* Maintenance Service Log section */}
             <div>
               <h2 className="text-md font-bold uppercase tracking-widest text-slate-500 mb-4 font-mono">Logged Maintenance Records</h2>
-              <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+              <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
                 <table className="w-full text-left border-collapse">
                   <thead className="bg-slate-50 border-b border-slate-200">
                     <tr>
@@ -1289,13 +1284,13 @@ export default function App() {
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
                     {maintenance.map(m => (
-                      <tr key={m.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={m.id} className="hover:bg-slate-50 transition-colors duration-300">
                         <td className="p-4 text-xs font-mono text-slate-900">{m.vehicle_reg}</td>
                         <td className="p-4 text-xs text-slate-800 font-bold">{m.service_type}</td>
                         <td className="p-4 text-xs text-slate-550 font-mono">{m.date}</td>
                         <td className="p-4 text-xs text-slate-800 font-mono">${m.cost.toLocaleString()}</td>
                         <td className="p-4 text-xs">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${m.status === 'Open' ? 'bg-amber-50 text-amber-705 border border-amber-200' : 'bg-slate-105 text-slate-600 border border-slate-200'}`}>
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${m.status === 'Open' ? 'bg-amber-50 text-amber-705 border border-amber-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
                             {m.status.toUpperCase()}
                           </span>
                         </td>
@@ -1303,7 +1298,7 @@ export default function App() {
                           {hasAccess('fleet', 'write') && m.status === 'Open' && (
                             <button 
                               onClick={() => closeMaintenance(m.id)}
-                              className="bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] uppercase font-bold font-mono px-3.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105"
+                              className="bg-emerald-650 hover:bg-emerald-600 text-white text-[10px] uppercase font-bold font-mono px-3.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105 shadow-sm"
                             >
                               Close Service
                             </button>
@@ -1323,13 +1318,13 @@ export default function App() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-[10px] text-blue-600 uppercase tracking-widest font-bold font-mono">Personnel Compliance</span>
-                <h1 className="text-2xl font-black tracking-tight text-slate-905 uppercase font-mono font-bold">Drivers & Safety.</h1>
+                <span className="text-[10px] text-[#2563EB] uppercase tracking-widest font-bold font-mono">Personnel Compliance</span>
+                <h1 className="text-2xl font-bold tracking-tight text-[#111827] uppercase font-mono">Drivers & Safety.</h1>
               </div>
               {hasAccess('drivers', 'write') && (
                 <button 
                   onClick={() => setShowAddDriver(true)} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
+                  className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
                 >
                   <Plus className="h-4 w-4" />
                   Add Driver
@@ -1338,7 +1333,7 @@ export default function App() {
             </div>
 
             {/* Drivers list table */}
-            <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
               <table className="w-full text-left border-collapse">
                 <thead className="bg-slate-50 border-b border-slate-200">
                   <tr>
@@ -1358,41 +1353,41 @@ export default function App() {
                     const warning = isLicenseExpiringSoon(d.license_expiry_date);
 
                     return (
-                      <tr key={d.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="p-4 text-xs font-bold text-slate-905">{d.name}</td>
-                        <td className="p-4 text-xs text-slate-505 font-mono">{d.license_no}</td>
-                        <td className="p-4 text-xs text-slate-505 font-mono">{d.license_category}</td>
+                      <tr key={d.id} className="hover:bg-slate-50 transition-colors duration-300">
+                        <td className="p-4 text-xs font-bold text-[#111827]">{d.name}</td>
+                        <td className="p-4 text-xs text-slate-500 font-mono">{d.license_no}</td>
+                        <td className="p-4 text-xs text-slate-500 font-mono">{d.license_category}</td>
                         <td className="p-4 text-xs font-mono">
                           {expired ? (
-                            <span className="text-red-600 font-bold flex items-center gap-1">
+                            <span className="text-red-650 font-bold flex items-center gap-1">
                               <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
                               {d.license_expiry_date} (Expired)
                             </span>
                           ) : warning ? (
-                            <span className="text-amber-600 font-bold flex items-center gap-1">
+                            <span className="text-amber-605 font-bold flex items-center gap-1">
                               <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
                               {d.license_expiry_date} (Expiring)
                             </span>
                           ) : (
-                            <span className="text-slate-705">{d.license_expiry_date}</span>
+                            <span className="text-slate-700">{d.license_expiry_date}</span>
                           )}
                         </td>
-                        <td className="p-4 text-xs text-slate-605 font-mono">{d.contact_no}</td>
+                        <td className="p-4 text-xs text-slate-600 font-mono">{d.contact_no}</td>
                         <td className="p-4 text-xs">
                           <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                            d.safety_score >= 85 ? 'bg-emerald-50 text-emerald-705 border border-emerald-200' :
+                            d.safety_score >= 85 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
                             d.safety_score >= 60 ? 'bg-amber-50 text-amber-705 border border-amber-200' :
-                            'bg-rose-50 text-rose-705 border border-rose-200'
+                            'bg-rose-50 text-rose-700 border border-rose-200'
                           }`}>
                             {d.safety_score} PTS
                           </span>
                         </td>
                         <td className="p-4 text-xs">
                           <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                            d.status === 'Available' ? 'bg-emerald-50 text-emerald-705 border border-emerald-200' :
-                            d.status === 'On Trip' ? 'bg-blue-50 text-blue-750 border border-blue-200' :
-                            d.status === 'Suspended' ? 'bg-rose-50 text-rose-705 border border-rose-200' :
-                            'bg-slate-105 text-slate-600 border border-slate-200'
+                            d.status === 'Available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
+                            d.status === 'On Trip' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                            d.status === 'Suspended' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+                            'bg-slate-100 text-slate-600 border border-slate-200'
                           }`}>
                             {d.status.toUpperCase()}
                           </span>
@@ -1402,15 +1397,15 @@ export default function App() {
                             <>
                               <button 
                                 onClick={() => { setAdjustScoreDriverId(d.id); setAdjustScoreValue(d.safety_score); }}
-                                className="text-slate-650 hover:text-slate-900 text-[10px] uppercase font-bold font-mono bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full"
+                                className="text-slate-655 hover:text-slate-900 text-[10px] uppercase font-bold font-mono bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full duration-300"
                               >
                                 Adjust
                               </button>
                               <button 
                                 onClick={() => toggleDriverSuspension(d.id, d.status)}
-                                className={`text-[10px] uppercase font-bold font-mono px-3.5 py-1 rounded-full transition-all border ${
+                                className={`text-[10px] uppercase font-bold font-mono px-3.5 py-1 rounded-full border duration-300 ${
                                   d.status === 'Suspended' 
-                                    ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-750' 
+                                    ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700' 
                                     : 'bg-rose-50 hover:bg-rose-100 border-rose-200 text-rose-700'
                                 }`}
                               >
@@ -1433,13 +1428,13 @@ export default function App() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-[10px] text-blue-600 uppercase tracking-widest font-bold font-mono">Routing Tower</span>
-                <h1 className="text-2xl font-black tracking-tight text-slate-905 uppercase font-mono font-bold">Trips Console.</h1>
+                <span className="text-[10px] text-[#2563EB] uppercase tracking-widest font-bold font-mono">Routing Tower</span>
+                <h1 className="text-2xl font-bold tracking-tight text-[#111827] uppercase font-mono">Trips Console.</h1>
               </div>
               {hasAccess('trips', 'write') && (
                 <button 
                   onClick={() => setShowCreateTrip(true)} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
+                  className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
                 >
                   <Plus className="h-4 w-4" />
                   Dispatch New Cargo Trip
@@ -1450,14 +1445,13 @@ export default function App() {
             {/* List of active board trips */}
             <div className="grid grid-cols-1 gap-4">
               {trips.map(t => (
-                <div key={t.id} className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden">
-                  <div className="absolute -top-1 -right-1 w-3 h-3 border-t border-r border-slate-200"></div>
+                <div key={t.id} className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden border-l-4 border-[#2563EB]">
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-mono text-slate-400 font-bold">ROUTE ID: #{t.id}</span>
                       <span className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono ${
-                        t.status === 'Draft' ? 'bg-slate-105 text-slate-600 border border-slate-200' :
-                        t.status === 'Dispatched' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
+                        t.status === 'Draft' ? 'bg-slate-100 text-slate-650 border border-slate-200' :
+                        t.status === 'Dispatched' ? 'bg-blue-50 text-[#2563EB] border border-[#2563EB]/20' :
                         t.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
                         'bg-rose-50 text-rose-700 border border-rose-200'
                       }`}>
@@ -1465,8 +1459,8 @@ export default function App() {
                       </span>
                     </div>
 
-                    <div className="text-md font-black text-slate-900 mt-2 flex items-center gap-2 font-mono uppercase">
-                      {t.source} <ArrowRight className="h-4 w-4 text-blue-600" /> {t.destination}
+                    <div className="text-md font-black text-[#111827] mt-2 flex items-center gap-2 font-mono uppercase">
+                      {t.source} <ArrowRight className="h-4 w-4 text-[#2563EB]" /> {t.destination}
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-4 text-[11px] text-slate-600 font-mono">
@@ -1495,13 +1489,13 @@ export default function App() {
                       <>
                         <button 
                           onClick={() => dispatchTrip(t.id)}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all"
+                          className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300 shadow-sm"
                         >
                           Execute Dispatch
                         </button>
                         <button 
                           onClick={() => cancelTrip(t.id)}
-                          className="border border-slate-300 hover:border-slate-400 text-slate-700 text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all"
+                          className="border border-slate-300 hover:border-slate-400 text-slate-700 text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300"
                         >
                           Cancel Draft
                         </button>
@@ -1521,13 +1515,13 @@ export default function App() {
                               other_expense: ''
                             });
                           }}
-                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all"
+                          className="bg-emerald-605 hover:bg-emerald-600 text-white font-bold text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300 shadow-sm"
                         >
                           Complete Trip Ops
                         </button>
                         <button 
                           onClick={() => cancelTrip(t.id)}
-                          className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-705 text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all"
+                          className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300"
                         >
                           Abort
                         </button>
@@ -1535,7 +1529,7 @@ export default function App() {
                     )}
 
                     {t.status === 'Completed' && (
-                      <div className="text-[10px] font-mono text-slate-600 bg-slate-100 border border-slate-200 px-3 py-1 rounded">
+                      <div className="text-[10px] font-mono text-slate-650 bg-slate-100 border border-slate-200 px-3 py-1 rounded">
                         ODO: {t.final_odometer} km | FUEL: {t.fuel_consumed} L
                       </div>
                     )}
@@ -1551,21 +1545,21 @@ export default function App() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <div>
-                <span className="text-[10px] text-blue-600 uppercase tracking-widest font-bold font-mono">Financial Ledger</span>
-                <h1 className="text-2xl font-black tracking-tight text-slate-905 uppercase font-mono font-bold">Expenses & Fuel.</h1>
+                <span className="text-[10px] text-[#2563EB] uppercase tracking-widest font-bold font-mono">Financial Ledger</span>
+                <h1 className="text-2xl font-bold tracking-tight text-[#111827] uppercase font-mono">Expenses & Fuel.</h1>
               </div>
               {hasAccess('expenses', 'write') && (
                 <div className="flex gap-2">
                   <button 
                     onClick={() => setShowAddFuel(true)} 
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
+                    className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
                   >
                     <Plus className="h-4 w-4" />
                     Log Fuel Purchase
                   </button>
                   <button 
                     onClick={() => setShowAddExpense(true)} 
-                    className="border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-305"
+                    className="border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
                   >
                     Add Other Expense
                   </button>
@@ -1579,7 +1573,7 @@ export default function App() {
               {/* Fuel logs table */}
               <div>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-3 font-mono">Refueling Logs</h3>
-                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-200/50">
                   <table className="w-full text-left border-collapse">
                     <thead className="bg-slate-50 border-b border-slate-200">
                       <tr>
@@ -1591,11 +1585,11 @@ export default function App() {
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white">
                       {fuelLogs.map(f => (
-                        <tr key={f.id} className="hover:bg-slate-50 transition-colors">
+                        <tr key={f.id} className="hover:bg-slate-50 transition-colors duration-300">
                           <td className="p-4 text-xs font-mono text-slate-900">{f.vehicle_reg}</td>
                           <td className="p-4 text-xs text-slate-500 font-mono">{f.date}</td>
-                          <td className="p-4 text-xs text-slate-805 font-mono">{f.liters} L</td>
-                          <td className="p-4 text-xs text-blue-600 font-mono">${f.cost.toLocaleString()}</td>
+                          <td className="p-4 text-xs text-slate-800 font-mono">{f.liters} L</td>
+                          <td className="p-4 text-xs text-[#2563EB] font-mono">${f.cost.toLocaleString()}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -1606,7 +1600,7 @@ export default function App() {
               {/* General Expenses Table */}
               <div>
                 <h3 className="text-sm font-bold uppercase tracking-widest text-slate-500 mb-3 font-mono">Operating Expenses Ledger</h3>
-                <div className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-200/50">
                   <table className="w-full text-left border-collapse">
                     <thead className="bg-slate-50 border-b border-slate-200">
                       <tr>
@@ -1619,10 +1613,10 @@ export default function App() {
                     </thead>
                     <tbody className="divide-y divide-slate-100 bg-white">
                       {expenses.map(e => (
-                        <tr key={e.id} className="hover:bg-slate-50 transition-colors">
+                        <tr key={e.id} className="hover:bg-slate-50 transition-colors duration-300">
                           <td className="p-4 text-xs font-mono text-slate-900">{e.vehicle_reg}</td>
-                          <td className="p-4 text-xs text-slate-505 font-mono">${(e.toll || 0).toLocaleString()}</td>
-                          <td className="p-4 text-xs text-slate-505 font-mono">${(e.maintenance_cost || 0).toLocaleString()}</td>
+                          <td className="p-4 text-xs text-slate-500 font-mono">${(e.toll || 0).toLocaleString()}</td>
+                          <td className="p-4 text-xs text-slate-500 font-mono">${(e.maintenance_cost || 0).toLocaleString()}</td>
                           <td className="p-4 text-xs text-slate-505 font-mono">${(e.other || 0).toLocaleString()}</td>
                           <td className="p-4 text-xs font-bold text-rose-600 font-mono">${e.total.toLocaleString()}</td>
                         </tr>
@@ -1649,7 +1643,7 @@ export default function App() {
                   <h1 className="text-xl font-black mt-2 text-purple-950 font-mono uppercase font-bold">Active Assigned Route.</h1>
                 </div>
                 <div className="text-right">
-                  <div className="text-[9px] text-purple-605 font-mono uppercase font-bold">License class</div>
+                  <div className="text-[9px] text-purple-600 font-mono uppercase font-bold">License class</div>
                   <div className="text-xs font-bold text-slate-800 font-mono">HEAVY TRANSPORT (VALID)</div>
                 </div>
               </div>
@@ -1660,7 +1654,7 @@ export default function App() {
                   <div className="text-[9px] text-purple-600 uppercase font-mono font-bold">Safety Score</div>
                   <div className="text-md font-black text-emerald-600 mt-1 font-mono">94.5 / 100</div>
                 </div>
-                <div className="text-center border-x border-purple-105">
+                <div className="text-center border-x border-purple-100">
                   <div className="text-[9px] text-purple-600 uppercase font-mono font-bold">Assigned Truck</div>
                   <div className="text-md font-black text-slate-800 mt-1 font-mono">Tata Prima</div>
                 </div>
@@ -1672,7 +1666,7 @@ export default function App() {
             </div>
 
             {/* Current Trip Details */}
-            <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm relative">
+            <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative border border-slate-100">
               <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 font-mono">Assigned Active Dispatch</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -1691,7 +1685,7 @@ export default function App() {
                     <span className="block text-[9px] text-slate-400 uppercase font-mono">Trip Status</span>
                     <div className="flex items-center gap-2 mt-2">
                       <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
-                      <span className="text-xs text-emerald-605 font-mono uppercase font-bold">Dispatched</span>
+                      <span className="text-xs text-emerald-600 font-mono uppercase font-bold">Dispatched</span>
                     </div>
                   </div>
                   <div className="text-right">
@@ -1701,15 +1695,15 @@ export default function App() {
                 </div>
 
                 {/* Emergency Section */}
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-2">
-                  <h4 className="text-xs font-bold text-rose-605 uppercase tracking-widest flex items-center gap-1.5 font-mono">
+                <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mt-2">
+                  <h4 className="text-xs font-bold text-rose-600 uppercase tracking-widest flex items-center gap-1.5 font-mono">
                     <AlertTriangle className="h-4 w-4 shrink-0" />
                     Broadcasting Panic Alert SOS
                   </h4>
-                  <p className="text-[11px] text-rose-805 mt-1 font-mono">Clicking below triggers immediate alert signals at the central operations room.</p>
+                  <p className="text-[11px] text-rose-800 mt-1 font-mono">Clicking below triggers immediate alert signals at the central operations room.</p>
                   <button 
                     onClick={() => alert('SOS emergency trigger dispatched to operations tower safety room.')}
-                    className="bg-red-600 hover:bg-red-700 text-white text-[10px] uppercase font-bold font-mono tracking-wider px-4 py-2 rounded-full mt-3 transition-colors"
+                    className="bg-[#EF4444] hover:bg-red-700 text-white text-[10px] uppercase font-bold font-mono tracking-wider px-4 py-2 rounded-full mt-3 transition-colors duration-300 shadow-sm"
                   >
                     Broadcast SOS Panic Button
                   </button>
@@ -1723,14 +1717,14 @@ export default function App() {
         {activeTab === 'settings' && (
           <div className="space-y-6 max-w-4xl text-left">
             <div>
-              <span className="text-[10px] text-blue-605 uppercase tracking-widest font-bold font-mono">System Policy</span>
-              <h1 className="text-2xl font-black tracking-tight text-slate-900 uppercase font-mono">Settings & Access.</h1>
+              <span className="text-[10px] text-[#2563EB] uppercase tracking-widest font-bold font-mono">System Policy</span>
+              <h1 className="text-2xl font-bold tracking-tight text-[#111827] uppercase font-mono">Settings & Access.</h1>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
               {/* Config Form */}
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-4">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-slate-800 font-mono font-bold">Depot Configurations</h3>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-2">Primary Depot Name</label>
@@ -1752,13 +1746,13 @@ export default function App() {
                     </select>
                   </div>
                 </div>
-                <button onClick={() => alert('Global configurations updated successfully')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest font-mono px-5 py-2.5 rounded-full transition-all">
+                <button onClick={() => alert('Global configurations updated successfully')} className="bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-widest font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-sm">
                   Save Configurations
                 </button>
               </div>
 
               {/* RBAC read only matrix */}
-              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100">
                 <h3 className="text-xs font-bold uppercase tracking-widest text-slate-800 font-mono mb-3 font-bold">RBAC Matrix Permissions</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-[10px] border-collapse">
@@ -1771,31 +1765,31 @@ export default function App() {
                         <th className="p-2.5 text-slate-400 font-bold uppercase font-mono">Expenses</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 text-slate-600 font-mono bg-white">
+                    <tbody className="divide-y divide-slate-100 text-slate-655 font-mono bg-white">
                       <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Fleet Manager</td>
+                        <td className="p-2.5 font-bold text-[#2563EB]">Fleet Manager</td>
                         <td className="p-2.5 text-emerald-600 font-bold">Full</td>
                         <td className="p-2.5 text-emerald-600 font-bold">Full</td>
                         <td className="p-2.5 text-slate-300">—</td>
                         <td className="p-2.5 text-slate-300">—</td>
                       </tr>
                       <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Dispatcher</td>
+                        <td className="p-2.5 font-bold text-[#2563EB]">Dispatcher</td>
                         <td className="p-2.5 text-amber-600 font-bold">View</td>
                         <td className="p-2.5 text-slate-300">—</td>
                         <td className="p-2.5 text-emerald-600 font-bold">Full</td>
                         <td className="p-2.5 text-slate-300">—</td>
                       </tr>
                       <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Safety Officer</td>
+                        <td className="p-2.5 font-bold text-[#2563EB]">Safety Officer</td>
                         <td className="p-2.5 text-slate-300">—</td>
                         <td className="p-2.5 text-emerald-600 font-bold">Full</td>
                         <td className="p-2.5 text-amber-600 font-bold">View</td>
                         <td className="p-2.5 text-slate-300">—</td>
                       </tr>
                       <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Financial Analyst</td>
-                        <td className="p-2.5 text-amber-605 font-bold">View</td>
+                        <td className="p-2.5 font-bold text-[#2563EB]">Financial Analyst</td>
+                        <td className="p-2.5 text-amber-600 font-bold">View</td>
                         <td className="p-2.5 text-slate-300">—</td>
                         <td className="p-2.5 text-slate-300">—</td>
                         <td className="p-2.5 text-emerald-600 font-bold">Full</td>
@@ -1816,13 +1810,10 @@ export default function App() {
       {/* modal: Add Vehicle */}
       {showAddVehicle && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-blue-600"></div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-blue-600"></div>
-
-            <button onClick={() => setShowAddVehicle(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
+            <button onClick={() => setShowAddVehicle(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Truck className="h-5 w-5 text-blue-600" />
+              <Truck className="h-5 w-5 text-[#2563EB]" />
               Register New Fleet Vehicle.
             </h2>
             <form onSubmit={addVehicle} className="space-y-4">
@@ -1832,7 +1823,7 @@ export default function App() {
                   type="text" required value={vehicleForm.reg_no} 
                   onChange={(e) => setVehicleForm({ ...vehicleForm, reg_no: e.target.value })}
                   placeholder="e.g. MH12QW1234"
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -1842,7 +1833,7 @@ export default function App() {
                     type="text" required value={vehicleForm.name} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, name: e.target.value })}
                     placeholder="Tata Prima"
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -1850,7 +1841,7 @@ export default function App() {
                   <select 
                     value={vehicleForm.type}
                     onChange={(e) => setVehicleForm({ ...vehicleForm, type: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                   >
                     <option value="Heavy Truck">Heavy Truck</option>
                     <option value="Medium Truck">Medium Truck</option>
@@ -1865,7 +1856,7 @@ export default function App() {
                   <input 
                     type="number" required value={vehicleForm.max_load_capacity} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, max_load_capacity: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-3 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-3 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -1873,7 +1864,7 @@ export default function App() {
                   <input 
                     type="number" required value={vehicleForm.odometer} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, odometer: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-3 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-3 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -1881,11 +1872,11 @@ export default function App() {
                   <input 
                     type="number" required value={vehicleForm.acquisition_cost} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, acquisition_cost: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-3 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-3 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Register Vehicle Profile
               </button>
             </form>
@@ -1896,13 +1887,10 @@ export default function App() {
       {/* modal: Add Driver */}
       {showAddDriver && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-blue-600"></div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-blue-600"></div>
-
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
             <button onClick={() => setShowAddDriver(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Users className="h-5 w-5 text-blue-600" />
+              <Users className="h-5 w-5 text-[#2563EB]" />
               Register Dispatch Driver.
             </h2>
             <form onSubmit={addDriver} className="space-y-4">
@@ -1912,7 +1900,7 @@ export default function App() {
                   type="text" required value={driverForm.name} 
                   onChange={(e) => setDriverForm({ ...driverForm, name: e.target.value })}
                   placeholder="John Smith"
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -1922,7 +1910,7 @@ export default function App() {
                     type="text" required value={driverForm.license_no} 
                     onChange={(e) => setDriverForm({ ...driverForm, license_no: e.target.value })}
                     placeholder="DL-1420180099"
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -1930,7 +1918,7 @@ export default function App() {
                   <select 
                     value={driverForm.license_category}
                     onChange={(e) => setDriverForm({ ...driverForm, license_category: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                   >
                     <option value="Heavy Transport">Heavy Transport</option>
                     <option value="Light Commercial">Light Commercial</option>
@@ -1943,7 +1931,7 @@ export default function App() {
                   <input 
                     type="date" required value={driverForm.license_expiry_date} 
                     onChange={(e) => setDriverForm({ ...driverForm, license_expiry_date: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -1952,11 +1940,11 @@ export default function App() {
                     type="text" required value={driverForm.contact_no} 
                     onChange={(e) => setDriverForm({ ...driverForm, contact_no: e.target.value })}
                     placeholder="+91 9876543210"
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Register Driver Profile
               </button>
             </form>
@@ -1967,7 +1955,7 @@ export default function App() {
       {/* modal: Adjust Safety Score */}
       {adjustScoreDriverId && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-sm shadow-2xl relative text-left">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative text-left">
             <button onClick={() => setAdjustScoreDriverId(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
             <h2 className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-6 font-mono flex items-center gap-2">
               <ShieldAlert className="h-5 w-5 text-amber-500" />
@@ -1979,10 +1967,10 @@ export default function App() {
                 <input 
                   type="number" step="0.1" max="100" min="0" required value={adjustScoreValue} 
                   onChange={(e) => setAdjustScoreValue(e.target.value)}
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
-              <button type="submit" className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all">
+              <button type="submit" className="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 shadow-sm">
                 Apply Safety Score Adjustment
               </button>
             </form>
@@ -1993,13 +1981,10 @@ export default function App() {
       {/* modal: Create Trip */}
       {showCreateTrip && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-lg shadow-2xl relative text-left">
-            <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-blue-600"></div>
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-blue-600"></div>
-
-            <button onClick={() => setShowCreateTrip(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl relative text-left">
+            <button onClick={() => setShowCreateTrip(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Navigation className="h-5 w-5 text-blue-600" />
+              <Navigation className="h-5 w-5 text-[#2563EB]" />
               Plan Cargo Dispatch Trip.
             </h2>
             <form onSubmit={createTrip} className="space-y-4">
@@ -2010,7 +1995,7 @@ export default function App() {
                     type="text" required value={tripForm.source} 
                     onChange={(e) => setTripForm({ ...tripForm, source: e.target.value })}
                     placeholder="e.g. Mumbai"
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2019,7 +2004,7 @@ export default function App() {
                     type="text" required value={tripForm.destination} 
                     onChange={(e) => setTripForm({ ...tripForm, destination: e.target.value })}
                     placeholder="e.g. Delhi NCR"
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
@@ -2029,7 +2014,7 @@ export default function App() {
                   <input 
                     type="number" required value={tripForm.cargo_weight} 
                     onChange={(e) => setTripForm({ ...tripForm, cargo_weight: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-850 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-850 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2037,7 +2022,7 @@ export default function App() {
                   <input 
                     type="number" required value={tripForm.planned_distance} 
                     onChange={(e) => setTripForm({ ...tripForm, planned_distance: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-850 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-850 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
@@ -2047,7 +2032,7 @@ export default function App() {
                   <select 
                     required value={tripForm.vehicle_id}
                     onChange={(e) => setTripForm({ ...tripForm, vehicle_id: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                   >
                     <option value="">-- Choose Available --</option>
                     {vehicles.filter(v => v.status === 'Available').map(v => (
@@ -2060,7 +2045,7 @@ export default function App() {
                   <select 
                     required value={tripForm.driver_id}
                     onChange={(e) => setTripForm({ ...tripForm, driver_id: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                   >
                     <option value="">-- Choose Available --</option>
                     {drivers.filter(d => {
@@ -2079,7 +2064,7 @@ export default function App() {
                   const selectedVehicle = vehicles.find(v => v.id.toString() === tripForm.vehicle_id.toString());
                   if (selectedVehicle && tripForm.cargo_weight > selectedVehicle.max_load_capacity) {
                     return (
-                      <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-650 text-xs flex gap-2 font-mono">
+                      <div className="bg-red-50 border border-red-200 rounded-2xl p-3 text-red-650 text-xs flex gap-2 font-mono">
                         <AlertTriangle className="h-4 w-4 shrink-0" />
                         <span><strong>Weight Overload Alert:</strong> Cargo weight exceeds vehicle's maximum carrying capacity of {selectedVehicle.max_load_capacity} kg. This trip cannot be dispatched.</span>
                       </div>
@@ -2088,7 +2073,7 @@ export default function App() {
                 })()
               )}
 
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Save Trip as Draft
               </button>
             </form>
@@ -2099,10 +2084,10 @@ export default function App() {
       {/* modal: Log Service Record */}
       {showAddMaintenance && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddMaintenance(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
+            <button onClick={() => setShowAddMaintenance(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Settings className="h-5 w-5 text-blue-600 animate-spin" />
+              <Settings className="h-5 w-5 text-[#2563EB] animate-spin" />
               Log Vehicle Service Record.
             </h2>
             <form onSubmit={addMaintenance} className="space-y-4">
@@ -2111,7 +2096,7 @@ export default function App() {
                 <select 
                   required value={maintenanceForm.vehicle_id}
                   onChange={(e) => setMaintenanceForm({ ...maintenanceForm, vehicle_id: e.target.value })}
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-705 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-705 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                 >
                   <option value="">-- Choose Vehicle --</option>
                   {vehicles.filter(v => v.status !== 'Retired').map(v => (
@@ -2125,7 +2110,7 @@ export default function App() {
                   type="text" required value={maintenanceForm.service_type} 
                   onChange={(e) => setMaintenanceForm({ ...maintenanceForm, service_type: e.target.value })}
                   placeholder="e.g. Brake Replacement"
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -2134,7 +2119,7 @@ export default function App() {
                   <input 
                     type="number" required value={maintenanceForm.cost} 
                     onChange={(e) => setMaintenanceForm({ ...maintenanceForm, cost: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2142,11 +2127,11 @@ export default function App() {
                   <input 
                     type="date" required value={maintenanceForm.date} 
                     onChange={(e) => setMaintenanceForm({ ...maintenanceForm, date: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Commit & Log Service
               </button>
             </form>
@@ -2157,7 +2142,7 @@ export default function App() {
       {/* modal: Complete Trip Form Details */}
       {activeCompleteTripModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl relative text-left">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
             <button onClick={() => setActiveCompleteTripModal(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-emerald-600" />
@@ -2174,7 +2159,7 @@ export default function App() {
                   <input 
                     type="number" required value={completeTripForm.final_odometer} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, final_odometer: parseFloat(e.target.value) || '' })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2182,7 +2167,7 @@ export default function App() {
                   <input 
                     type="number" required value={completeTripForm.fuel_consumed} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, fuel_consumed: parseFloat(e.target.value) || '' })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
@@ -2191,7 +2176,7 @@ export default function App() {
                 <input 
                   type="number" required value={completeTripForm.revenue} 
                   onChange={(e) => setCompleteTripForm({ ...completeTripForm, revenue: parseFloat(e.target.value) || '' })}
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -2200,7 +2185,7 @@ export default function App() {
                   <input 
                     type="number" value={completeTripForm.toll_expense} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, toll_expense: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2208,11 +2193,11 @@ export default function App() {
                   <input 
                     type="number" value={completeTripForm.other_expense} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, other_expense: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-750 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-750 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Log Completion & Update Stats
               </button>
             </form>
@@ -2223,10 +2208,10 @@ export default function App() {
       {/* modal: Log Fuel Purchase */}
       {showAddFuel && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl relative text-left">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
             <button onClick={() => setShowAddFuel(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-700 mb-6 font-mono flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-blue-600" />
+              <DollarSign className="h-5 w-5 text-[#2563EB]" />
               Log Fuel Purchase Receipt.
             </h2>
             <form onSubmit={addFuel} className="space-y-4">
@@ -2235,7 +2220,7 @@ export default function App() {
                 <select 
                   required value={fuelForm.vehicle_id}
                   onChange={(e) => setFuelForm({ ...fuelForm, vehicle_id: e.target.value })}
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                 >
                   <option value="">-- Choose Vehicle --</option>
                   {vehicles.filter(v => v.status !== 'Retired').map(v => (
@@ -2249,7 +2234,7 @@ export default function App() {
                   <input 
                     type="date" required value={fuelForm.date} 
                     onChange={(e) => setFuelForm({ ...fuelForm, date: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2266,10 +2251,10 @@ export default function App() {
                 <input 
                   type="number" required value={fuelForm.cost} 
                   onChange={(e) => setFuelForm({ ...fuelForm, cost: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-700 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Record Fuel Expense
               </button>
             </form>
@@ -2280,8 +2265,8 @@ export default function App() {
       {/* modal: Log General Expense */}
       {showAddExpense && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddExpense(false)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-655"><X className="h-5 w-5" /></button>
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
+            <button onClick={() => setShowAddExpense(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-705 mb-6 font-mono flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-blue-600" />
               Add Incidentals / Toll Expense.
@@ -2292,7 +2277,7 @@ export default function App() {
                 <select 
                   required value={expenseForm.vehicle_id}
                   onChange={(e) => setExpenseForm({ ...expenseForm, vehicle_id: e.target.value })}
-                  className="w-full bg-slate-55 border border-slate-200 text-slate-750 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-200 text-slate-750 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
                 >
                   <option value="">-- Choose Vehicle --</option>
                   {vehicles.filter(v => v.status !== 'Retired').map(v => (
@@ -2306,7 +2291,7 @@ export default function App() {
                   <input 
                     type="number" value={expenseForm.toll} 
                     onChange={(e) => setExpenseForm({ ...expenseForm, toll: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -2314,11 +2299,11 @@ export default function App() {
                   <input 
                     type="number" value={expenseForm.other} 
                     onChange={(e) => setExpenseForm({ ...expenseForm, other: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-200 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-200 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all mt-4">
+              <button type="submit" className="w-full bg-[#2563EB] hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Record Expense
               </button>
             </form>
@@ -2329,9 +2314,9 @@ export default function App() {
       {/* modal: Vehicle History & Details */}
       {selectedVehicleHistory && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-xl p-6 w-full max-w-2xl shadow-2xl relative max-h-[85vh] overflow-y-auto text-left">
-            <button onClick={() => setSelectedVehicleHistory(null)} className="absolute top-4 right-4 text-slate-405 hover:text-slate-655"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-2 font-mono flex items-center gap-2">
+          <div className="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-2xl relative max-h-[85vh] overflow-y-auto text-left">
+            <button onClick={() => setSelectedVehicleHistory(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
+            <h2 className="text-md font-bold uppercase tracking-widest text-[#111827] mb-2 font-mono flex items-center gap-2 font-bold">
               <Truck className="h-5 w-5 text-blue-600" />
               Vehicle Operational Log & History.
             </h2>
@@ -2343,7 +2328,7 @@ export default function App() {
                 {selectedVehicleHistory.trips.length === 0 ? (
                   <p className="text-[10px] text-slate-405 font-mono">No past or active trips logged for this vehicle.</p>
                 ) : (
-                  <div className="bg-slate-50 border border-slate-205 rounded-lg overflow-hidden">
+                  <div className="bg-slate-50 border border-slate-200 rounded-lg overflow-hidden">
                     <table className="w-full text-left text-xs border-collapse">
                       <thead className="bg-slate-100 border-b border-slate-200">
                         <tr>
@@ -2375,7 +2360,7 @@ export default function App() {
                 ) : (
                   <div className="bg-slate-50 border border-slate-205 rounded-lg overflow-hidden">
                     <table className="w-full text-left text-xs border-collapse">
-                      <thead className="bg-slate-100 border-b border-slate-205">
+                      <thead className="bg-slate-100 border-b border-slate-200">
                         <tr>
                           <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Service Type</th>
                           <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Date Logged</th>
