@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Truck, Users, Navigation, DollarSign, BarChart3, Settings, 
   Plus, LogOut, ShieldAlert, CheckCircle2, AlertTriangle, X, 
-  Lock, ArrowRight, Activity, Zap, FileSpreadsheet, Eye, Play, Phone, Check
+  Lock, ArrowRight, Activity, Zap, FileSpreadsheet, Eye, Play, Phone, Check, Search
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -38,6 +38,10 @@ export default function App() {
 
   // Active tab inside app dashboard
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  // Search & Filter State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All Statuses');
 
   // Modals state
   const [showAddVehicle, setShowAddVehicle] = useState(false);
@@ -398,6 +402,15 @@ export default function App() {
     return diffDays <= 30;
   };
 
+  // Filter vehicles based on query and status filter
+  const getFilteredVehicles = () => {
+    return vehicles.filter(v => {
+      const matchesSearch = v.name.toLowerCase().includes(searchQuery.toLowerCase()) || v.reg_no.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesStatus = statusFilter === 'All Statuses' || v.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  };
+
   // ---------------- LANDING MARKETING PAGE ----------------
   if (view === 'landing') {
     return (
@@ -570,8 +583,8 @@ export default function App() {
               ].map((card, idx) => (
                 <div key={idx} className="bg-[#12151C] border border-white/5 rounded-xl p-5 shadow-2xl relative text-left">
                   {/* Viewfinder brackets */}
-                  <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-[#1E6FEB]"></div>
-                  <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-[#1E6FEB]"></div>
+                  <div className="absolute top-2 left-2.5 w-3 h-3 border-t-2 border-l-2 border-[#1E6FEB]"></div>
+                  <div className="absolute bottom-2 right-2.5 w-3 h-3 border-b-2 border-r-2 border-[#1E6FEB]"></div>
                   
                   <div className="flex justify-between items-center mb-3">
                     <span className="text-[9px] font-bold font-mono text-[#A3A9B5] uppercase tracking-widest">{card.label}</span>
@@ -675,7 +688,7 @@ export default function App() {
                 We'd love to show you around.
               </h2>
               
-              <div className="space-y-3 pt-2 text-[11px] font-mono text-slate-400">
+              <div className="space-y-3 pt-2 text-[11px] font-mono text-slate-405">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[#4FA8FF] shrink-0" /> Comply with dispatch and compliance rules automatically.
                 </div>
@@ -877,7 +890,7 @@ export default function App() {
             </div>
 
             {errorMsg && (
-              <div className="bg-red-50 border border-red-205 text-red-700 px-4 py-3 rounded-xl text-xs flex items-start gap-2">
+              <div className="bg-red-50 border border-red-205 text-red-750 px-4 py-3 rounded-xl text-xs flex items-start gap-2">
                 <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
                 <span>{errorMsg}</span>
               </div>
@@ -955,13 +968,13 @@ export default function App() {
                   className="w-full bg-[#F59E0B] hover:bg-[#E08E00] text-white font-bold tracking-wider text-xs uppercase py-3.5 px-4 rounded-full transition shadow-md shadow-amber-500/10 flex items-center justify-center space-x-2"
                 >
                   <span>Sign In To System</span>
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </button>
 
                 <button 
                   type="button"
                   onClick={() => setView('landing')}
-                  className="w-full border border-gray-200 hover:bg-gray-50 text-gray-600 font-bold tracking-wider text-xs uppercase py-3.5 px-4 rounded-full transition"
+                  className="w-full border border-gray-200 hover:bg-gray-50 text-gray-650 font-bold tracking-wider text-xs uppercase py-3.5 px-4 rounded-full transition"
                 >
                   Return To Landing
                 </button>
@@ -998,34 +1011,41 @@ export default function App() {
     );
   }
 
-  // ---------------- MAIN CONSOLE DASHBOARD VIEW (Apple-Style Minimalist Light Theme) ----------------
+  // ---------------- MAIN CONSOLE DASHBOARD VIEW (Apple-Style Light Dashboard Workspace) ----------------
   return (
-    <div className="min-h-screen bg-[#F8F9FA] text-gray-900 antialiased flex flex-col md:flex-row relative transition-all duration-300 ease-in-out font-sans">
+    <div className="min-h-screen bg-[#F9FAFC] text-gray-900 antialiased flex flex-col md:flex-row relative transition-all duration-300 ease-in-out font-sans">
       
-      {/* 1. DARK SIDEBAR COMPONENT */}
-      <aside className="w-full md:w-64 bg-[#0F1115] text-white flex flex-col justify-between border-r border-zinc-800 shrink-0 relative z-10 shadow-lg">
+      {/* 1. SIDEBAR NAVIGATION (LEFT PANEL) */}
+      <aside className="w-full md:w-64 bg-[#FFFFFF] text-gray-700 flex flex-col justify-between border-r border-[#E5E7EB] shrink-0 relative z-10 shadow-sm">
         <div>
-          {/* Brand Logo Header */}
-          <div className="px-6 py-6 border-b border-zinc-800 flex items-center space-x-2 bg-black/40">
-            <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10M21 16V10a2 2 0 00-2-2h-3V5a1 1 0 00-1-1H9"></path>
-            </svg>
-            <span className="text-xl font-bold tracking-tight text-white cursor-pointer" onClick={() => setView('landing')}>
-              transit<span className="text-blue-500">ops</span>
-            </span>
+          {/* Top Branding Section */}
+          <div className="px-6 py-6 border-b border-[#E5E7EB] flex items-center space-x-3 bg-white">
+            {/* Rounded square icon - blue gradient background with globe/network glyph */}
+            <div className="w-10 h-10 bg-gradient-to-b from-[#0084E6] to-[#0070C9] rounded-xl flex items-center justify-center shadow-md shadow-blue-500/10">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+              </svg>
+            </div>
+            <div className="flex flex-col text-left">
+              <span className="text-sm font-bold tracking-tight text-gray-900 font-sans uppercase">TRANSITOPS</span>
+              <span className="text-[9px] font-bold text-[#0084E6] tracking-wider uppercase font-mono">FLEET PORTAL</span>
+            </div>
           </div>
 
-          {/* Navigation Links */}
+          {/* Menu Styling Section */}
           <div className="px-4 py-6">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 px-3 block mb-3">Operations Console</span>
-            <nav className="space-y-1">
+            <span className="text-[9px] font-bold uppercase tracking-widest text-gray-400 px-3 block mb-3 font-mono">Operations Console</span>
+            <nav className="space-y-1.5">
               {hasAccess('analytics') && (
                 <button 
                   onClick={() => setActiveTab('dashboard')} 
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'dashboard' ? 'bg-white/10 text-white border-blue-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                  className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                    activeTab === 'dashboard' 
+                      ? 'bg-gradient-to-r from-[#0084E6] to-[#0070C9] text-white shadow-md shadow-blue-500/10' 
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                  }`}
                 >
-                  <BarChart3 className="w-4 h-4 text-blue-400" />
+                  <BarChart3 className={`w-4 h-4 ${activeTab === 'dashboard' ? 'text-white' : 'text-gray-400'}`} />
                   <span>Fleet Metrics</span>
                 </button>
               )}
@@ -1033,9 +1053,13 @@ export default function App() {
               {hasAccess('fleet') && (
                 <button 
                   onClick={() => setActiveTab('vehicles')} 
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'vehicles' ? 'bg-white/10 text-white border-blue-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                  className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                    activeTab === 'vehicles' 
+                      ? 'bg-gradient-to-r from-[#0084E6] to-[#0070C9] text-white shadow-md shadow-blue-500/10' 
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                  }`}
                 >
-                  <Truck className="w-4 h-4 text-blue-400" />
+                  <Truck className={`w-4 h-4 ${activeTab === 'vehicles' ? 'text-white' : 'text-gray-400'}`} />
                   <span>Vehicle Registry</span>
                 </button>
               )}
@@ -1043,9 +1067,13 @@ export default function App() {
               {hasAccess('drivers') && (
                 <button 
                   onClick={() => setActiveTab('drivers')} 
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'drivers' ? 'bg-white/10 text-white border-blue-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                  className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                    activeTab === 'drivers' 
+                      ? 'bg-gradient-to-r from-[#0084E6] to-[#0070C9] text-white shadow-md shadow-blue-500/10' 
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                  }`}
                 >
-                  <Users className="w-4 h-4 text-blue-400" />
+                  <Users className={`w-4 h-4 ${activeTab === 'drivers' ? 'text-white' : 'text-gray-400'}`} />
                   <span>Drivers & Safety</span>
                 </button>
               )}
@@ -1053,9 +1081,13 @@ export default function App() {
               {hasAccess('trips') && (
                 <button 
                   onClick={() => setActiveTab('trips')} 
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'trips' ? 'bg-white/10 text-white border-blue-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                  className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                    activeTab === 'trips' 
+                      ? 'bg-gradient-to-r from-[#0084E6] to-[#0070C9] text-white shadow-md shadow-blue-500/10' 
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                  }`}
                 >
-                  <Navigation className="w-4 h-4 text-blue-400" />
+                  <Navigation className={`w-4 h-4 ${activeTab === 'trips' ? 'text-white' : 'text-gray-400'}`} />
                   <span>Trips Console</span>
                 </button>
               )}
@@ -1063,337 +1095,252 @@ export default function App() {
               {hasAccess('expenses') && (
                 <button 
                   onClick={() => setActiveTab('expenses')} 
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'expenses' ? 'bg-white/10 text-white border-blue-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                  className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                    activeTab === 'expenses' 
+                      ? 'bg-gradient-to-r from-[#0084E6] to-[#0070C9] text-white shadow-md shadow-blue-500/10' 
+                      : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                  }`}
                 >
-                  <DollarSign className="w-4 h-4 text-blue-400" />
+                  <DollarSign className={`w-4 h-4 ${activeTab === 'expenses' ? 'text-white' : 'text-gray-400'}`} />
                   <span>Expenses & Fuel</span>
                 </button>
               )}
 
               <button 
                 onClick={() => setActiveTab('driver-app')} 
-                className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'driver-app' ? 'bg-white/10 text-purple-400 border-purple-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                  activeTab === 'driver-app' 
+                    ? 'bg-purple-650 text-white shadow-md shadow-purple-500/10' 
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                }`}
               >
-                <Zap className="w-4 h-4 text-purple-400" />
+                <Zap className={`w-4 h-4 ${activeTab === 'driver-app' ? 'text-white' : 'text-gray-400'}`} />
                 <span>Demo Driver App</span>
               </button>
 
               <button 
                 onClick={() => setActiveTab('settings')} 
-                className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-left font-medium text-sm transition-all duration-300 border-l-4 ${activeTab === 'settings' ? 'bg-white/10 text-white border-blue-500' : 'text-zinc-400 border-transparent hover:text-white hover:bg-white/5'}`}
+                className={`w-full flex items-center space-x-3 px-4 py-2.5 rounded-full text-left font-medium text-xs transition-all duration-300 uppercase tracking-wider font-mono ${
+                  activeTab === 'settings' 
+                    ? 'bg-gradient-to-r from-[#0084E6] to-[#0070C9] text-white shadow-md shadow-blue-500/10' 
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100/60'
+                }`}
               >
-                <Settings className="w-4 h-4 text-blue-400" />
+                <Settings className={`w-4 h-4 ${activeTab === 'settings' ? 'text-white' : 'text-gray-400'}`} />
                 <span>Settings & RBAC</span>
               </button>
             </nav>
           </div>
         </div>
 
-        {/* User Section / Footer */}
-        <div className="p-4 border-t border-zinc-800">
-          <div className="flex items-center justify-between p-2 rounded-xl bg-zinc-900/50">
+        {/* Footer Segment */}
+        <div className="p-4 border-t border-[#E5E7EB] bg-white space-y-4">
+          {/* Rounded compliance alert bar */}
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-red-50 border border-red-100 text-xs text-red-700">
+            <span className="font-semibold">Compliance Alerts</span>
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-650"></span>
+            </span>
+          </div>
+
+          {/* Profile badge & logout */}
+          <div className="flex items-center justify-between p-2 rounded-xl bg-gray-50 border border-gray-100">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xs uppercase text-white font-mono">
+              <div className="w-8 h-8 bg-[#0084E6] rounded-full flex items-center justify-center font-bold text-xs uppercase text-white font-mono">
                 {user.name ? user.name.slice(0, 2) : 'OP'}
               </div>
               <div className="flex flex-col text-left">
-                <span className="text-xs font-semibold text-white block truncate w-32">{user.name}</span>
-                <span className="text-[10px] text-zinc-500 truncate w-32">{user.role}</span>
+                <span className="text-xs font-semibold text-gray-800 block truncate w-24">{user.name}</span>
+                <span className="text-[10px] text-gray-400 truncate w-24">{user.role}</span>
               </div>
             </div>
-            <button onClick={handleLogout} className="text-red-400 hover:text-red-300 transition duration-300">
+            <button onClick={handleLogout} className="text-red-500 hover:text-red-700 transition duration-300">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
             </button>
           </div>
         </div>
       </aside>
 
-      {/* 2. LIGHT DASHBOARD MAIN CANVAS */}
-      <main className="flex-grow p-8 lg:p-10 max-w-7xl mx-auto space-y-8 overflow-y-auto">
-        
-        {/* ================= tab: DASHBOARD (Fleet Metrics) ================= */}
-        {activeTab === 'dashboard' && analytics && (
-          <>
-            {/* Title Header Section */}
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">Operations Platform</span>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Fleet Analytics & KPIs</h1>
-            </div>
+      {/* 2. MAIN DATA CANVAS (RIGHT PANEL WORKSPACE) */}
+      <main className="flex-1 p-6 md:p-8 overflow-y-auto max-h-screen relative text-left bg-[#F9FAFC]">
+        {/* Subtle Low-Opacity Blueprints sketch watermark */}
+        <div className="absolute inset-0 opacity-[0.02] pointer-events-none z-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' stroke='%23000' stroke-width='1.5' fill='none'/%3E%3Cpath d='M50 0 v100 M0 50 h100 M18 18 l64 64 M18 82 l64 -64' stroke='%23000' stroke-width='1'/%3E%3Ccircle cx='50' cy='50' r='20' stroke='%23000' stroke-width='1.5' fill='none'/%3E%3C/svg%3E")`,
+          backgroundSize: '300px 300px'
+        }}></div>
 
-            {/* 3. TOP ROW: FOUR MINIMALIST METRIC CARDS */}
-            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-blue-500 flex flex-col justify-between min-h-[130px] transition-all duration-300 hover:shadow-md">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-1">Fleet Utilization</span>
-                  <span className="text-3xl font-bold tracking-tight text-gray-900 block">{analytics.kpis.fleetUtilization}%</span>
+        <div className="relative z-10 space-y-6">
+          
+          {/* Top Header Section */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-200/60 pb-6">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold tracking-tight text-gray-900">+ Fleet Vehicle Configuration</h2>
+              <p className="text-sm text-gray-400 mt-1">Configure GPS tracking, FASTag IDs, and audit expiration logs for all trucks.</p>
+            </div>
+            {hasAccess('fleet', 'write') && (
+              <button 
+                onClick={() => setShowAddVehicle(true)}
+                className="bg-[#0084E6] hover:bg-[#0070C9] text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full shadow-md shadow-blue-500/10 transition-all duration-300 hover:scale-102 flex items-center gap-1.5"
+              >
+                <Plus className="w-4 h-4" />
+                Register Vehicle
+              </button>
+            )}
+          </div>
+
+          {/* Expiry Warning Banner */}
+          <div className="bg-[#FFFBEB] border border-[#FCD34D] rounded-2xl p-4 flex items-start gap-3 relative overflow-hidden shadow-sm">
+            <AlertTriangle className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+            <div className="text-xs text-amber-800 font-mono leading-relaxed text-left">
+              <strong className="font-bold uppercase block mb-1">SYSTEM AUDIT NOTICE:</strong>
+              1 driver license document is expiring within 30 days. Please inspect personnel profiles under the Drivers tab to ensure compliance updates.
+            </div>
+          </div>
+
+          {/* ================= tab-specific workspaces ================= */}
+          
+          {/* Dashboard Metrics (Fleet Metrics) */}
+          {activeTab === 'dashboard' && analytics && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-blue-500 flex flex-col justify-between min-h-[120px]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono block">Utilization</span>
+                  <span className="text-2xl font-black text-gray-950 font-mono mt-1">{analytics.kpis.fleetUtilization}%</span>
                 </div>
-                <span className="text-xs font-medium text-blue-600 mt-4 block">Active / Total active vehicles</span>
+                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-cyan-500 flex flex-col justify-between min-h-[120px]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono block">Fuel Efficiency</span>
+                  <span className="text-2xl font-black text-gray-950 font-mono mt-1">{analytics.kpis.fuelEfficiency} km/L</span>
+                </div>
+                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-red-500 flex flex-col justify-between min-h-[120px]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono block">Operating Cost</span>
+                  <span className="text-2xl font-black text-gray-950 font-mono mt-1">${analytics.kpis.totalOpCost.toLocaleString()}</span>
+                </div>
+                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-purple-500 flex flex-col justify-between min-h-[120px]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono block">Operational State</span>
+                  <span className="text-xs font-mono font-bold text-gray-800 mt-2 block">
+                    🟢 {analytics.kpis.availableVehicles} AV | 🔵 {analytics.kpis.activeVehicles} TRIP | 🟡 {analytics.kpis.maintenanceVehicles} SHOP
+                  </span>
+                </div>
               </div>
 
-              <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-cyan-500 flex flex-col justify-between min-h-[130px] transition-all duration-300 hover:shadow-md">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-1">Fuel Efficiency</span>
-                  <div className="flex items-baseline space-x-1">
-                    <span className="text-3xl font-bold tracking-tight text-gray-900">{analytics.kpis.fuelEfficiency}</span>
-                    <span className="text-xs font-medium text-gray-500">km/L</span>
+              {/* ROI Table & Charts */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-4">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block font-mono">Monthly Revenue Overview</span>
+                  <div className="h-64 flex items-end justify-between px-4 border-b border-gray-200 relative pt-4">
+                    <div className="absolute inset-x-0 top-1/4 border-t border-gray-100"></div>
+                    <div className="absolute inset-x-0 top-2/4 border-t border-gray-100"></div>
+                    <div className="absolute inset-x-0 top-3/4 border-t border-gray-100"></div>
+                    {analytics.monthlyRevenue.map((r, i) => (
+                      <div key={i} className="flex flex-col items-center space-y-2 w-1/4 z-10">
+                        <div className="w-16 bg-blue-600 rounded-t-lg transition-all hover:opacity-90" style={{ height: `${(r.Revenue / 120000) * 100}%` }}></div>
+                        <span className="text-xs font-medium text-gray-500">{r.month}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <span className="text-xs font-medium text-emerald-600 mt-4 block">Calculated distance per liter</span>
-              </div>
 
-              <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-red-500 flex flex-col justify-between min-h-[130px] transition-all duration-300 hover:shadow-md">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-1">Total Operational Cost</span>
-                  <span className="text-3xl font-bold tracking-tight text-gray-900 block">${analytics.kpis.totalOpCost.toLocaleString()}</span>
-                </div>
-                <span className="text-xs font-medium text-red-500 mt-4 block">Fuel + Maintenance logs</span>
-              </div>
-
-              <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-t-4 border-purple-500 flex flex-col justify-between min-h-[130px] transition-all duration-300 hover:shadow-md">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block mb-2">Vehicle Status</span>
-                  <div className="space-y-2 mt-1">
-                    <div className="flex items-center space-x-2 text-xs font-medium text-gray-700">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                      <span>{analytics.kpis.availableVehicles} Available</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-medium text-gray-700">
-                      <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
-                      <span>{analytics.kpis.activeVehicles} On Trip</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-medium text-gray-700">
-                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                      <span>{analytics.kpis.maintenanceVehicles} In Shop</span>
-                    </div>
+                <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-4">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block font-mono">Costliest Vehicles</span>
+                  <div className="h-64 flex items-end justify-between px-4 border-b border-gray-200 relative pt-4">
+                    <div className="absolute inset-x-0 top-1/4 border-t border-gray-100"></div>
+                    <div className="absolute inset-x-0 top-2/4 border-t border-gray-100"></div>
+                    <div className="absolute inset-x-0 top-3/4 border-t border-gray-100"></div>
+                    {analytics.topCostliestVehicles.map((v, i) => (
+                      <div key={i} className="flex flex-col items-center space-y-2 w-1/4 z-10">
+                        <div className="w-12 bg-red-500 rounded-t-lg transition-all hover:opacity-90" style={{ height: `${(v.operational_cost / 20000) * 100}%` }}></div>
+                        <span className="text-[10px] font-semibold text-gray-600 tracking-tight">{v.reg_no}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
-            </section>
+            </div>
+          )}
 
-            {/* 4. MIDDLE ROW: CHARTS */}
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-6">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">Monthly Revenue Overview</span>
-                <div className="h-64 flex items-end justify-between px-4 border-b border-gray-200 relative pt-4">
-                  <div className="absolute inset-x-0 top-1/4 border-t border-gray-100"></div>
-                  <div className="absolute inset-x-0 top-2/4 border-t border-gray-100"></div>
-                  <div className="absolute inset-x-0 top-3/4 border-t border-gray-100"></div>
-                  {analytics.monthlyRevenue.map((r, i) => (
-                    <div key={i} className="flex flex-col items-center space-y-2 w-1/4 z-10">
-                      <div 
-                        className="w-16 bg-blue-600 rounded-t-lg transition-all hover:opacity-90 cursor-pointer"
-                        style={{ height: `${(r.Revenue / 120000) * 100}%` }}
-                      ></div>
-                      <span className="text-xs font-medium text-gray-500">{r.month}</span>
-                    </div>
-                  ))}
+          {/* Vehicle Registry Module */}
+          {activeTab === 'vehicles' && (
+            <div className="space-y-6">
+              
+              {/* Search & Filter Row */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-gray-200/60">
+                <div className="relative w-full sm:max-w-xs">
+                  <Search className="absolute left-3 top-2.5 h-4.5 w-4.5 text-gray-450 pointer-events-none" />
+                  <input 
+                    type="text" 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search vehicle name or reg..." 
+                    className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-full text-xs text-gray-800 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20"
+                  />
                 </div>
-                <div className="flex items-center justify-center space-x-2 text-xs font-medium text-gray-600">
-                  <span className="w-3 h-3 bg-blue-600 rounded-sm"></span>
-                  <span>Revenue</span>
-                </div>
-              </div>
-
-              <div className="bg-white rounded-2xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-6">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400 block">Costliest Vehicles</span>
-                <div className="h-64 flex items-end justify-between px-4 border-b border-gray-200 relative pt-4">
-                  <div className="absolute inset-x-0 top-1/4 border-t border-gray-100"></div>
-                  <div className="absolute inset-x-0 top-2/4 border-t border-gray-100"></div>
-                  <div className="absolute inset-x-0 top-3/4 border-t border-gray-100"></div>
-                  {analytics.topCostliestVehicles.map((v, i) => (
-                    <div key={i} className="flex flex-col items-center space-y-2 w-1/4 z-10">
-                      <div 
-                        className="w-12 bg-red-500 rounded-t-lg transition-all hover:opacity-90 cursor-pointer"
-                        style={{ height: `${(v.operational_cost / 20000) * 100}%` }}
-                      ></div>
-                      <span className="text-[10px] font-semibold text-gray-600 tracking-tight">{v.reg_no}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex items-center justify-center space-x-2 text-xs font-medium text-gray-600">
-                  <span className="w-3 h-3 bg-red-500 rounded-sm"></span>
-                  <span>Op Cost ($)</span>
+                <div>
+                  <select 
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="px-4 py-2 border border-gray-200 rounded-full text-xs text-gray-700 bg-white focus:outline-none cursor-pointer"
+                  >
+                    <option value="All Statuses">All Statuses</option>
+                    <option value="Available">Available</option>
+                    <option value="On Trip">On Trip</option>
+                    <option value="In Shop">In Shop</option>
+                    <option value="Retired">Retired</option>
+                  </select>
                 </div>
               </div>
-            </section>
 
-            {/* 5. BOTTOM ROW: ROI METRICS MATRIX ROW */}
-            <section className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-gray-900 block">Fleet Return On Investment (ROI) Matrix</span>
-                <p className="text-xs font-medium text-gray-500">
-                  Formula: <span className="font-mono bg-gray-50 px-1.5 py-0.5 rounded text-gray-600 text-[11px]">ROI = (Revenue - (Maintenance + Fuel)) / Acquisition Cost</span>
-                </p>
-              </div>
-              <div className="border border-gray-200 rounded-xl px-4 py-2 text-xs font-semibold text-gray-500 bg-gray-50 flex items-center space-x-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span>Data Synchronized Automatically</span>
-              </div>
-            </section>
-
-            {/* Detailed ROI Table */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
-              <table className="w-full text-left border-collapse">
-                <thead className="bg-slate-50 border-b border-slate-200">
-                  <tr>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Vehicle</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Reg No.</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Acquisition Cost</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Total Revenue</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Operational Cost</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Return (ROI)</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 bg-white">
-                  {analytics.vehicleAnalyticsList.map(v => (
-                    <tr key={v.id} className="hover:bg-slate-50 transition-colors duration-300">
-                      <td className="p-4 text-xs font-bold text-[#111827]">{v.name}</td>
-                      <td className="p-4 text-xs text-slate-600 font-mono">{v.reg_no}</td>
-                      <td className="p-4 text-xs text-slate-500 font-mono">${v.acquisition_cost.toLocaleString()}</td>
-                      <td className="p-4 text-xs text-[#2563EB] font-mono">${v.revenue.toLocaleString()}</td>
-                      <td className="p-4 text-xs text-[#EF4444] font-mono">${v.operational_cost.toLocaleString()}</td>
-                      <td className="p-4 text-xs">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold font-mono ${v.roi >= 0 ? 'bg-emerald-50 text-emerald-755 border border-emerald-200' : 'bg-rose-50 text-rose-705 border border-rose-200'}`}>
-                          {v.roi}%
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
-
-        {/* ================= tab: VEHICLES ================= */}
-        {activeTab === 'vehicles' && (
-          <div className="space-y-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">Logistics Assets</span>
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Vehicle Registry</h1>
-              </div>
-              <div className="flex gap-2 shrink-0">
-                {hasAccess('fleet', 'write') && (
-                  <>
-                    <button 
-                      onClick={() => setShowAddVehicle(true)} 
-                      className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
-                    >
-                      <Plus className="h-4 w-4" />
-                      Add Vehicle
-                    </button>
-                    <button 
-                      onClick={() => setShowAddMaintenance(true)} 
-                      className="border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
-                    >
-                      Log Service Record
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-
-            {/* Rule Banner */}
-            <div className="bg-white rounded-2xl p-4 flex items-center gap-3 relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-l-4 border-blue-500">
-              <ShieldAlert className="h-5 w-5 text-blue-600 shrink-0" />
-              <span className="text-[11px] text-slate-600 font-mono">
-                <strong className="font-semibold text-slate-900 uppercase">SYSTEM POLICY:</strong> Vehicles flagged as <code className="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-blue-600">Retired</code> or <code className="bg-slate-100 border border-slate-200 px-1.5 py-0.5 rounded text-blue-600">In Shop</code> are excluded from Dispatch options.
-              </span>
-            </div>
-
-            {/* Vehicles Table */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
-              <table className="w-full text-left border-collapse">
-                <thead className="bg-slate-50 border-b border-slate-200">
-                  <tr>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Reg. No.</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Model/Name</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Type</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Max Capacity</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Odometer</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Status</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100 bg-white">
-                  {vehicles.map(v => (
-                    <tr key={v.id} className="hover:bg-slate-50 transition-colors duration-300">
-                      <td className="p-4 text-xs font-bold text-[#111827] font-mono">{v.reg_no}</td>
-                      <td className="p-4 text-xs text-slate-800 font-bold">{v.name}</td>
-                      <td className="p-4 text-xs text-slate-500 font-mono">{v.type}</td>
-                      <td className="p-4 text-xs text-slate-800 font-mono">{v.max_load_capacity.toLocaleString()} kg</td>
-                      <td className="p-4 text-xs text-slate-505 font-mono">{v.odometer.toLocaleString()} km</td>
-                      <td className="p-4 text-xs">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                          v.status === 'Available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                          v.status === 'On Trip' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                          v.status === 'In Shop' ? 'bg-amber-50 text-amber-705 border border-amber-200' :
-                          'bg-slate-100 text-slate-600 border border-slate-200'
-                        }`}>
-                          {v.status.toUpperCase()}
-                        </span>
-                      </td>
-                      <td className="p-4 text-xs text-right space-x-2">
-                        <button 
-                          onClick={() => {
-                            const historyTrips = trips.filter(t => t.vehicle_id === v.id);
-                            const historyMaint = maintenance.filter(m => m.vehicle_id === v.id);
-                            setSelectedVehicleHistory({ vehicle: v, trips: historyTrips, maintenance: historyMaint });
-                          }}
-                          className="text-slate-655 hover:text-slate-900 text-[10px] uppercase font-bold font-mono bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full duration-300"
-                        >
-                          History
-                        </button>
-                        {hasAccess('fleet', 'write') && v.status !== 'Retired' && (
-                          <button 
-                            onClick={() => retireVehicle(v.id)}
-                            className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[10px] uppercase font-bold font-mono px-3 py-1 rounded-full duration-300"
-                          >
-                            Retire
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Maintenance Service Log section */}
-            <div>
-              <h2 className="text-md font-bold uppercase tracking-widest text-slate-500 mb-4 font-mono">Logged Maintenance Records</h2>
-              <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+              {/* Structured Registry Table Grid */}
+              <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200/60">
                 <table className="w-full text-left border-collapse">
-                  <thead className="bg-slate-50 border-b border-slate-200">
+                  <thead className="bg-gray-50 border-b border-gray-200">
                     <tr>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Vehicle Reg</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Service Details</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Date Logged</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Cost</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Status</th>
-                      <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono text-right">Actions</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">REG. NO</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">MODEL/NAME</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">TYPE</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">GPS/FASTAG ID</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">MAX CAPACITY</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">STATUS AUDIT</th>
+                      <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono text-right">ACTIONS</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 bg-white">
-                    {maintenance.map(m => (
-                      <tr key={m.id} className="hover:bg-slate-50 transition-colors duration-300">
-                        <td className="p-4 text-xs font-mono text-slate-900">{m.vehicle_reg}</td>
-                        <td className="p-4 text-xs text-slate-800 font-bold">{m.service_type}</td>
-                        <td className="p-4 text-xs text-slate-555 font-mono">{m.date}</td>
-                        <td className="p-4 text-xs text-slate-800 font-mono">${m.cost.toLocaleString()}</td>
+                  <tbody className="divide-y divide-gray-100 bg-white">
+                    {getFilteredVehicles().map(v => (
+                      <tr key={v.id} className="hover:bg-gray-50/60 transition-colors duration-300">
+                        <td className="p-4 text-xs font-bold text-gray-900 font-mono">{v.reg_no}</td>
+                        <td className="p-4 text-xs text-gray-800 font-bold">{v.name}</td>
+                        <td className="p-4 text-xs text-gray-500 font-mono">{v.type}</td>
+                        <td className="p-4 text-xs text-gray-450 font-mono">
+                          GPS_TX_{v.id} | FT_ID_99{v.id}
+                        </td>
+                        <td className="p-4 text-xs text-gray-800 font-mono">{v.max_load_capacity.toLocaleString()} kg</td>
                         <td className="p-4 text-xs">
-                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${m.status === 'Open' ? 'bg-amber-50 text-amber-705 border border-amber-200' : 'bg-slate-105 text-slate-605 border border-slate-200'}`}>
-                            {m.status.toUpperCase()}
+                          <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold font-mono ${
+                            v.status === 'Available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' :
+                            v.status === 'On Trip' ? 'bg-blue-50 text-blue-700 border border-blue-100' :
+                            v.status === 'In Shop' ? 'bg-amber-50 text-amber-705 border border-amber-100' :
+                            'bg-gray-105 text-gray-600 border border-gray-200'
+                          }`}>
+                            {v.status.toUpperCase()}
                           </span>
                         </td>
-                        <td className="p-4 text-xs text-right">
-                          {hasAccess('fleet', 'write') && m.status === 'Open' && (
+                        <td className="p-4 text-xs text-right space-x-2">
+                          <button 
+                            onClick={() => {
+                              const historyTrips = trips.filter(t => t.vehicle_id === v.id);
+                              const historyMaint = maintenance.filter(m => m.vehicle_id === v.id);
+                              setSelectedVehicleHistory({ vehicle: v, trips: historyTrips, maintenance: historyMaint });
+                            }}
+                            className="text-gray-655 hover:text-gray-900 text-[10px] uppercase font-bold font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-full duration-300"
+                          >
+                            History
+                          </button>
+                          {hasAccess('fleet', 'write') && v.status !== 'Retired' && (
                             <button 
-                              onClick={() => closeMaintenance(m.id)}
-                              className="bg-emerald-650 hover:bg-emerald-600 text-white text-[10px] uppercase font-bold font-mono px-3.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105 shadow-sm"
+                              onClick={() => retireVehicle(v.id)}
+                              className="bg-rose-50 hover:bg-rose-100 border border-rose-100 text-rose-700 text-[10px] uppercase font-bold font-mono px-3 py-1 rounded-full duration-300"
                             >
-                              Close Service
+                              Retire
                             </button>
                           )}
                         </td>
@@ -1403,109 +1350,42 @@ export default function App() {
                 </table>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ================= tab: DRIVERS ================= */}
-        {activeTab === 'drivers' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">Personnel Compliance</span>
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Drivers & Safety</h1>
-              </div>
-              {hasAccess('drivers', 'write') && (
-                <button 
-                  onClick={() => setShowAddDriver(true)} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
-                >
-                  <Plus className="h-4 w-4" />
-                  Add Driver
-                </button>
-              )}
-            </div>
-
-            {/* Drivers list table */}
-            <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+          {/* Drivers Compliance Module */}
+          {activeTab === 'drivers' && (
+            <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200/60">
               <table className="w-full text-left border-collapse">
-                <thead className="bg-slate-50 border-b border-slate-200">
+                <thead className="bg-gray-50 border-b border-gray-200">
                   <tr>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Driver Name</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">License No.</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Class</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Expiry Date</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Contact</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Safety Rating</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Duty Status</th>
-                    <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono text-right">Actions</th>
+                    <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">Driver Name</th>
+                    <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">License No</th>
+                    <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">Expiry Check</th>
+                    <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">Safety Score</th>
+                    <th className="p-4 text-[10px] font-bold uppercase tracking-wider text-gray-400 font-mono">Duty Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 bg-white">
+                <tbody className="divide-y divide-gray-100 bg-white">
                   {drivers.map(d => {
                     const expired = new Date(d.license_expiry_date) < new Date();
-                    const warning = isLicenseExpiringSoon(d.license_expiry_date);
-
                     return (
-                      <tr key={d.id} className="hover:bg-slate-50 transition-colors duration-300">
-                        <td className="p-4 text-xs font-bold text-[#111827]">{d.name}</td>
-                        <td className="p-4 text-xs text-slate-500 font-mono">{d.license_no}</td>
-                        <td className="p-4 text-xs text-slate-505 font-mono">{d.license_category}</td>
+                      <tr key={d.id} className="hover:bg-gray-50/60">
+                        <td className="p-4 text-xs font-bold text-gray-900">{d.name}</td>
+                        <td className="p-4 text-xs text-gray-500 font-mono">{d.license_no}</td>
                         <td className="p-4 text-xs font-mono">
                           {expired ? (
-                            <span className="text-red-600 font-bold flex items-center gap-1">
-                              <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                              {d.license_expiry_date} (Expired)
-                            </span>
-                          ) : warning ? (
-                            <span className="text-amber-600 font-bold flex items-center gap-1">
-                              <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                              {d.license_expiry_date} (Expiring)
-                            </span>
+                            <span className="text-red-650 font-bold">Expired</span>
                           ) : (
-                            <span className="text-slate-700">{d.license_expiry_date}</span>
+                            <span className="text-gray-700">{d.license_expiry_date}</span>
                           )}
                         </td>
-                        <td className="p-4 text-xs text-slate-600 font-mono">{d.contact_no}</td>
+                        <td className="p-4 text-xs font-mono">{d.safety_score} PTS</td>
                         <td className="p-4 text-xs">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                            d.safety_score >= 85 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                            d.safety_score >= 60 ? 'bg-amber-50 text-amber-705 border border-amber-200' :
-                            'bg-rose-50 text-rose-700 border border-rose-200'
-                          }`}>
-                            {d.safety_score} PTS
-                          </span>
-                        </td>
-                        <td className="p-4 text-xs">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono ${
-                            d.status === 'Available' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                            d.status === 'On Trip' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                            d.status === 'Suspended' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
-                            'bg-slate-100 text-slate-600 border border-slate-200'
+                          <span className={`px-2.5 py-1 rounded-full text-[9px] font-bold font-mono ${
+                            d.status === 'Available' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'
                           }`}>
                             {d.status.toUpperCase()}
                           </span>
-                        </td>
-                        <td className="p-4 text-xs text-right space-x-2">
-                          {hasAccess('drivers', 'write') && (
-                            <>
-                              <button 
-                                onClick={() => { setAdjustScoreDriverId(d.id); setAdjustScoreValue(d.safety_score); }}
-                                className="text-slate-655 hover:text-slate-900 text-[10px] uppercase font-bold font-mono bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-full duration-300"
-                              >
-                                Adjust
-                              </button>
-                              <button 
-                                onClick={() => toggleDriverSuspension(d.id, d.status)}
-                                className={`text-[10px] uppercase font-bold font-mono px-3.5 py-1 rounded-full border duration-300 ${
-                                  d.status === 'Suspended' 
-                                    ? 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-700' 
-                                    : 'bg-rose-50 hover:bg-rose-100 border-rose-200 text-rose-700'
-                                }`}
-                              >
-                                {d.status === 'Suspended' ? 'Activate' : 'Suspend'}
-                              </button>
-                            </>
-                          )}
                         </td>
                       </tr>
                     );
@@ -1513,389 +1393,81 @@ export default function App() {
                 </tbody>
               </table>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ================= tab: TRIPS (Dispatch Console) ================= */}
-        {activeTab === 'trips' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">Routing Tower</span>
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Trips Console</h1>
-              </div>
-              {hasAccess('trips', 'write') && (
-                <button 
-                  onClick={() => setShowCreateTrip(true)} 
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
-                >
-                  <Plus className="h-4 w-4" />
-                  Dispatch New Cargo Trip
-                </button>
-              )}
-            </div>
-
-            {/* List of active board trips */}
-            <div className="grid grid-cols-1 gap-4">
+          {/* Trips Module */}
+          {activeTab === 'trips' && (
+            <div className="space-y-4">
               {trips.map(t => (
-                <div key={t.id} className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden border-l-4 border-blue-500">
+                <div key={t.id} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200/60 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden border-l-4 border-[#0084E6]">
                   <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono text-slate-400 font-bold">ROUTE ID: #{t.id}</span>
-                      <span className={`px-2 py-0.5 rounded text-[9px] font-bold font-mono ${
-                        t.status === 'Draft' ? 'bg-slate-100 text-slate-650 border border-slate-200' :
-                        t.status === 'Dispatched' ? 'bg-blue-50 text-blue-600 border border-blue-200' :
-                        t.status === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                        'bg-rose-50 text-rose-700 border border-rose-200'
-                      }`}>
-                        {t.status.toUpperCase()}
-                      </span>
-                    </div>
-
-                    <div className="text-md font-black text-gray-900 mt-2 flex items-center gap-2 font-mono uppercase">
-                      {t.source} <ArrowRight className="h-4 w-4 text-blue-600" /> {t.destination}
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-4 text-[11px] text-slate-600 font-mono">
-                      <div>
-                        <span className="block text-[9px] text-slate-400 uppercase font-bold">Vehicle:</span>
-                        <strong className="text-slate-800">{t.vehicle_name} ({t.vehicle_reg})</strong>
-                      </div>
-                      <div>
-                        <span className="block text-[9px] text-slate-400 uppercase font-bold">Driver Assigned:</span>
-                        <strong className="text-slate-800">{t.driver_name || 'UNASSIGNED'}</strong>
-                      </div>
-                      <div>
-                        <span className="block text-[9px] text-slate-400 uppercase font-bold">Cargo Payload:</span>
-                        <strong className="text-slate-800">{t.cargo_weight.toLocaleString()} kg</strong>
-                      </div>
-                      <div>
-                        <span className="block text-[9px] text-slate-400 uppercase font-bold">Total Distance:</span>
-                        <strong className="text-slate-800">{t.planned_distance.toLocaleString()} km</strong>
-                      </div>
+                    <span className="text-[10px] font-mono text-gray-400 font-bold">ROUTE #{t.id} | {t.status.toUpperCase()}</span>
+                    <h3 className="text-md font-black text-gray-900 mt-1 uppercase font-mono">{t.source} ➔ {t.destination}</h3>
+                    <div className="flex gap-4 mt-2 text-[10px] text-gray-550 font-mono">
+                      <span>Vehicle: {t.vehicle_name}</span>
+                      <span>Weight: {t.cargo_weight.toLocaleString()} kg</span>
                     </div>
                   </div>
-
-                  {/* Trip Execution Controls */}
-                  <div className="flex gap-2 self-stretch md:self-auto justify-end border-t md:border-t-0 border-slate-100 pt-3 md:pt-0">
-                    {hasAccess('trips', 'write') && t.status === 'Draft' && (
-                      <>
-                        <button 
-                          onClick={() => dispatchTrip(t.id)}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300 shadow-sm"
-                        >
-                          Execute Dispatch
-                        </button>
-                        <button 
-                          onClick={() => cancelTrip(t.id)}
-                          className="border border-slate-300 hover:border-slate-400 text-slate-700 text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300"
-                        >
-                          Cancel Draft
-                        </button>
-                      </>
-                    )}
-
-                    {hasAccess('trips', 'write') && t.status === 'Dispatched' && (
-                      <>
-                        <button 
-                          onClick={() => {
-                            setActiveCompleteTripModal(t);
-                            setCompleteTripForm({
-                              final_odometer: (t.final_odometer || 0) || Math.round(vehicles.find(v => v.id === t.vehicle_id)?.odometer + t.planned_distance),
-                              fuel_consumed: '',
-                              revenue: '',
-                              toll_expense: '',
-                              other_expense: ''
-                            });
-                          }}
-                          className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300 shadow-sm"
-                        >
-                          Complete Trip Ops
-                        </button>
-                        <button 
-                          onClick={() => cancelTrip(t.id)}
-                          className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-[10px] uppercase font-mono tracking-wider px-4 py-2 rounded-full transition-all duration-300"
-                        >
-                          Abort
-                        </button>
-                      </>
-                    )}
-
-                    {t.status === 'Completed' && (
-                      <div className="text-[10px] font-mono text-slate-650 bg-slate-100 border border-slate-200 px-3 py-1 rounded">
-                        ODO: {t.final_odometer} km | FUEL: {t.fuel_consumed} L
-                      </div>
-                    )}
-                  </div>
+                  {t.status === 'Draft' && (
+                    <button onClick={() => dispatchTrip(t.id)} className="bg-[#0084E6] text-white text-[10px] uppercase font-mono px-4 py-1.5 rounded-full hover:bg-[#0070C9]">
+                      Dispatch
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
 
-        {/* ================= tab: EXPENSES & FUEL ================= */}
-        {activeTab === 'expenses' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">Financial Ledger</span>
-                <h1 className="text-3xl font-bold tracking-tight text-gray-900">Expenses & Fuel</h1>
-              </div>
-              {hasAccess('expenses', 'write') && (
-                <div className="flex gap-2">
-                  <button 
-                    onClick={() => setShowAddFuel(true)} 
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(37,99,235,0.15)] hover:scale-105"
-                  >
-                    <Plus className="h-4 w-4" />
-                    Log Fuel Purchase
-                  </button>
-                  <button 
-                    onClick={() => setShowAddExpense(true)} 
-                    className="border border-slate-300 hover:border-slate-400 text-slate-700 font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full flex items-center gap-2 transition-all duration-300"
-                  >
-                    Add Other Expense
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Tables grids */}
+          {/* Expenses Module */}
+          {activeTab === 'expenses' && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              
-              {/* Fuel logs table */}
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-505 mb-3 font-mono">Refueling Logs</h3>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-200/50">
-                  <table className="w-full text-left border-collapse">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Vehicle</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Date</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Liters</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Cost</th>
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-200/60">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 font-mono block mb-3">Operating Fuel Purchases</span>
+                <table className="w-full text-left text-xs border-collapse">
+                  <tbody className="divide-y divide-gray-100 font-mono">
+                    {fuelLogs.map(f => (
+                      <tr key={f.id}>
+                        <td className="p-3">{f.vehicle_reg}</td>
+                        <td className="p-3">{f.liters} L</td>
+                        <td className="p-3 font-bold text-gray-800">${f.cost.toLocaleString()}</td>
                       </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 bg-white">
-                      {fuelLogs.map(f => (
-                        <tr key={f.id} className="hover:bg-slate-50 transition-colors duration-300">
-                          <td className="p-4 text-xs font-mono text-slate-900">{f.vehicle_reg}</td>
-                          <td className="p-4 text-xs text-slate-500 font-mono">{f.date}</td>
-                          <td className="p-4 text-xs text-slate-800 font-mono">{f.liters} L</td>
-                          <td className="p-4 text-xs text-blue-600 font-mono">${f.cost.toLocaleString()}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* General Expenses Table */}
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-widest text-slate-505 mb-3 font-mono">Operating Expenses Ledger</h3>
-                <div className="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-200/50">
-                  <table className="w-full text-left border-collapse">
-                    <thead className="bg-slate-50 border-b border-slate-200">
-                      <tr>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Vehicle</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Tolls</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Maint. Cost</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Other</th>
-                        <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Total</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 bg-white">
-                      {expenses.map(e => (
-                        <tr key={e.id} className="hover:bg-slate-50 transition-colors duration-300">
-                          <td className="p-4 text-xs font-mono text-slate-900">{e.vehicle_reg}</td>
-                          <td className="p-4 text-xs text-slate-500 font-mono">${(e.toll || 0).toLocaleString()}</td>
-                          <td className="p-4 text-xs text-slate-500 font-mono">${(e.maintenance_cost || 0).toLocaleString()}</td>
-                          <td className="p-4 text-xs text-slate-505 font-mono">${(e.other || 0).toLocaleString()}</td>
-                          <td className="p-4 text-xs font-bold text-rose-600 font-mono">${e.total.toLocaleString()}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        )}
-
-        {/* ================= tab: DEMO DRIVER APP ================= */}
-        {activeTab === 'driver-app' && (
-          <div className="max-w-2xl mx-auto space-y-6 text-left">
-            <div className="bg-gradient-to-r from-purple-100 to-indigo-50 border border-purple-200 rounded-2xl p-6 shadow-sm relative overflow-hidden">
-              <div className="absolute top-2 left-2 w-3 h-3 border-t-2 border-l-2 border-purple-400"></div>
-              <div className="absolute bottom-2 right-2 w-3 h-3 border-b-2 border-r-2 border-purple-400"></div>
-
-              <div className="flex justify-between items-start">
-                <div>
-                  <span className="bg-purple-600 text-white text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-widest font-mono">Driver Portal</span>
-                  <h1 className="text-xl font-black mt-2 text-purple-955 font-mono uppercase font-bold">Active Assigned Route.</h1>
-                </div>
-                <div className="text-right">
-                  <div className="text-[9px] text-purple-600 font-mono uppercase font-bold">License class</div>
-                  <div className="text-xs font-bold text-slate-800 font-mono">HEAVY TRANSPORT (VALID)</div>
-                </div>
-              </div>
-
-              {/* Driver Stats */}
-              <div className="grid grid-cols-3 gap-4 mt-6 bg-white p-4 rounded-xl border border-purple-100">
-                <div className="text-center">
-                  <div className="text-[9px] text-purple-605 uppercase font-mono font-bold">Safety Score</div>
-                  <div className="text-md font-black text-emerald-600 mt-1 font-mono">94.5 / 100</div>
-                </div>
-                <div className="text-center border-x border-purple-100">
-                  <div className="text-[9px] text-purple-605 uppercase font-mono font-bold">Assigned Truck</div>
-                  <div className="text-md font-black text-slate-800 mt-1 font-mono">Tata Prima</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-[9px] text-purple-605 uppercase font-mono font-bold">Plate ID</div>
-                  <div className="text-md font-black text-slate-800 mt-1 font-mono">MH12QW1234</div>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
+          )}
 
-            {/* Current Trip Details */}
-            <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] relative border border-slate-100">
-              <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 font-mono">Assigned Active Dispatch</h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <div>
-                    <span className="block text-[9px] text-slate-400 uppercase font-mono">Route Direction</span>
-                    <strong className="text-xs text-slate-800 font-mono uppercase">Mumbai Depo ➔ Delhi NCR Central</strong>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-[9px] text-slate-400 uppercase font-mono">Cargo Payload</span>
-                    <strong className="text-xs text-slate-800 font-mono">14,200 kg</strong>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                  <div>
-                    <span className="block text-[9px] text-slate-400 uppercase font-mono">Trip Status</span>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping"></span>
-                      <span className="text-xs text-emerald-600 font-mono uppercase font-bold">Dispatched</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <span className="block text-[9px] text-slate-400 font-mono uppercase">Planned distance</span>
-                    <strong className="text-xs font-mono text-slate-800">1,410 km</strong>
-                  </div>
-                </div>
-
-                {/* Emergency Section */}
-                <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mt-2">
-                  <h4 className="text-xs font-bold text-rose-600 uppercase tracking-widest flex items-center gap-1.5 font-mono">
-                    <AlertTriangle className="h-4 w-4 shrink-0" />
-                    Broadcasting Panic Alert SOS
-                  </h4>
-                  <p className="text-[11px] text-rose-800 mt-1 font-mono">Clicking below triggers immediate alert signals at the central operations room.</p>
-                  <button 
-                    onClick={() => alert('SOS emergency trigger dispatched to operations tower safety room.')}
-                    className="bg-red-600 hover:bg-red-750 text-white text-[10px] uppercase font-bold font-mono tracking-wider px-4 py-2 rounded-full mt-3 transition-colors duration-300 shadow-sm"
-                  >
-                    Broadcast SOS Panic Button
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ================= tab: SETTINGS ================= */}
-        {activeTab === 'settings' && (
-          <div className="space-y-6 max-w-4xl text-left">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 block mb-1">System Policy</span>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">Settings & Access</h1>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Config Form */}
-              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-800 font-mono font-bold">Depot Configurations</h3>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-2">Primary Depot Name</label>
-                  <input type="text" className="w-full bg-slate-55 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-800 focus:outline-none font-mono text-xs" defaultValue="TransitOps HQ - Terminal A" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-2">Distance Unit</label>
-                    <select className="w-full bg-slate-55 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-700 focus:outline-none font-mono text-xs">
-                      <option>Kilometers (km)</option>
-                      <option>Miles (mi)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-2">Currency Symbol</label>
-                    <select className="w-full bg-slate-55 border border-slate-200 rounded-lg px-4 py-2.5 text-slate-700 focus:outline-none font-mono text-xs">
-                      <option>USD ($)</option>
-                      <option>INR (₹)</option>
-                    </select>
-                  </div>
-                </div>
-                <button onClick={() => alert('Global configurations updated successfully')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all duration-300 shadow-sm">
-                  Save Configurations
+          {/* Demo Driver App */}
+          {activeTab === 'driver-app' && (
+            <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+              <span className="bg-purple-100 text-purple-700 text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-widest font-mono">Active Operator Router</span>
+              <h2 className="text-lg font-black text-gray-900 mt-3 font-mono">MH12QW1234</h2>
+              <div className="bg-red-50 border border-red-200 rounded-xl p-4 mt-6">
+                <h4 className="text-xs font-bold text-red-700 uppercase tracking-widest font-mono">SOS central Emergency Dispatch</h4>
+                <button onClick={() => alert('Emergency dispatch alerts sent.')} className="bg-red-600 hover:bg-red-700 text-white text-[10px] uppercase font-mono py-2 px-4 rounded-full mt-3 font-bold">
+                  Trigger panic signal
                 </button>
               </div>
-
-              {/* RBAC read only matrix */}
-              <div className="bg-white rounded-2xl p-5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-800 font-mono mb-3 font-bold">RBAC Matrix Permissions</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-[10px] border-collapse">
-                    <thead className="bg-slate-55 border-b border-slate-200">
-                      <tr>
-                        <th className="p-2.5 text-slate-400 font-bold uppercase font-mono">Role</th>
-                        <th className="p-2.5 text-slate-400 font-bold uppercase font-mono">Fleet</th>
-                        <th className="p-2.5 text-slate-400 font-bold uppercase font-mono">Drivers</th>
-                        <th className="p-2.5 text-slate-400 font-bold uppercase font-mono">Trips</th>
-                        <th className="p-2.5 text-slate-400 font-bold uppercase font-mono">Expenses</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 text-slate-600 font-mono bg-white">
-                      <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Fleet Manager</td>
-                        <td className="p-2.5 text-emerald-600 font-bold">Full</td>
-                        <td className="p-2.5 text-emerald-600 font-bold">Full</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Dispatcher</td>
-                        <td className="p-2.5 text-amber-600 font-bold">View</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                        <td className="p-2.5 text-emerald-600 font-bold">Full</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Safety Officer</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                        <td className="p-2.5 text-emerald-600 font-bold">Full</td>
-                        <td className="p-2.5 text-amber-600 font-bold">View</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                      </tr>
-                      <tr>
-                        <td className="p-2.5 font-bold text-blue-600">Financial Analyst</td>
-                        <td className="p-2.5 text-amber-600 font-bold">View</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                        <td className="p-2.5 text-slate-300">—</td>
-                        <td className="p-2.5 text-emerald-600 font-bold">Full</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
             </div>
-          </div>
-        )}
+          )}
 
+          {/* Settings Tab */}
+          {activeTab === 'settings' && (
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-200/60 max-w-lg">
+              <span className="text-xs font-bold text-[#0084E6] uppercase tracking-widest font-mono block">Config</span>
+              <h2 className="text-lg font-bold text-gray-900 mt-1 mb-4">Terminal Configurations</h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest font-mono mb-2">Base Depot Terminal</label>
+                  <input type="text" className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-xs font-mono text-gray-850 focus:outline-none" defaultValue="TransitOps HQ - Terminal A" />
+                </div>
+                <button onClick={() => alert('Saved terminal parameters')} className="bg-[#0084E6] text-white text-[11px] font-mono px-5 py-2.5 rounded-full uppercase font-bold">Save changes</button>
+              </div>
+            </div>
+          )}
+
+        </div>
       </main>
 
       {/* ================================== MODALS ================================== */}
@@ -1904,7 +1476,7 @@ export default function App() {
       {showAddVehicle && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddVehicle(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
+            <button onClick={() => setShowAddVehicle(false)} className="absolute top-4 right-4 text-slate-405 hover:text-slate-600"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
               <Truck className="h-5 w-5 text-blue-600" />
               Register New Fleet Vehicle.
@@ -1916,7 +1488,7 @@ export default function App() {
                   type="text" required value={vehicleForm.reg_no} 
                   onChange={(e) => setVehicleForm({ ...vehicleForm, reg_no: e.target.value })}
                   placeholder="e.g. MH12QW1234"
-                  className="w-full bg-slate-50 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                  className="w-full bg-slate-50 border border-slate-205 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -1926,7 +1498,7 @@ export default function App() {
                     type="text" required value={vehicleForm.name} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, name: e.target.value })}
                     placeholder="Tata Prima"
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-slate-50 border border-slate-205 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -1969,435 +1541,8 @@ export default function App() {
                   />
                 </div>
               </div>
-              <button type="submit" className="w-full bg-blue-650 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
+              <button type="submit" className="w-full bg-[#0084E6] hover:bg-[#0070C9] text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
                 Register Vehicle Profile
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* modal: Add Driver */}
-      {showAddDriver && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddDriver(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Users className="h-5 w-5 text-blue-600" />
-              Register Dispatch Driver.
-            </h2>
-            <form onSubmit={addDriver} className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Driver Full Name</label>
-                <input 
-                  type="text" required value={driverForm.name} 
-                  onChange={(e) => setDriverForm({ ...driverForm, name: e.target.value })}
-                  placeholder="John Smith"
-                  className="w-full bg-slate-50 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">License Number</label>
-                  <input 
-                    type="text" required value={driverForm.license_no} 
-                    onChange={(e) => setDriverForm({ ...driverForm, license_no: e.target.value })}
-                    placeholder="DL-1420180099"
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">License Class</label>
-                  <select 
-                    value={driverForm.license_category}
-                    onChange={(e) => setDriverForm({ ...driverForm, license_category: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
-                  >
-                    <option value="Heavy Transport">Heavy Transport</option>
-                    <option value="Light Commercial">Light Commercial</option>
-                  </select>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Expiry Date</label>
-                  <input 
-                    type="date" required value={driverForm.license_expiry_date} 
-                    onChange={(e) => setDriverForm({ ...driverForm, license_expiry_date: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-505 uppercase tracking-widest font-mono mb-1.5">Contact Number</label>
-                  <input 
-                    type="text" required value={driverForm.contact_no} 
-                    onChange={(e) => setDriverForm({ ...driverForm, contact_no: e.target.value })}
-                    placeholder="+91 9876543210"
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
-                Register Driver Profile
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* modal: Adjust Safety Score */}
-      {adjustScoreDriverId && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl relative text-left">
-            <button onClick={() => setAdjustScoreDriverId(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
-            <h2 className="text-xs font-bold uppercase tracking-widest text-slate-700 mb-6 font-mono flex items-center gap-2">
-              <ShieldAlert className="h-5 w-5 text-amber-505" />
-              Adjust Driver Safety Rating
-            </h2>
-            <form onSubmit={adjustSafetyScore} className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">New Safety Score Points</label>
-                <input 
-                  type="number" step="0.1" max="100" min="0" required value={adjustScoreValue} 
-                  onChange={(e) => setAdjustScoreValue(e.target.value)}
-                  className="w-full bg-slate-55 border border-slate-202 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                />
-              </div>
-              <button type="submit" className="w-full bg-amber-600 hover:bg-amber-550 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 shadow-sm">
-                Apply Safety Score Adjustment
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* modal: Create Trip */}
-      {showCreateTrip && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl relative text-left">
-            <button onClick={() => setShowCreateTrip(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Navigation className="h-5 w-5 text-blue-600" />
-              Plan Cargo Dispatch Trip.
-            </h2>
-            <form onSubmit={createTrip} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Source City</label>
-                  <input 
-                    type="text" required value={tripForm.source} 
-                    onChange={(e) => setTripForm({ ...tripForm, source: e.target.value })}
-                    placeholder="e.g. Mumbai"
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Destination City</label>
-                  <input 
-                    type="text" required value={tripForm.destination} 
-                    onChange={(e) => setTripForm({ ...tripForm, destination: e.target.value })}
-                    placeholder="e.g. Delhi NCR"
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-505 uppercase tracking-widest font-mono mb-1.5">Cargo Weight (kg)</label>
-                  <input 
-                    type="number" required value={tripForm.cargo_weight} 
-                    onChange={(e) => setTripForm({ ...tripForm, cargo_weight: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-850 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-505 uppercase tracking-widest font-mono mb-1.5">Planned Distance (km)</label>
-                  <input 
-                    type="number" required value={tripForm.planned_distance} 
-                    onChange={(e) => setTripForm({ ...tripForm, planned_distance: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-50 border border-slate-205 text-slate-850 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-505 uppercase tracking-widest font-mono mb-1.5">Select Vehicle (Available)</label>
-                  <select 
-                    required value={tripForm.vehicle_id}
-                    onChange={(e) => setTripForm({ ...tripForm, vehicle_id: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-205 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
-                  >
-                    <option value="">-- Choose Available --</option>
-                    {vehicles.filter(v => v.status === 'Available').map(v => (
-                      <option key={v.id} value={v.id}>{v.name} ({v.reg_no}) [Max: {v.max_load_capacity} kg]</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Select Driver (Available)</label>
-                  <select 
-                    required value={tripForm.driver_id}
-                    onChange={(e) => setTripForm({ ...tripForm, driver_id: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-205 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
-                  >
-                    <option value="">-- Choose Available --</option>
-                    {drivers.filter(d => {
-                      const expired = new Date(d.license_expiry_date) < new Date();
-                      return d.status === 'Available' && !expired;
-                    }).map(d => (
-                      <option key={d.id} value={d.id}>{d.name} (Safety Score: {d.safety_score})</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {/* Dynamic live capacity weight check warning */}
-              {tripForm.vehicle_id && tripForm.cargo_weight && (
-                (() => {
-                  const selectedVehicle = vehicles.find(v => v.id.toString() === tripForm.vehicle_id.toString());
-                  if (selectedVehicle && tripForm.cargo_weight > selectedVehicle.max_load_capacity) {
-                    return (
-                      <div className="bg-red-50 border border-red-200 rounded-2xl p-3 text-red-650 text-xs flex gap-2 font-mono">
-                        <AlertTriangle className="h-4 w-4 shrink-0" />
-                        <span><strong>Weight Overload Alert:</strong> Cargo weight exceeds vehicle's maximum carrying capacity of {selectedVehicle.max_load_capacity} kg. This trip cannot be dispatched.</span>
-                      </div>
-                    );
-                  }
-                })()
-              )}
-
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
-                Save Trip as Draft
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-  
-      {/* modal: Log Service Record */}
-      {showAddMaintenance && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddMaintenance(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <Settings className="h-5 w-5 text-blue-600 animate-spin" />
-              Log Vehicle Service Record.
-            </h2>
-            <form onSubmit={addMaintenance} className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold text-slate-550 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
-                <select 
-                  required value={maintenanceForm.vehicle_id}
-                  onChange={(e) => setMaintenanceForm({ ...maintenanceForm, vehicle_id: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-205 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
-                >
-                  <option value="">-- Choose Vehicle --</option>
-                  {vehicles.filter(v => v.status !== 'Retired').map(v => (
-                    <option key={v.id} value={v.id}>{v.name} ({v.reg_no}) [{v.status}]</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold text-slate-550 uppercase tracking-widest font-mono mb-1.5">Service Details</label>
-                <input 
-                  type="text" required value={maintenanceForm.service_type} 
-                  onChange={(e) => setMaintenanceForm({ ...maintenanceForm, service_type: e.target.value })}
-                  placeholder="e.g. Brake Replacement"
-                  className="w-full bg-slate-55 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Service Cost ($)</label>
-                  <input 
-                    type="number" required value={maintenanceForm.cost} 
-                    onChange={(e) => setMaintenanceForm({ ...maintenanceForm, cost: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Service Date</label>
-                  <input 
-                    type="date" required value={maintenanceForm.date} 
-                    onChange={(e) => setMaintenanceForm({ ...maintenanceForm, date: e.target.value })}
-                    className="w-full bg-slate-55 border border-slate-205 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
-                Commit & Log Service
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* modal: Complete Trip Form Details */}
-      {activeCompleteTripModal && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setActiveCompleteTripModal(null)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-900 mb-6 font-mono flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-[#10B981]" />
-              Complete Active Trip Operations.
-            </h2>
-            <form onSubmit={completeTrip} className="space-y-4">
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-[10px] text-slate-550 space-y-1 font-mono">
-                <div>Trip ID: #{activeCompleteTripModal.id} ({activeCompleteTripModal.source} ➔ {activeCompleteTripModal.destination})</div>
-                <div>Assigned Vehicle: {activeCompleteTripModal.vehicle_name} ({activeCompleteTripModal.vehicle_reg})</div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Final Odometer (km)</label>
-                  <input 
-                    type="number" required value={completeTripForm.final_odometer} 
-                    onChange={(e) => setCompleteTripForm({ ...completeTripForm, final_odometer: parseFloat(e.target.value) || '' })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Fuel Consumed (Liters)</label>
-                  <input 
-                    type="number" required value={completeTripForm.fuel_consumed} 
-                    onChange={(e) => setCompleteTripForm({ ...completeTripForm, fuel_consumed: parseFloat(e.target.value) || '' })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Trip Revenue Earned ($)</label>
-                <input 
-                  type="number" required value={completeTripForm.revenue} 
-                  onChange={(e) => setCompleteTripForm({ ...completeTripForm, revenue: parseFloat(e.target.value) || '' })}
-                  className="w-full bg-slate-50 border border-slate-208 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Highway Tolls ($)</label>
-                  <input 
-                    type="number" value={completeTripForm.toll_expense} 
-                    onChange={(e) => setCompleteTripForm({ ...completeTripForm, toll_expense: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Other Incidentals ($)</label>
-                  <input 
-                    type="number" value={completeTripForm.other_expense} 
-                    onChange={(e) => setCompleteTripForm({ ...completeTripForm, other_expense: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <button type="submit" className="w-full bg-blue-650 hover:bg-blue-750 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
-                Log Completion & Update Stats
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* modal: Log Fuel Purchase */}
-      {showAddFuel && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddFuel(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-655"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-705 mb-6 font-mono flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-blue-600" />
-              Log Fuel Purchase Receipt.
-            </h2>
-            <form onSubmit={addFuel} className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold text-slate-550 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
-                <select 
-                  required value={fuelForm.vehicle_id}
-                  onChange={(e) => setFuelForm({ ...fuelForm, vehicle_id: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
-                >
-                  <option value="">-- Choose Vehicle --</option>
-                  {vehicles.filter(v => v.status !== 'Retired').map(v => (
-                    <option key={v.id} value={v.id}>{v.name} ({v.reg_no})</option>
-                  ))}
-                </select>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Purchase Date</label>
-                  <input 
-                    type="date" required value={fuelForm.date} 
-                    onChange={(e) => setFuelForm({ ...fuelForm, date: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-255 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-555 uppercase tracking-widest font-mono mb-1.5">Liters Refueled</label>
-                  <input 
-                    type="number" step="0.01" required value={fuelForm.liters} 
-                    onChange={(e) => setFuelForm({ ...fuelForm, liters: parseFloat(e.target.value) || 0 })}
-                    className="w-full bg-slate-55 border border-slate-252 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Total Cost Paid ($)</label>
-                <input 
-                  type="number" required value={fuelForm.cost} 
-                  onChange={(e) => setFuelForm({ ...fuelForm, cost: parseFloat(e.target.value) || 0 })}
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-700 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                />
-              </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
-                Record Fuel Expense
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* modal: Log General Expense */}
-      {showAddExpense && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl relative text-left">
-            <button onClick={() => setShowAddExpense(false)} className="absolute top-4 right-4 text-slate-550 hover:text-slate-355"><X className="h-5 w-5" /></button>
-            <h2 className="text-md font-bold uppercase tracking-widest text-slate-705 mb-6 font-mono flex items-center gap-2">
-              <DollarSign className="h-5 w-5 text-blue-600" />
-              Add Incidentals / Toll Expense.
-            </h2>
-            <form onSubmit={addExpense} className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
-                <select 
-                  required value={expenseForm.vehicle_id}
-                  onChange={(e) => setExpenseForm({ ...expenseForm, vehicle_id: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-200 text-slate-750 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs"
-                >
-                  <option value="">-- Choose Vehicle --</option>
-                  {vehicles.filter(v => v.status !== 'Retired').map(v => (
-                    <option key={v.id} value={v.id}>{v.name} ({v.reg_no})</option>
-                  ))}
-                </select>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Toll Cost ($)</label>
-                  <input 
-                    type="number" value={expenseForm.toll} 
-                    onChange={(e) => setExpenseForm({ ...expenseForm, toll: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-808 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono mb-1.5">Other Incidentals ($)</label>
-                  <input 
-                    type="number" value={expenseForm.other} 
-                    onChange={(e) => setExpenseForm({ ...expenseForm, other: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 text-slate-805 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
-                  />
-                </div>
-              </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase font-mono py-3 rounded-full transition-all duration-300 mt-4 shadow-sm">
-                Record Expense
               </button>
             </form>
           </div>
@@ -2455,10 +1600,10 @@ export default function App() {
                     <table className="w-full text-left text-xs border-collapse">
                       <thead className="bg-slate-100 border-b border-slate-200">
                         <tr>
-                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Service Type</th>
-                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Date Logged</th>
-                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Cost</th>
-                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-500 font-mono">Status</th>
+                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Service Type</th>
+                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Date Logged</th>
+                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Cost</th>
+                          <th className="p-3 text-[10px] font-bold uppercase tracking-widest text-slate-505 font-mono">Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-205 font-mono text-[11px] bg-white">
