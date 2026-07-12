@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   Truck, Users, Navigation, DollarSign, BarChart3, Settings, 
   Plus, LogOut, ShieldAlert, CheckCircle2, AlertTriangle, X, 
-  Lock, ArrowRight, Activity, Zap, FileSpreadsheet, Eye
+  Lock, ArrowRight, Activity, Zap, FileSpreadsheet, Eye, Play, Phone, Check
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -12,6 +12,9 @@ import {
 const API_BASE = 'http://localhost:5000/api';
 
 export default function App() {
+  // App View Mode: 'landing' or 'app' (after login)
+  const [view, setView] = useState('landing');
+
   // Authentication State
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
@@ -33,7 +36,7 @@ export default function App() {
   const [expenses, setExpenses] = useState([]);
   const [analytics, setAnalytics] = useState(null);
 
-  // Active module tab
+  // Active module tab inside App Console
   const [activeTab, setActiveTab] = useState('dashboard');
 
   // Modals state
@@ -62,6 +65,9 @@ export default function App() {
   // Safety Score Modifier state
   const [adjustScoreDriverId, setAdjustScoreDriverId] = useState(null);
   const [adjustScoreValue, setAdjustScoreValue] = useState('');
+
+  // Marketing Lead Capture Form
+  const [leadForm, setLeadForm] = useState({ firstName: '', lastName: '', phone: '', email: '', company: '', fleetSize: '1-10' });
 
   // Fetch initial system data
   const fetchData = async () => {
@@ -100,6 +106,7 @@ export default function App() {
 
   useEffect(() => {
     if (token) {
+      setView('app');
       fetchData();
     }
   }, [token]);
@@ -134,7 +141,8 @@ export default function App() {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
       }
-      
+      setView('app');
+
       // Default initial tabs based on roles
       if (data.user.role === 'Dispatcher') {
         setActiveTab('trips');
@@ -155,9 +163,9 @@ export default function App() {
     setUser(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    setView('landing');
   };
 
-  // Helper function to check role access permissions
   const hasAccess = (module, action = 'view') => {
     if (!user) return false;
     const rbac = {
@@ -411,8 +419,368 @@ export default function App() {
     return diffDays <= 30;
   };
 
-  // ---------------- AUTHENTICATION UI ----------------
-  if (!token) {
+  // ---------------- LANDING MARKETING PAGE ----------------
+  if (view === 'landing') {
+    return (
+      <div className="min-h-screen bg-[#0A0E14] text-slate-100 selection:bg-blue-500 selection:text-white relative">
+        {/* Tech Grid Overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20 pointer-events-none"></div>
+
+        {/* Navigation Bar */}
+        <header className="sticky top-0 z-50 bg-[#0A0E14]/80 backdrop-blur-md border-b border-slate-900">
+          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Truck className="h-6 w-6 text-cyan-400" />
+              <span className="text-lg font-black tracking-widest uppercase font-mono text-white">TransitOps</span>
+            </div>
+            
+            <nav className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-wider font-mono text-slate-400">
+              <a href="#platform" className="hover:text-white transition-colors">Platform</a>
+              <a href="#rules" className="hover:text-white transition-colors">Safety Rules</a>
+              <a href="#roles" className="hover:text-white transition-colors">Operational Seats</a>
+              <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+            </nav>
+
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setView('login')}
+                className="text-xs font-bold uppercase tracking-wider font-mono text-slate-400 hover:text-white transition-colors"
+              >
+                Login
+              </button>
+              <button 
+                onClick={() => setView('login')}
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white text-xs font-bold uppercase tracking-wider font-mono px-5 py-2.5 rounded-full transition-all shadow-[0_4px_15px_rgba(6,182,212,0.15)]"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <section className="relative pt-20 pb-32 overflow-hidden px-6">
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-r from-blue-600/10 to-cyan-500/10 rounded-full filter blur-3xl opacity-60"></div>
+          <div className="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+            <span className="text-[10px] bg-blue-950 text-cyan-400 px-3 py-1 rounded-full font-mono uppercase tracking-widest border border-blue-900/40">
+              Fleet Operations Platform
+            </span>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white uppercase font-mono max-w-3xl mx-auto leading-none">
+              Operations that run themselves — and never let a mistake through.
+            </h1>
+            <p className="text-sm md:text-base text-slate-400 max-w-2xl mx-auto font-mono">
+              TransitOps is the only rule-enforcing transit platform that blocks capacity overloads, license compliance issues, and scheduling errors at the source.
+            </p>
+            <div className="flex justify-center gap-4 pt-4">
+              <button 
+                onClick={() => setView('login')}
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs uppercase tracking-wider font-mono px-8 py-3.5 rounded-full transition-all shadow-[0_4px_20px_rgba(6,182,212,0.25)]"
+              >
+                Get Started
+              </button>
+              <a 
+                href="#contact"
+                className="border border-slate-700 hover:border-slate-500 text-slate-350 font-bold text-xs uppercase tracking-wider font-mono px-8 py-3.5 rounded-full transition-all"
+              >
+                Watch Demo
+              </a>
+            </div>
+
+            {/* Video Placeholder / CSS Animated Mock UI */}
+            <div className="mt-16 bg-slate-950/80 border border-slate-900 rounded-2xl p-4 shadow-[0_0_50px_rgba(59,130,246,0.1)] relative max-w-3xl mx-auto overflow-hidden">
+              {/* Tech Corner Overlays */}
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-cyan-500"></div>
+              <div className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-cyan-500"></div>
+              <div className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-cyan-500"></div>
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-cyan-500"></div>
+              
+              <div className="bg-[#050b14] h-72 rounded-lg border border-slate-900 flex flex-col justify-center items-center relative p-8">
+                <div className="absolute top-4 left-4 flex gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/60"></span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500/60"></span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/60"></span>
+                </div>
+                <div className="absolute top-4 right-4 text-[9px] text-cyan-400 font-mono tracking-widest uppercase font-bold animate-pulse">
+                  SYSTEM MONITOR FEED
+                </div>
+                
+                <div className="space-y-4 text-center max-w-md">
+                  <div className="w-12 h-12 bg-blue-950 border border-blue-900 rounded-full flex items-center justify-center mx-auto text-cyan-400 animate-pulse">
+                    <Activity className="h-6 w-6" />
+                  </div>
+                  <h4 className="text-sm font-bold uppercase tracking-wider font-mono text-slate-200">Enforcing Compliance Rules in Real-Time</h4>
+                  <p className="text-[10px] text-slate-500 font-mono">Simulated video feed of automated driver credential validations, cargo load limits, and operational cost calculations.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Section: Hub & Spoke modules (Ivory / White background block) */}
+        <section id="platform" className="bg-[#F8F9FA] text-slate-950 py-24 px-6 relative overflow-hidden">
+          <div className="max-w-7xl mx-auto text-center space-y-6">
+            <span className="text-[10px] bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-mono uppercase tracking-widest border border-blue-200">
+              INTEGRATED OPERATIONS PLATFORM
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight text-slate-950 uppercase font-mono leading-none">
+              One system, six connected modules.
+            </h2>
+            <p className="text-sm text-slate-600 max-w-xl mx-auto font-mono">
+              A unified core that orchestrates workflows and automatically syncs logs across all sectors of your transit enterprise.
+            </p>
+
+            {/* Hub-and-Spoke diagram */}
+            <div className="pt-16 grid grid-cols-2 lg:grid-cols-6 gap-4 max-w-6xl mx-auto">
+              {[
+                { title: 'Fleet Registry', desc: 'Registry lifecycle, shop tracking, status metrics.', icon: Truck },
+                { title: 'Drivers & Safety', desc: 'Safety ratings, credential checks, penalties.', icon: Users },
+                { title: 'Trips Console', desc: 'Live validations, dispatch steppers, cargo metrics.', icon: Navigation },
+                { title: 'Maintenance', desc: 'Log service events, auto shop lockdowns.', icon: Settings },
+                { title: 'Fuel Ledger', desc: 'Fuel receipts and logs tracking.', icon: DollarSign },
+                { title: 'ROI Analytics', desc: 'Auto-calculating costs and ROI cards.', icon: BarChart3 }
+              ].map((mod, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => setView('login')}
+                  className="bg-white border border-slate-200 rounded-xl p-5 text-left shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(59,130,246,0.08)] hover:-translate-y-1 transition-all cursor-pointer group"
+                >
+                  <div className="w-10 h-10 bg-slate-950 text-white rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-600 transition-colors">
+                    <mod.icon className="h-5 w-5" />
+                  </div>
+                  <h4 className="text-xs font-bold font-mono uppercase tracking-wider text-slate-900">{mod.title}</h4>
+                  <p className="text-[11px] text-slate-500 font-mono mt-2 leading-relaxed">{mod.desc}</p>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+
+        {/* Section: Rules Highlight */}
+        <section id="rules" className="py-24 px-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5 space-y-6">
+              <span className="text-[10px] bg-red-950 text-red-400 px-3 py-1 rounded-full font-mono uppercase tracking-widest border border-red-900/40">
+                Rules Enforced at Source
+              </span>
+              <h2 className="text-3xl font-black tracking-tight text-white uppercase font-mono">
+                Catch every conflict before it happens.
+              </h2>
+              <p className="text-xs text-slate-400 leading-relaxed font-mono">
+                From overloaded cargo weights to expired license compliance, TransitOps blocks operational mistakes at the source instead of just showing them in report printouts next month.
+              </p>
+              <ul className="space-y-3 pt-2 text-[11px] font-mono text-slate-350">
+                <li className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-cyan-400" /> Auto-hides Retired or In-Shop vehicles from dispatch.
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-cyan-400" /> Blocks trip dispatch if driver license is expired or suspended.
+                </li>
+                <li className="flex items-center gap-2">
+                  <Check className="h-4 w-4 text-cyan-400" /> Restricts trip assignment if cargo exceeds payload capacity.
+                </li>
+              </ul>
+              <div className="pt-4">
+                <button 
+                  onClick={() => setView('login')}
+                  className="border border-slate-700 hover:border-slate-500 text-slate-300 text-xs font-bold uppercase tracking-wider font-mono px-6 py-2.5 rounded-full transition-all"
+                >
+                  Explore Compliance Rules
+                </button>
+              </div>
+            </div>
+
+            {/* Simulated UI Cards Grid */}
+            <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                { label: 'Capacity Exceeded', val: 'DISPATCH BLOCKED', status: 'overload', desc: '14,200 kg cargo exceeds maximum 10,000 kg carrying capacity of medium truck DL01AB9999.' },
+                { label: 'License Expired', val: 'ASSIGNMENT BLOCKED', status: 'expired', desc: 'Robert Expired cannot be assigned. Operator license expired on 2026-06-01.' },
+                { label: 'Vehicle In Shop', val: 'OMITTED FROM SELECTION', status: 'shop', desc: 'Medium Truck KA03XY5678 automatically hidden from active dispatch list while service logs are open.' },
+                { label: 'Driver Suspended', val: 'ASSIGNMENT BLOCKED', status: 'suspended', desc: 'Sam Suspended disabled from duty queue. Safety score dropped below 50 points compliance limit.' }
+              ].map((card, idx) => (
+                <div key={idx} className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-2xl relative">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-[10px] font-bold font-mono text-slate-300 uppercase">{card.label}</span>
+                    <span className={`text-[8px] font-mono font-black px-2 py-0.5 rounded border uppercase tracking-wider ${
+                      card.status === 'overload' || card.status === 'expired' || card.status === 'suspended'
+                        ? 'bg-rose-950/40 border-rose-900 text-rose-400'
+                        : 'bg-amber-950/40 border-amber-900 text-amber-400'
+                    }`}>
+                      {card.val}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-slate-450 font-mono leading-relaxed">{card.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Role-based Value */}
+        <section id="roles" className="py-24 px-6 bg-slate-950/40 border-y border-slate-900">
+          <div className="max-w-7xl mx-auto space-y-12">
+            <div className="text-center space-y-4">
+              <span className="text-[10px] text-cyan-400 uppercase tracking-widest font-bold font-mono">Role-Based Modules</span>
+              <h2 className="text-3xl font-black text-white uppercase font-mono">Built for every seat in the operation.</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { role: 'Fleet Manager', desc: 'Owns vehicle profiles, logs service orders, and monitors health states.', cta: 'Manage Fleet' },
+                { role: 'Dispatcher', desc: 'Orchestrates active routes, verifies capacity limits, and records cargo states.', cta: 'Orchestrate Trips' },
+                { role: 'Safety Officer', desc: 'Monitors driver credential lists, licenses, and adjusting safety ratings.', cta: 'Inspect Compliance' },
+                { role: 'Financial Analyst', desc: 'Enters operational expenses and analyzes auto-calculated vehicle ROI cards.', cta: 'Audit Financials' }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-slate-950 border border-slate-900 rounded-xl p-6 flex flex-col justify-between hover:border-slate-800 transition-colors">
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-bold text-white font-mono uppercase tracking-wider">{item.role}</h4>
+                    <p className="text-[11px] text-slate-500 font-mono leading-relaxed">{item.desc}</p>
+                  </div>
+                  <button 
+                    onClick={() => { setRole(item.role); setView('login'); }}
+                    className="text-[10px] text-cyan-400 font-mono uppercase font-bold tracking-wider mt-6 flex items-center gap-1 hover:text-cyan-300 transition-colors self-start"
+                  >
+                    {item.cta} <ArrowRight className="h-3 w-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Social Proof (Dark Operation BG Style) */}
+        <section className="relative py-32 overflow-hidden px-6 text-center bg-[#070b10]">
+          <div className="absolute inset-0 bg-slate-950/60 z-0"></div>
+          <div className="max-w-4xl mx-auto relative z-10 space-y-6">
+            <span className="text-[10px] text-slate-500 font-mono uppercase tracking-widest font-bold">BUILT FOR OPERATORS LIKE</span>
+            <h2 className="text-3xl font-black text-white font-mono uppercase tracking-tight">The most complex fleets run on TransitOps.</h2>
+            <div className="pt-8 flex flex-wrap justify-center items-center gap-12 opacity-30 select-none">
+              <span className="font-mono text-xs font-black tracking-widest uppercase">ACME LOGISTICS</span>
+              <span className="font-mono text-xs font-black tracking-widest uppercase">APEX CARRIERS</span>
+              <span className="font-mono text-xs font-black tracking-widest uppercase">HORIZON TRANSPORT</span>
+              <span className="font-mono text-xs font-black tracking-widest uppercase">VORTEX HAULING</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Section: Lead Capture & Contact */}
+        <section id="contact" className="py-24 px-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-5 space-y-6">
+              <span className="text-[10px] text-cyan-400 font-mono uppercase tracking-widest font-bold">CONNECT WITH US</span>
+              <h2 className="text-3xl font-black text-white uppercase font-mono">We'd love to show you around.</h2>
+              <p className="text-xs text-slate-400 font-mono leading-relaxed">
+                Connect with our product specialist and explore how automated validation logic can secure your transport pipelines.
+              </p>
+              <div className="space-y-3 pt-2 text-[11px] font-mono text-slate-400">
+                <div className="flex items-center gap-2"><Check className="h-4 w-4 text-cyan-400" /> Verify operations rules.</div>
+                <div className="flex items-center gap-2"><Check className="h-4 w-4 text-cyan-400" /> Prevent fleet compliance risks.</div>
+                <div className="flex items-center gap-2"><Check className="h-4 w-4 text-cyan-400" /> Sync operating ledgers instantly.</div>
+              </div>
+            </div>
+
+            {/* Form card */}
+            <div className="lg:col-span-7 bg-slate-950 border border-slate-900 rounded-2xl p-8 shadow-2xl relative">
+              <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-cyan-500"></div>
+              <form onSubmit={(e) => { e.preventDefault(); alert('Request logged! A product specialist will contact you shortly.'); }} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono mb-1.5">First Name</label>
+                    <input type="text" required className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono mb-1.5">Last Name</label>
+                    <input type="text" required className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono mb-1.5">Company Email</label>
+                  <input type="email" required className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs" />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono mb-1.5">Company Name</label>
+                    <input type="text" required className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs" />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono mb-1.5">Fleet Size</label>
+                    <select className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2.5 focus:outline-none font-mono text-xs text-slate-305">
+                      <option>1-10 vehicles</option>
+                      <option>11-50 vehicles</option>
+                      <option>51-200 vehicles</option>
+                      <option>200+ vehicles</option>
+                    </select>
+                  </div>
+                </div>
+                <button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs uppercase font-mono py-3.5 rounded-full transition-all mt-4">
+                  Request Private System Tour
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="bg-slate-950 border-t border-slate-900 py-16 px-6 relative z-10 text-xs font-mono text-slate-500">
+          <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-6 gap-8">
+            <div className="col-span-2 space-y-4">
+              <div className="flex items-center gap-2">
+                <Truck className="h-5 w-5 text-cyan-400" />
+                <span className="text-sm font-black tracking-widest uppercase text-white">TransitOps</span>
+              </div>
+              <p className="text-[11px] leading-relaxed max-w-xs">AI-assisted operational routing, compliance validation, and fleet metrics.</p>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white uppercase mb-4">Products</h5>
+              <ul className="space-y-2">
+                <li><a href="#platform" className="hover:text-slate-300">Fleet Management</a></li>
+                <li><a href="#platform" className="hover:text-slate-300">Driver Compliance</a></li>
+                <li><a href="#platform" className="hover:text-slate-300">Trip Dispatch</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white uppercase mb-4">Who We Serve</h5>
+              <ul className="space-y-2">
+                <li><a href="#" className="hover:text-slate-300">Logistics</a></li>
+                <li><a href="#" className="hover:text-slate-300">Construction</a></li>
+                <li><a href="#" className="hover:text-slate-300">Field Service</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white uppercase mb-4">Resources</h5>
+              <ul className="space-y-2">
+                <li><a href="#" className="hover:text-slate-300">Documentation</a></li>
+                <li><a href="#" className="hover:text-slate-300">Guides & Articles</a></li>
+                <li><a href="#" className="hover:text-slate-300">API Gateway</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white uppercase mb-4">Company</h5>
+              <ul className="space-y-2">
+                <li><a href="#" className="hover:text-slate-300">About Us</a></li>
+                <li><a href="#" className="hover:text-slate-300">Leadership</a></li>
+                <li><a href="#" className="hover:text-slate-300">Security Core</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="max-w-7xl mx-auto pt-12 mt-12 border-t border-slate-900 flex justify-between items-center text-[10px]">
+            <span>© 2026 TransitOps Operations System.</span>
+            <span>UNITED STATES (ENGLISH)</span>
+          </div>
+        </footer>
+
+      </div>
+    );
+  }
+
+  // ---------------- AUTHENTICATION UI (Login) ----------------
+  if (view === 'login') {
     return (
       <div className="min-h-screen bg-[#000000] flex flex-col justify-center items-center px-4 relative overflow-hidden">
         {/* Computer Vision Tech Grid Overlay */}
@@ -473,7 +841,7 @@ export default function App() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 font-mono">Security Password</label>
+              <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest mb-1.5 font-mono">Security Password</label>
               <input 
                 type="password" 
                 required 
@@ -504,6 +872,14 @@ export default function App() {
               Sign In to System
               <ArrowRight className="h-4 w-4" />
             </button>
+            
+            <button 
+              type="button"
+              onClick={() => setView('landing')}
+              className="w-full border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-slate-200 font-bold text-xs uppercase font-mono py-3 rounded-full transition-all"
+            >
+              Back to Landing Page
+            </button>
           </form>
 
           <div className="mt-8 pt-6 border-t border-slate-900 text-center flex justify-between items-center text-[10px] text-slate-500 font-mono">
@@ -515,6 +891,7 @@ export default function App() {
     );
   }
 
+  // ---------------- MAIN CONSOLE DASHBOARD VIEW ----------------
   return (
     <div className="min-h-screen bg-[#000000] text-slate-100 flex flex-col md:flex-row relative">
       {/* Background machine lines and grid overlay */}
@@ -1252,7 +1629,7 @@ export default function App() {
 
             {/* Current Trip Details */}
             <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl relative">
-              <h3 className="text-xs font-bold text-slate-450 uppercase tracking-widest mb-4 font-mono">Assigned Active Dispatch</h3>
+              <h3 className="text-xs font-bold text-slate-455 uppercase tracking-widest mb-4 font-mono">Assigned Active Dispatch</h3>
               <div className="space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-900 pb-3">
                   <div>
@@ -1310,21 +1687,21 @@ export default function App() {
               
               {/* Config Form */}
               <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl space-y-4">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-200 font-mono">Depot Configurations</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-200 font-mono font-bold">Depot Configurations</h3>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-2">Primary Depot Name</label>
                   <input type="text" className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none font-mono text-xs" defaultValue="TransitOps HQ - Terminal A" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-2">Distance Unit</label>
+                    <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-2">Distance Unit</label>
                     <select className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2.5 text-slate-300 focus:outline-none font-mono text-xs">
                       <option>Kilometers (km)</option>
                       <option>Miles (mi)</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-2">Currency Symbol</label>
+                    <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-2">Currency Symbol</label>
                     <select className="w-full bg-[#050b14] border border-slate-900 rounded-lg px-4 py-2.5 text-slate-300 focus:outline-none font-mono text-xs">
                       <option>USD ($)</option>
                       <option>INR (₹)</option>
@@ -1338,7 +1715,7 @@ export default function App() {
 
               {/* RBAC read only matrix */}
               <div className="bg-slate-950 border border-slate-900 rounded-xl p-5 shadow-xl">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-200 font-mono mb-3">RBAC Matrix Permissions</h3>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-slate-200 font-mono mb-3 font-bold">RBAC Matrix Permissions</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-[10px] border-collapse">
                     <thead className="bg-[#050b14] border-b border-slate-900">
@@ -1360,7 +1737,7 @@ export default function App() {
                       </tr>
                       <tr>
                         <td className="p-2.5 font-bold text-cyan-400">Dispatcher</td>
-                        <td className="p-2.5 text-amber-400">View</td>
+                        <td className="p-2.5 text-amber-400 font-bold">View</td>
                         <td className="p-2.5 text-slate-600">—</td>
                         <td className="p-2.5 text-emerald-400">Full</td>
                         <td className="p-2.5 text-slate-600">—</td>
@@ -1369,15 +1746,15 @@ export default function App() {
                         <td className="p-2.5 font-bold text-cyan-400">Safety Officer</td>
                         <td className="p-2.5 text-slate-600">—</td>
                         <td className="p-2.5 text-emerald-400">Full</td>
-                        <td className="p-2.5 text-amber-400">View</td>
+                        <td className="p-2.5 text-amber-400 font-bold">View</td>
                         <td className="p-2.5 text-slate-600">—</td>
                       </tr>
                       <tr>
                         <td className="p-2.5 font-bold text-cyan-400">Financial Analyst</td>
-                        <td className="p-2.5 text-amber-400">View</td>
+                        <td className="p-2.5 text-amber-400 font-bold">View</td>
                         <td className="p-2.5 text-slate-600">—</td>
                         <td className="p-2.5 text-slate-600">—</td>
-                        <td className="p-2.5 text-emerald-400">Full</td>
+                        <td className="p-2.5 text-emerald-400 font-bold">Full</td>
                       </tr>
                     </tbody>
                   </table>
@@ -1396,7 +1773,6 @@ export default function App() {
       {showAddVehicle && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-950 border border-slate-900 rounded-xl p-6 w-full max-w-md shadow-2xl relative">
-            {/* Tech Corners */}
             <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-cyan-500"></div>
             <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-cyan-500"></div>
 
@@ -1417,7 +1793,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Model Name</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Model Name</label>
                   <input 
                     type="text" required value={vehicleForm.name} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, name: e.target.value })}
@@ -1426,7 +1802,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Type</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Type</label>
                   <select 
                     value={vehicleForm.type}
                     onChange={(e) => setVehicleForm({ ...vehicleForm, type: e.target.value })}
@@ -1441,7 +1817,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Capacity (kg)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Capacity (kg)</label>
                   <input 
                     type="number" required value={vehicleForm.max_load_capacity} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, max_load_capacity: parseInt(e.target.value) || 0 })}
@@ -1449,7 +1825,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Odometer (km)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Odometer (km)</label>
                   <input 
                     type="number" required value={vehicleForm.odometer} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, odometer: parseInt(e.target.value) || 0 })}
@@ -1457,7 +1833,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Cost ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Cost ($)</label>
                   <input 
                     type="number" required value={vehicleForm.acquisition_cost} 
                     onChange={(e) => setVehicleForm({ ...vehicleForm, acquisition_cost: parseFloat(e.target.value) || 0 })}
@@ -1487,7 +1863,7 @@ export default function App() {
             </h2>
             <form onSubmit={addDriver} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Driver Full Name</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Driver Full Name</label>
                 <input 
                   type="text" required value={driverForm.name} 
                   onChange={(e) => setDriverForm({ ...driverForm, name: e.target.value })}
@@ -1497,7 +1873,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">License Number</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">License Number</label>
                   <input 
                     type="text" required value={driverForm.license_no} 
                     onChange={(e) => setDriverForm({ ...driverForm, license_no: e.target.value })}
@@ -1506,7 +1882,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">License Class</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">License Class</label>
                   <select 
                     value={driverForm.license_category}
                     onChange={(e) => setDriverForm({ ...driverForm, license_category: e.target.value })}
@@ -1519,7 +1895,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Expiry Date</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Expiry Date</label>
                   <input 
                     type="date" required value={driverForm.license_expiry_date} 
                     onChange={(e) => setDriverForm({ ...driverForm, license_expiry_date: e.target.value })}
@@ -1527,7 +1903,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Contact Number</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Contact Number</label>
                   <input 
                     type="text" required value={driverForm.contact_no} 
                     onChange={(e) => setDriverForm({ ...driverForm, contact_no: e.target.value })}
@@ -1585,7 +1961,7 @@ export default function App() {
             <form onSubmit={createTrip} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Source City</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Source City</label>
                   <input 
                     type="text" required value={tripForm.source} 
                     onChange={(e) => setTripForm({ ...tripForm, source: e.target.value })}
@@ -1594,18 +1970,18 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Destination City</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Destination City</label>
                   <input 
                     type="text" required value={tripForm.destination} 
                     onChange={(e) => setTripForm({ ...tripForm, destination: e.target.value })}
                     placeholder="e.g. Delhi NCR"
-                    className="w-full bg-[#050b14] border border-slate-900 text-slate-200 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
+                    className="w-full bg-[#050b14] border border-slate-905 text-slate-200 rounded-lg px-4 py-2 focus:outline-none font-mono text-xs"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Cargo Weight (kg)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Cargo Weight (kg)</label>
                   <input 
                     type="number" required value={tripForm.cargo_weight} 
                     onChange={(e) => setTripForm({ ...tripForm, cargo_weight: parseFloat(e.target.value) || 0 })}
@@ -1613,7 +1989,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Planned Distance (km)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Planned Distance (km)</label>
                   <input 
                     type="number" required value={tripForm.planned_distance} 
                     onChange={(e) => setTripForm({ ...tripForm, planned_distance: parseFloat(e.target.value) || 0 })}
@@ -1623,7 +1999,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Select Vehicle (Available)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Select Vehicle (Available)</label>
                   <select 
                     required value={tripForm.vehicle_id}
                     onChange={(e) => setTripForm({ ...tripForm, vehicle_id: e.target.value })}
@@ -1636,7 +2012,7 @@ export default function App() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Select Driver (Available)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Select Driver (Available)</label>
                   <select 
                     required value={tripForm.driver_id}
                     onChange={(e) => setTripForm({ ...tripForm, driver_id: e.target.value })}
@@ -1687,7 +2063,7 @@ export default function App() {
             </h2>
             <form onSubmit={addMaintenance} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
                 <select 
                   required value={maintenanceForm.vehicle_id}
                   onChange={(e) => setMaintenanceForm({ ...maintenanceForm, vehicle_id: e.target.value })}
@@ -1700,7 +2076,7 @@ export default function App() {
                 </select>
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Service Details</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Service Details</label>
                 <input 
                   type="text" required value={maintenanceForm.service_type} 
                   onChange={(e) => setMaintenanceForm({ ...maintenanceForm, service_type: e.target.value })}
@@ -1710,7 +2086,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Service Cost ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Service Cost ($)</label>
                   <input 
                     type="number" required value={maintenanceForm.cost} 
                     onChange={(e) => setMaintenanceForm({ ...maintenanceForm, cost: parseFloat(e.target.value) || 0 })}
@@ -1718,7 +2094,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Service Date</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Service Date</label>
                   <input 
                     type="date" required value={maintenanceForm.date} 
                     onChange={(e) => setMaintenanceForm({ ...maintenanceForm, date: e.target.value })}
@@ -1738,7 +2114,7 @@ export default function App() {
       {activeCompleteTripModal && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-slate-950 border border-slate-900 rounded-xl p-6 w-full max-w-md shadow-2xl relative">
-            <button onClick={() => setActiveCompleteTripModal(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-350"><X className="h-5 w-5" /></button>
+            <button onClick={() => setActiveCompleteTripModal(null)} className="absolute top-4 right-4 text-slate-500 hover:text-slate-355"><X className="h-5 w-5" /></button>
             <h2 className="text-md font-bold uppercase tracking-widest text-slate-200 mb-6 font-mono flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-emerald-500" />
               Complete Active Trip Operations.
@@ -1750,7 +2126,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Final Odometer (km)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Final Odometer (km)</label>
                   <input 
                     type="number" required value={completeTripForm.final_odometer} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, final_odometer: parseFloat(e.target.value) || '' })}
@@ -1758,7 +2134,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Fuel Consumed (Liters)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Fuel Consumed (Liters)</label>
                   <input 
                     type="number" required value={completeTripForm.fuel_consumed} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, fuel_consumed: parseFloat(e.target.value) || '' })}
@@ -1767,7 +2143,7 @@ export default function App() {
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Trip Revenue Earned ($)</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Trip Revenue Earned ($)</label>
                 <input 
                   type="number" required value={completeTripForm.revenue} 
                   onChange={(e) => setCompleteTripForm({ ...completeTripForm, revenue: parseFloat(e.target.value) || '' })}
@@ -1776,7 +2152,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Highway Tolls ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Highway Tolls ($)</label>
                   <input 
                     type="number" value={completeTripForm.toll_expense} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, toll_expense: e.target.value })}
@@ -1784,7 +2160,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Other Incidentals ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Other Incidentals ($)</label>
                   <input 
                     type="number" value={completeTripForm.other_expense} 
                     onChange={(e) => setCompleteTripForm({ ...completeTripForm, other_expense: e.target.value })}
@@ -1811,7 +2187,7 @@ export default function App() {
             </h2>
             <form onSubmit={addFuel} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
                 <select 
                   required value={fuelForm.vehicle_id}
                   onChange={(e) => setFuelForm({ ...fuelForm, vehicle_id: e.target.value })}
@@ -1825,7 +2201,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Purchase Date</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Purchase Date</label>
                   <input 
                     type="date" required value={fuelForm.date} 
                     onChange={(e) => setFuelForm({ ...fuelForm, date: e.target.value })}
@@ -1833,7 +2209,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Liters Refueled</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Liters Refueled</label>
                   <input 
                     type="number" step="0.01" required value={fuelForm.liters} 
                     onChange={(e) => setFuelForm({ ...fuelForm, liters: parseFloat(e.target.value) || 0 })}
@@ -1842,7 +2218,7 @@ export default function App() {
                 </div>
               </div>
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Total Cost Paid ($)</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Total Cost Paid ($)</label>
                 <input 
                   type="number" required value={fuelForm.cost} 
                   onChange={(e) => setFuelForm({ ...fuelForm, cost: parseFloat(e.target.value) || 0 })}
@@ -1868,7 +2244,7 @@ export default function App() {
             </h2>
             <form onSubmit={addExpense} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
+                <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Select Vehicle</label>
                 <select 
                   required value={expenseForm.vehicle_id}
                   onChange={(e) => setExpenseForm({ ...expenseForm, vehicle_id: e.target.value })}
@@ -1882,7 +2258,7 @@ export default function App() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Toll Cost ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Toll Cost ($)</label>
                   <input 
                     type="number" value={expenseForm.toll} 
                     onChange={(e) => setExpenseForm({ ...expenseForm, toll: e.target.value })}
@@ -1890,7 +2266,7 @@ export default function App() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-450 uppercase tracking-widest font-mono mb-1.5">Other Incidentals ($)</label>
+                  <label className="block text-[10px] font-bold text-slate-455 uppercase tracking-widest font-mono mb-1.5">Other Incidentals ($)</label>
                   <input 
                     type="number" value={expenseForm.other} 
                     onChange={(e) => setExpenseForm({ ...expenseForm, other: e.target.value })}
