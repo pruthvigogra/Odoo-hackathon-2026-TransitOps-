@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { Bell, Truck, Users, BarChart3, LogOut, ShieldAlert, CircleDot } from 'lucide-react';
+import { 
+  Bell, Truck, Users, Map, Navigation, Compass, Landmark, AlertCircle, 
+  BarChart3, Wrench, Fuel, FileText, Settings, ShieldCheck, LogOut, 
+  LayoutDashboard, HeartHandshake, CircleDot
+} from 'lucide-react';
 import { api, clearToken, getUser } from '@/utils/api';
 import { io } from 'socket.io-client';
 
@@ -25,12 +29,11 @@ export default function Navbar() {
     }
 
     const socket = io('http://localhost:5000');
-    socket.on('new_alert', () => {
+    const handleNewAlert = () => {
       fetchNotifications();
-    });
-    socket.on('notification_update', () => {
-      fetchNotifications();
-    });
+    };
+    socket.on('new_alert', handleNewAlert);
+    socket.on('notification_update', handleNewAlert);
 
     return () => {
       socket.disconnect();
@@ -63,60 +66,78 @@ export default function Navbar() {
     router.push('/');
   };
 
+  // The 14 Dashboard points from your image:
   const navItems = [
-    { name: 'Live Operations', href: '/dashboard', icon: Truck },
-    { name: 'Vehicles', href: '/vehicles', icon: Truck },
-    { name: 'Drivers', href: '/drivers', icon: Users },
-    { name: 'Analytics & Reports', href: '/reports', icon: BarChart3 },
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'Vehicle Management', href: '/vehicles', icon: Truck },
+    { name: 'Driver Management', href: '/drivers', icon: Users },
+    { name: 'Route Management', href: '/routes', icon: Map },
+    { name: 'Trip Management', href: '/trips', icon: Navigation },
+    { name: 'Live GPS Tracking', href: '/tracking', icon: Compass },
+    { name: 'Toll Verification', href: '/toll-verification', icon: Landmark },
+    { name: 'Alerts & Notifications', href: '/alerts', icon: AlertCircle, badgeKey: 'alerts' },
+    { name: 'Reports & Analytics', href: '/reports', icon: BarChart3 },
+    { name: 'Maintenance', href: '/maintenance', icon: Wrench },
+    { name: 'Fuel Management', href: '/fuel', icon: Fuel },
+    { name: 'Documents', href: '/documents', icon: FileText },
+    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'User Management', href: '/users', icon: ShieldCheck },
   ];
 
   if (!user) return null;
 
   return (
-    <aside className="w-16 md:w-64 h-screen bg-white/90 backdrop-blur-md border-r border-slate-200 sticky top-0 flex flex-col justify-between py-6 px-3 md:px-4 shadow-sm z-30 transition-all duration-300">
+    <aside className="w-16 md:w-64 h-screen bg-white/90 backdrop-blur-md border-r border-slate-200 sticky top-0 flex flex-col py-6 px-3 md:px-4 shadow-sm z-30 transition-all duration-300">
       
-      {/* Top Section: Brand & Nav Links */}
-      <div className="space-y-8">
-        
-        {/* Brand Logo */}
+      {/* Top Section: Brand Logo */}
+      <div className="flex-shrink-0">
         <Link href="/dashboard" className="flex items-center gap-3 select-none group px-1 md:px-2">
           <div className="w-9 h-9 bg-sky-600 rounded-xl flex items-center justify-center shadow-md shadow-sky-600/10 group-hover:scale-105 transition-transform flex-shrink-0">
             <Truck className="w-5 h-5 text-white stroke-[2.5px]" />
           </div>
           <div className="hidden md:block leading-none">
-            <span className="text-sm font-black text-slate-800 tracking-wider">TRANSITOPS</span>
-            <span className="text-[9px] text-sky-600 block font-bold tracking-widest mt-0.5 leading-none">FLEET PORTAL</span>
+            <span className="text-sm font-black text-slate-800 tracking-wider">TransitOps</span>
+            <span className="text-[8px] text-sky-600 block font-bold tracking-widest mt-0.5 leading-none">SMART TRANSPORT</span>
           </div>
         </Link>
-
-        {/* Navigation Stack */}
-        <div className="flex flex-col gap-1.5">
-          {navItems.map(item => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                  isActive
-                    ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/10'
-                    : 'text-slate-650 hover:bg-slate-100 hover:text-slate-900'
-                }`}
-              >
-                <Icon className="w-4.5 h-4.5 flex-shrink-0" />
-                <span className="hidden md:inline">{item.name}</span>
-              </Link>
-            );
-          })}
-        </div>
       </div>
 
-      {/* Bottom Section: Alerts Bell & Profile */}
-      <div className="space-y-4">
+      {/* Middle Section: Scrollable Nav Items list */}
+      <div className="flex-1 overflow-y-auto my-5 pr-1 space-y-1 scrollbar-thin">
+        {navItems.map(item => {
+          const isActive = pathname === item.href;
+          const Icon = item.icon;
+          const isAlertsItem = item.badgeKey === 'alerts';
+
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
+                isActive
+                  ? 'bg-sky-600 text-white shadow-sm shadow-sky-600/10'
+                  : 'text-slate-650 hover:bg-slate-100 hover:text-slate-900'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <Icon className="w-4.5 h-4.5 flex-shrink-0" />
+                <span className="hidden md:inline whitespace-nowrap">{item.name}</span>
+              </div>
+              {isAlertsItem && unreadCount > 0 && (
+                <span className="hidden md:flex h-4.5 px-1.5 min-w-4.5 items-center justify-center rounded-full bg-rose-600 text-[9px] font-bold text-white leading-none">
+                  {unreadCount}
+                </span>
+              )}
+            </Link>
+          );
+        })}
+      </div>
+
+      {/* Bottom Section: Support Card, Profile & Footer */}
+      <div className="space-y-4 pt-4 border-t border-slate-150 flex-shrink-0">
         
-        {/* Notification Bell */}
-        <div className="relative px-1 md:px-2">
+        {/* Alerts Bell notification popover */}
+        <div className="relative px-1">
           <button
             onClick={() => {
               setShowNotifications(!showNotifications);
@@ -124,7 +145,7 @@ export default function Navbar() {
                 markAllAsRead();
               }
             }}
-            className="w-full flex items-center justify-center md:justify-start gap-3 p-2.5 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-800 rounded-xl border border-slate-200 transition-colors"
+            className="w-full flex items-center justify-center md:justify-start gap-3 p-2 bg-slate-50 hover:bg-slate-100 text-slate-500 hover:text-slate-800 rounded-xl border border-slate-200 transition-colors"
           >
             <div className="relative flex items-center justify-center">
               <Bell className="w-4.5 h-4.5" />
@@ -134,15 +155,14 @@ export default function Navbar() {
                 </span>
               )}
             </div>
-            <span className="hidden md:inline text-xs font-semibold text-slate-600">Compliance Alerts</span>
+            <span className="hidden md:inline text-xs font-semibold text-slate-600">Quick Notifications</span>
           </button>
 
-          {/* Notifications Dropdown (Opens relative to sidebar button) */}
           {showNotifications && (
             <div className="absolute left-12 md:left-full bottom-0 ml-3 w-80 bg-white border border-slate-200 rounded-2xl shadow-xl z-50 overflow-hidden animate-scale-in">
               <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <ShieldAlert className="w-3.5 h-3.5 text-rose-500" />
+                  <CircleDot className="w-3.5 h-3.5 text-rose-500" />
                   Live Compliance Alerts
                 </span>
                 <button
@@ -180,20 +200,45 @@ export default function Navbar() {
           )}
         </div>
 
+        {/* 24/7 Support Box (From screenshot) */}
+        <div className="hidden md:block bg-sky-50/50 border border-sky-100 p-3 rounded-2xl">
+          <div className="flex items-start gap-2.5">
+            <div className="p-1 bg-sky-100 rounded-lg text-sky-650 mt-0.5">
+              <HeartHandshake className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="text-[10px] font-bold text-slate-800 block">24/7 Support</span>
+              <span className="text-[9px] text-slate-500 block">Need help with dispatch?</span>
+            </div>
+          </div>
+          <button 
+            onClick={() => alert('Support helpline initiated. Calling dispatch officer...')}
+            className="w-full mt-2.5 bg-sky-600 hover:bg-sky-750 text-white font-bold text-[9px] py-1.5 px-3 rounded-lg transition-colors text-center"
+          >
+            Contact Support
+          </button>
+        </div>
+
         {/* User Card & Logout Button */}
-        <div className="border-t border-slate-200 pt-4 flex flex-col md:flex-row items-center gap-3 px-1 md:px-2">
+        <div className="flex items-center justify-between gap-3 pt-2">
           <div className="hidden md:block flex-1 min-w-0 select-none">
-            <span className="text-xs font-bold text-slate-800 block truncate">{user.name}</span>
-            <span className="text-[9px] font-bold text-sky-600 uppercase tracking-widest truncate block">{user.role}</span>
+            <span className="text-xs font-bold text-slate-800 block truncate">{user?.name || 'Fleet Manager'}</span>
+            <span className="text-[9px] font-bold text-sky-600 uppercase tracking-widest truncate block">{user?.role || 'Admin'}</span>
           </div>
           <button
             onClick={handleLogout}
             title="Sign Out"
-            className="p-2.5 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 text-slate-500 rounded-xl border border-slate-200 hover:border-rose-200 transition-all flex-shrink-0"
+            className="p-2 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 text-slate-500 rounded-xl border border-slate-200 hover:border-rose-200 transition-all flex-shrink-0"
           >
             <LogOut className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Footer copyright (From screenshot) */}
+        <div className="hidden md:block text-[8px] text-slate-400 select-none text-center">
+          &copy; 2024 TransitOps. All rights reserved.
+        </div>
+
       </div>
 
     </aside>
